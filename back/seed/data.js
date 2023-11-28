@@ -486,6 +486,12 @@ module.exports = {
       longDescription:
         "Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.\n\nMauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.\n\nNullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.",
       price: 85.12,
+      discount: {
+        isActive: true,
+        discountPercentage: 21,
+        startDate: "2023-12-10T00:00:00.000Z",
+        endDate: "2023-12-20T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade06",
       variations: [
         { color: "Green", size: "XL", quantity: 54 },
@@ -506,6 +512,12 @@ module.exports = {
       longDescription:
         "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
       price: 70.58,
+      discount: {
+        isActive: true,
+        discountPercentage: 23,
+        startDate: "2023-12-04T00:00:00.000Z",
+        endDate: "2023-12-14T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade06",
       variations: [
         { color: "Violet", size: "XL", quantity: 32 },
@@ -527,6 +539,12 @@ module.exports = {
       longDescription:
         "Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
       price: 134.7,
+      discount: {
+        isActive: true,
+        discountPercentage: 17,
+        startDate: "2023-12-12T00:00:00.000Z",
+        endDate: "2023-12-30T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade07",
       variations: [
         { color: "Orange", size: "M", quantity: 70 },
@@ -552,6 +570,12 @@ module.exports = {
       longDescription:
         "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
       price: 826.7,
+      discount: {
+        isActive: true,
+        discountPercentage: 18,
+        startDate: "2023-12-11T00:00:00.000Z",
+        endDate: "2023-12-26T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade08",
       variations: [],
       brand: "Tanoodle",
@@ -569,6 +593,12 @@ module.exports = {
       longDescription:
         "Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.",
       price: 55.47,
+      discount: {
+        isActive: true,
+        discountPercentage: 20,
+        startDate: "2023-11-28T00:00:00.000Z",
+        endDate: "2023-12-10T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade09",
       variations: [{ color: "Fuscia", size: "L", quantity: 181 }],
       brand: "Brainbox",
@@ -585,6 +615,12 @@ module.exports = {
       longDescription:
         "Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
       price: 124.37,
+      discount: {
+        isActive: true,
+        discountPercentage: 25,
+        startDate: "2023-12-02T00:00:00.000Z",
+        endDate: "2023-12-12T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade0a",
       variations: [
         { color: "Yellow", size: "XL", quantity: 30 },
@@ -612,6 +648,12 @@ module.exports = {
       longDescription:
         "Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.\n\nPhasellus in felis. Donec semper sapien a libero. Nam dui.\n\nProin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.",
       price: 983.21,
+      discount: {
+        isActive: true,
+        discountPercentage: 22,
+        startDate: "2023-11-29T00:00:00.000Z",
+        endDate: "2023-12-08T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade0c",
       variations: [
         { color: "Indigo", size: "XL", quantity: 187 },
@@ -633,6 +675,12 @@ module.exports = {
       longDescription:
         "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
       price: 254.32,
+      discount: {
+        isActive: false,
+        discountPercentage: 0,
+        startDate: "2023-12-01T00:00:00.000Z",
+        endDate: "2023-12-31T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade0d",
       variations: [],
       brand: "Flipopia",
@@ -650,6 +698,12 @@ module.exports = {
       longDescription:
         "Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.\n\nInteger ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.\n\nNam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.",
       price: 872.37,
+      discount: {
+        isActive: false,
+        discountPercentage: 0,
+        startDate: "2023-12-01T00:00:00.000Z",
+        endDate: "2023-12-31T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade0e",
       variations: [
         { color: "Indigo", size: "XL", quantity: 86 },
@@ -672,6 +726,12 @@ module.exports = {
       longDescription:
         "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
       price: 613.67,
+      discount: {
+        isActive: false,
+        discountPercentage: 0,
+        startDate: "2023-12-01T00:00:00.000Z",
+        endDate: "2023-12-31T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade0f",
       variations: [{ color: "Aquamarine", size: "XL", quantity: 79 }],
       brand: "Realblab",
@@ -689,6 +749,12 @@ module.exports = {
       longDescription:
         "Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
       price: 845.35,
+      discount: {
+        isActive: false,
+        discountPercentage: 0,
+        startDate: "2023-12-01T00:00:00.000Z",
+        endDate: "2023-12-31T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade11",
       variations: [
         { color: "Puce", size: "S", quantity: 101 },
@@ -716,6 +782,12 @@ module.exports = {
       longDescription:
         "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.",
       price: 928.56,
+      discount: {
+        isActive: true,
+        discountPercentage: 28,
+        startDate: "2023-12-03T00:00:00.000Z",
+        endDate: "2023-12-16T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade12",
       variations: [
         { color: "Crimson", size: "S", quantity: 168 },
@@ -739,6 +811,12 @@ module.exports = {
       longDescription:
         "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
       price: 576.45,
+      discount: {
+        isActive: false,
+        discountPercentage: 0,
+        startDate: "2023-12-01T00:00:00.000Z",
+        endDate: "2023-12-31T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade13",
       variations: [
         { color: "Red", size: "M", quantity: 17 },
@@ -763,6 +841,12 @@ module.exports = {
       longDescription:
         "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.",
       price: 283.81,
+      discount: {
+        isActive: true,
+        discountPercentage: 15,
+        startDate: "2023-12-01T00:00:00.000Z",
+        endDate: "2023-12-15T00:00:00.000Z",
+      },
       category: "6561c4749ef7bf78863ade14",
       variations: [
         { color: "Turquoise", size: "M", quantity: 118 },
@@ -790,6 +874,12 @@ module.exports = {
       longDescription:
         "Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\n\nCurabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
       price: 144.12,
+      discount: {
+        isActive: true,
+        discountPercentage: 30,
+        startDate: "2023-12-08T00:00:00.000Z",
+        endDate: "2023-12-18T00:00:00.000Z",
+      },
       category: "656199a075fd9c58437a1123",
       variations: [
         { color: "Turquoise", size: "M", quantity: 122 },

@@ -1,28 +1,120 @@
 /** @format */
 
 const express = require("express");
-
 const router = express.Router();
-
 const Product = require("../models/Product");
+const adminAuth = require("../middlewares/adminAuth");
+const errorHandler = require("../middlewares/errorHandler");
 
-router.use((err, req, res, next) => {
-  res
-    .status(err.status || 500)
-    .json({ message: err.message || "Internal Server Error" });
-});
+router.use(errorHandler);
 
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Product.find().populate("category").exec();
-    if (!products || products.length === 0) {
-      const error = new Error("Products not found");
-      error.status = 404;
-      throw error;
+    const {
+      page = 1,
+      limit = 10,
+      sortBy,
+      sortOrder,
+      search,
+      minPrice,
+      maxPrice,
+      brand,
+      discount,
+      newArrival,
+      category,
+      reviews,
+    } = req.query;
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    let pipeline = [];
+
+    if (search) {
+      pipeline.push({
+        $match: {
+          $or: [
+            { name: { $regex: search, $options: "i" } },
+            { longDescription: { $regex: search, $options: "i" } },
+            { shortDescription: { $regex: search, $options: "i" } },
+            { category: { $regex: search, $options: "i" } },
+            { brand: { $regex: search, $options: "i" } },
+          ],
+        },
+      });
+    } else {
+      pipeline.push({
+        $match: {},
+      });
     }
-    res.status(200).json(products);
+
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      const priceMatch = {};
+
+      if (minPrice !== undefined) {
+        priceMatch.$gte = parseInt(minPrice);
+      }
+      if (maxPrice !== undefined) {
+        priceMatch.$lte = parseInt(maxPrice);
+      }
+
+      pipeline.push({
+        $match: { price: priceMatch },
+      });
+    }
+
+    if (brand) {
+      pipeline.push({ $match: { brand: brand } });
+    }
+
+    if (newArrival) {
+      const oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+      pipeline.push({
+        $match: {
+          createdAt: { $gte: oneWeekAgo },
+        },
+      });
+    }
+
+    if (discount) {
+      pipeline.push({
+        $match: { "discount.isActive": true },
+      });
+    }
+
+    const sortOptions = {};
+
+    if (sortBy && sortOrder) {
+      sortOptions[sortBy] = sortOrder === "desc" ? -1 : 1;
+    } else {
+      sortOptions.createdAt = -1;
+    }
+
+    const countPipeline = [...pipeline, { $count: "total_count" }];
+
+    pipeline.push(
+      { $sort: sortOptions },
+      { $skip: startIndex },
+      { $limit: limit }
+    );
+
+    const products = await Product.aggregate(pipeline);
+    const countResult = await Product.aggregate(countPipeline);
+
+    res.status(200).json({
+      totalProducts: countResult[0].total_count,
+      currentPage: page,
+      totalPages: Math.ceil(countResult[0].total_count / limit),
+      resultsInThePage: products.length,
+      hasnextPage: endIndex < countResult[0].total_count,
+      nextPage: endIndex < countResult[0].total_count ? page + 1 : null,
+      hasPreviousPage: startIndex > 0,
+      previousPage: startIndex > 0 ? page - 1 : null,
+      products,
+    });
   } catch (error) {
-    next(error); // Pass the error to the error-handling middleware
+    next(error);
   }
 });
 
@@ -44,7 +136,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", adminAuth, async (req, res, next) => {
   try {
     const newProduct = await Product.create(req.body);
     res.status(201).json(newProduct);
@@ -53,7 +145,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", adminAuth, async (req, res, next) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -75,7 +167,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", adminAuth, async (req, res, next) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
     if (!deletedProduct) {

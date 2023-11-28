@@ -22,6 +22,12 @@ const productSchema = new mongoose.Schema({
     required: [true, "Product price is required"],
     min: [0, "Product price cannot be negative"],
   },
+  discount: {
+    isActive: Boolean,
+    discountPercentage: Number,
+    startDate: Date,
+    endDate: Date,
+  },
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
@@ -53,6 +59,14 @@ const productSchema = new mongoose.Schema({
       trim: true,
     },
   ],
+  averageRating: {
+    type: Number,
+    default: 0,
+  },
+  reviewsCount: {
+    type: Number,
+    default: 0,
+  },
   slug: {
     type: String,
   },
@@ -65,10 +79,6 @@ const productSchema = new mongoose.Schema({
 productSchema.pre("save", function (next) {
   this.slug = this.name.toLowerCase().replace(/\s+/g, "-");
   next();
-});
-
-productSchema.post("save", function (doc) {
-  console.log("Product saved:", doc);
 });
 
 const Product = mongoose.model("Product", productSchema);

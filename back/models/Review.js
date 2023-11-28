@@ -19,7 +19,7 @@ const reviewSchema = new mongoose.Schema({
     min: [1, "Rating must be between 1 and 5"],
     max: [5, "Rating must be between 1 and 5"],
   },
-  reviewText: {
+  comment: {
     type: String,
     trim: true,
     required: [true, "Review text is required"],

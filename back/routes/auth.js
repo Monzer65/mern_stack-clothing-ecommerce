@@ -6,12 +6,9 @@ const RevokedToken = require("../models/RevokedToken");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const { authLimmiter } = require("../middlewares/rateLimmiter");
+const errorHandler = require("../middlewares/errorHandler");
 
-router.use((err, req, res, next) => {
-  res
-    .status(err.status || 500)
-    .json({ message: err.message || "Internal Server Error" });
-});
+router.use(errorHandler);
 
 async function sendCodeToEmail(user, contact) {
   const verificationCode = Math.floor(

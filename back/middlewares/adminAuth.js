@@ -1,9 +1,10 @@
 /** @format */
 
+// adminAuth.js
 const jwt = require("jsonwebtoken");
 const RevokedToken = require("../models/RevokedToken");
 
-const authVerification = async (req, res, next) => {
+const adminAuth = async (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
 
   if (!authHeader?.startsWith("Bearer ")) {
@@ -26,6 +27,13 @@ const authVerification = async (req, res, next) => {
 
       req.user = decoded.userInfo.username;
       req.role = decoded.userInfo.role;
+
+      if (req.role !== "admin") {
+        return res
+          .status(403)
+          .json({ message: "Forbidden. Admin access required." });
+      }
+
       next();
     });
   } catch (error) {
@@ -33,4 +41,4 @@ const authVerification = async (req, res, next) => {
   }
 };
 
-module.exports = authVerification;
+module.exports = adminAuth;

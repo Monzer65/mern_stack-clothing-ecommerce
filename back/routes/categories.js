@@ -5,16 +5,12 @@ const router = express.Router();
 
 const Category = require("../models/Category");
 const { categoryValidation } = require("../middlewares/validation");
+const adminAuth = require("../middlewares/adminAuth");
+const errorHandler = require("../middlewares/errorHandler");
 
-const authVerification = require("../middlewares/authVerification");
-// Error handling middleware
-router.use((err, req, res, next) => {
-  res
-    .status(err.status || 500)
-    .json({ message: err.message || "Internal Server Error" });
-});
+router.use(errorHandler);
 
-router.get("/", authVerification, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const categories = await Category.find();
     if (!categories || categories.length === 0) {
@@ -46,7 +42,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", categoryValidation, async (req, res, next) => {
+router.post("/", adminAuth, categoryValidation, async (req, res, next) => {
   const category = new Category(req.body);
   try {
     const newCategory = await category.save();
@@ -56,7 +52,7 @@ router.post("/", categoryValidation, async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", adminAuth, async (req, res, next) => {
   try {
     const updatedCategory = await Category.findByIdAndUpdate(
       req.params.id,
@@ -78,7 +74,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", adminAuth, async (req, res, next) => {
   try {
     const deletedCategory = await Category.findByIdAndDelete(req.params.id);
     if (!deletedCategory) {

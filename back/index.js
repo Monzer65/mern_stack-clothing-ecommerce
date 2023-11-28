@@ -40,5 +40,11 @@ app.use("/categories", categories);
 const products = require("./routes/products");
 app.use("/products", products);
 
+const reviews = require("./routes/reviews");
+app.use("/reviews", reviews);
+
 const auth = require("./routes/auth");
 app.use("/auth", auth);
+
+const profile = require("./routes/profile");
+app.use("/profile", profile);
