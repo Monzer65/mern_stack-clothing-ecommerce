@@ -5,8 +5,37 @@ const router = express.Router();
 const Product = require("../models/Product");
 const adminAuth = require("../middlewares/adminAuth");
 const errorHandler = require("../middlewares/errorHandler");
+const Category = require("../models/Category");
+const mongoose = require("mongoose");
 
 router.use(errorHandler);
+
+// Recursive function to get all descendant categories
+// Recursive function to get all descendant category IDs
+// Recursive function to get all descendant category IDs including the parent category
+async function getAllCategoryIds(categorySlug) {
+  try {
+    const category = await Category.findOne({ slug: categorySlug }).exec();
+
+    if (!category) {
+      throw new Error("Category not found");
+    }
+
+    const descendantCategories = await Category.find({
+      parentCategory: category._id,
+    }).exec();
+
+    const allDescendantIds = [
+      category._id,
+      ...(descendantCategories.map((c) => c._id) || ""),
+    ];
+
+    return allDescendantIds;
+  } catch (err) {
+    console.error("Error retrieving category IDs:", err.message);
+    return [];
+  }
+}
 
 router.get("/", async (req, res, next) => {
   try {
@@ -22,7 +51,7 @@ router.get("/", async (req, res, next) => {
       discount,
       newArrival,
       category,
-      reviews,
+      ratings,
     } = req.query;
 
     const startIndex = (page - 1) * limit;
@@ -83,6 +112,22 @@ router.get("/", async (req, res, next) => {
       });
     }
 
+    if (ratings) {
+      pipeline.push({
+        $match: { "reviews.rating": { $gte: parseInt(ratings) } },
+      });
+    }
+
+    if (category) {
+      const categoryIds = await getAllCategoryIds(category);
+
+      console.log("Category IDs:", categoryIds);
+
+      pipeline.push({
+        $match: { category: { $in: categoryIds } },
+      });
+    }
+
     const sortOptions = {};
 
     if (sortBy && sortOrder) {
@@ -90,6 +135,30 @@ router.get("/", async (req, res, next) => {
     } else {
       sortOptions.createdAt = -1;
     }
+
+    pipeline.push(
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "_id",
+          foreignField: "product",
+          as: "reviews",
+        },
+      },
+      {
+        $addFields: {
+          ratings: "$reviews.rating",
+        },
+      },
+      {
+        $unset: "reviews",
+      },
+      {
+        $addFields: {
+          averageRating: { $avg: "$ratings" },
+        },
+      }
+    );
 
     const countPipeline = [...pipeline, { $count: "total_count" }];
 
@@ -102,13 +171,20 @@ router.get("/", async (req, res, next) => {
     const products = await Product.aggregate(pipeline);
     const countResult = await Product.aggregate(countPipeline);
 
+    let total;
+    if (!countResult[0]) {
+      total = 0;
+    } else {
+      total = countResult[0].total_count;
+    }
+
     res.status(200).json({
-      totalProducts: countResult[0].total_count,
+      totalProducts: total,
       currentPage: page,
-      totalPages: Math.ceil(countResult[0].total_count / limit),
+      totalPages: Math.ceil(total / limit),
       resultsInThePage: products.length,
-      hasnextPage: endIndex < countResult[0].total_count,
-      nextPage: endIndex < countResult[0].total_count ? page + 1 : null,
+      hasnextPage: endIndex < total,
+      nextPage: endIndex < total ? page + 1 : null,
       hasPreviousPage: startIndex > 0,
       previousPage: startIndex > 0 ? page - 1 : null,
       products,
