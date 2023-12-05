@@ -2,6 +2,8 @@
 
 const express = require("express");
 
+const { errorHandler, notFound } = require("./middlewares/errorHandler");
+
 const app = express();
 
 const cookieParser = require("cookie-parser");
@@ -15,16 +17,15 @@ const uri = require("./config/dbUri");
 mongoose
   .connect(uri)
   .then(() => {
-    app.listen(3000, () => {
-      console.log("Server is running on port 3000");
-    });
     console.log("Connected to MongoDB");
   })
   .catch((err) => {
-    console.error("Error connecting to MongoDB:", err);
+    console.log("Error connecting to MongoDB:", err);
   });
 
 app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
@@ -34,17 +35,22 @@ const corsOptions = require("./config/corsOptions");
 
 app.use(cors(corsOptions));
 
-const categories = require("./routes/categories");
-app.use("/categories", categories);
+app.use("/categories", require("./routes/categories"));
 
-const products = require("./routes/products");
-app.use("/products", products);
+app.use("/products", require("./routes/products"));
 
-const reviews = require("./routes/reviews");
-app.use("/reviews", reviews);
+app.use("/reviews", require("./routes/reviews"));
 
-const auth = require("./routes/auth");
-app.use("/auth", auth);
+app.use("/auth", require("./routes/auth"));
 
-const profile = require("./routes/profile");
-app.use("/profile", profile);
+app.use("/profile", require("./routes/profile"));
+
+app.use(notFound);
+
+app.use(errorHandler);
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

@@ -5,21 +5,69 @@ const router = express.Router();
 const jwtAuth = require("../middlewares/jwtAuth");
 const User = require("../models/User");
 const RevokedToken = require("../models/RevokedToken");
-const errorHandler = require("../middlewares/errorHandler");
 
-router.use(errorHandler);
+router.get("/", jwtAuth, async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId)
+      .select("_id username email address")
+      .lean();
+
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/", jwtAuth, async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    user.address = req.body.address || user.address;
+    user.username = req.body.username || user.username;
+    user.email = req.body.email || user.email;
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      username: updatedUser.username,
+      email: updatedUser.email,
+      address: updatedUser.address,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get("/:id", jwtAuth, async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id).select(
-      "_id username email address"
-    );
+    console.log(req.userId, req.email, req.role, req.username);
+    const user = await User.findById(req.params.id)
+      .select("_id username email address")
+      .lean();
+
     if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json(user);
+
+    if (user.email !== req.email && req.role[0] !== "admin") {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    res.status(200).json("user");
   } catch (error) {
     next(error);
   }
@@ -30,9 +78,11 @@ router.put("/:id", jwtAuth, async (req, res, next) => {
     const user = await User.findById(req.params.id);
 
     if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.email !== req.email && req.role[0] !== "admin") {
+      return res.status(403).json({ message: "Forbidden" });
     }
 
     // Input validation
@@ -82,10 +132,13 @@ router.put("/:id", jwtAuth, async (req, res, next) => {
 router.delete("/:id", jwtAuth, async (req, res, next) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
+
     if (!deletedUser) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (deletedUser.email !== req.email || req.role[0] !== "admin") {
+      return res.status(403).json({ message: "Forbidden" });
     }
     //clear refresh token and revoke access token (log out the user)
     const oldAccessToken = req.headers.authorization.split(" ")[1];

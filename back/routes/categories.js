@@ -5,18 +5,13 @@ const router = express.Router();
 
 const Category = require("../models/Category");
 const { categoryValidation } = require("../middlewares/validation");
-const adminAuth = require("../middlewares/adminAuth");
-const errorHandler = require("../middlewares/errorHandler");
-
-router.use(errorHandler);
+const jwtAuth = require("../middlewares/jwtAuth");
 
 router.get("/", async (req, res, next) => {
   try {
     const categories = await Category.find();
     if (!categories || categories.length === 0) {
-      const error = new Error("Categories not found");
-      error.status = 404;
-      throw error;
+      throw new error("Categories not found");
     }
     res.status(200).json(categories);
   } catch (error) {
@@ -42,7 +37,13 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", adminAuth, categoryValidation, async (req, res, next) => {
+router.post("/", jwtAuth, categoryValidation, async (req, res, next) => {
+  if (req.role[0] !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Forbidden. Admin access required." });
+  }
+
   const category = new Category(req.body);
   try {
     const newCategory = await category.save();
@@ -52,7 +53,13 @@ router.post("/", adminAuth, categoryValidation, async (req, res, next) => {
   }
 });
 
-router.put("/:id", adminAuth, async (req, res, next) => {
+router.put("/:id", jwtAuth, async (req, res, next) => {
+  if (req.role[0] !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Forbidden. Admin access required." });
+  }
+
   try {
     const updatedCategory = await Category.findByIdAndUpdate(
       req.params.id,
@@ -74,7 +81,13 @@ router.put("/:id", adminAuth, async (req, res, next) => {
   }
 });
 
-router.delete("/:id", adminAuth, async (req, res, next) => {
+router.delete("/:id", jwtAuth, async (req, res, next) => {
+  if (req.role[0] !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Forbidden. Admin access required." });
+  }
+
   try {
     const deletedCategory = await Category.findByIdAndDelete(req.params.id);
     if (!deletedCategory) {

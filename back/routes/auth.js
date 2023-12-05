@@ -6,9 +6,6 @@ const RevokedToken = require("../models/RevokedToken");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const { authLimmiter } = require("../middlewares/rateLimmiter");
-const errorHandler = require("../middlewares/errorHandler");
-
-router.use(errorHandler);
 
 async function sendCodeToEmail(user, contact) {
   const verificationCode = Math.floor(
@@ -57,9 +54,8 @@ router.post("/register", async (req, res, next) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser && existingUser.isVerified) {
-      return res
-        .status(409)
-        .json({ error: "the user already exists and verified" });
+      res.status(409);
+      throw new Error({ message: "the user is already registered" });
     }
 
     if (
@@ -67,9 +63,8 @@ router.post("/register", async (req, res, next) => {
       !existingUser.isVerified &&
       existingUser.verificationCodeExpiration > Date.now()
     ) {
-      return res
-        .status(409)
-        .json({ error: "the user already requested a verification code" });
+      res.status(409);
+      throw new Error({ message: "the user is already registered" });
     }
 
     if (
@@ -94,7 +89,12 @@ router.post("/register", async (req, res, next) => {
 
     await sendCodeToEmail(newUser, email);
 
-    res.status(201).json({ success: true });
+    res.status(201).json({
+      success: true,
+      _id: newUser._id,
+      name: newUser.username,
+      email: newUser.email,
+    });
   } catch (error) {
     next(error);
   }
@@ -106,20 +106,21 @@ router.post("/verify", async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      res.status(404);
+      throw new Error({ message: "user not found" });
     }
 
     if (user.isVerified) {
-      return res.status(409).json({ error: "User already verified" });
+      res.status(409);
+      throw new Error({ message: "the user is already verified" });
     }
 
     if (
       user.verificationCode !== verificationCode ||
       user.verificationCodeExpiration < Date.now()
     ) {
-      return res.status(401).json({ error: "Invalid verification code" });
+      res.status(401);
+      throw new Error({ message: "invalid verification code" });
     }
 
     await User.updateOne(user, {
@@ -130,10 +131,33 @@ router.post("/verify", async (req, res, next) => {
       },
     });
 
-    res.status(200).json({ success: true });
+    const accessToken = jwt.sign(
+      {
+        userId: user._id,
+        role: user.role,
+        email: user.email,
+        username: user.username,
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    const refreshToken = jwt.sign(
+      { email: user.email },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "30d" }
+    );
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: "strict",
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({ success: true, accessToken });
   } catch (error) {
     next(error);
-    s;
   }
 });
 
@@ -143,44 +167,46 @@ router.post("/login", authLimmiter, async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      res.status(404);
+      throw new Error({ message: "user not found" });
     }
 
     if (!user.isVerified) {
-      return res.status(401).json({ error: "User not verified yet" });
+      res.status(401);
+      throw new Error({ message: "the user is not verified" });
     }
 
     const isPasswordValid = await user.comparePassword(password);
 
-    if (!isPasswordValid) {
-      return res.status(401).json({ error: "Invalid password" });
+    if (user && !isPasswordValid) {
+      res.status(401);
+      throw new Error("invalid password");
     }
 
     const accessToken = jwt.sign(
       {
-        userInfo: {
-          id: user._id,
-          username: user.username,
-          role: user.role,
-        },
+        userId: user._id,
+        role: user.role,
+        email: user.email,
+        username: user.username,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1h" }
+      {
+        expiresIn: "1h",
+      }
     );
 
     const refreshToken = jwt.sign(
-      { username: user.username },
+      { email: user.email },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "30d" }
     );
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: "strict",
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({ accessToken });
@@ -194,13 +220,13 @@ router.post("/forgot-password", async (req, res, next) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      res.status(404);
+      throw new Error({ message: "user not found" });
     }
 
     if (!user.isVerified) {
-      return res.status(401).json({ error: "User not verified" });
+      res.status(401);
+      throw new Error({ message: "the user is not verified" });
     }
 
     await sendCodeToEmail(user, email);
@@ -217,19 +243,23 @@ router.post("/reset-password", async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      res.status(404);
+      throw new Error({ message: "user not found" });
     }
 
     if (
       user.verificationCode !== verificationCode ||
       user.verificationCodeExpiration < Date.now()
     ) {
-      return res.status(401).json({ error: "Invalid verification code" });
+      res.status(401);
+      throw new Error({ message: "invalid verification code" });
     }
 
-    await User.updateOne({ _id: user._id }, { $set: { password } });
+    user.password = password;
+    user.verificationCode = null;
+    user.verificationCodeExpiration = null;
+
+    await user.save();
 
     res.status(200).json({ success: true });
   } catch (error) {
@@ -239,20 +269,22 @@ router.post("/reset-password", async (req, res, next) => {
 
 router.post("/logout", async (req, res, next) => {
   try {
-    const oldAccessToken = req.headers.authorization.split(" ")[1];
+    const accessToken = req.headers.authorization.split(" ")[1];
 
     const existingrevokedToken = await RevokedToken.findOne({
-      token: oldAccessToken,
+      token: accessToken,
     });
 
     if (existingrevokedToken) {
-      return res.status(400).json({ message: "Token already revoked" });
+      res.status(401);
+      throw new Error("already logged out");
     }
 
-    const revokedToken = await RevokedToken.create({ token: oldAccessToken });
+    const revokedToken = await RevokedToken.create({ token: accessToken });
 
     if (!revokedToken) {
-      return res.status(500).json({ message: "Failed to revoke token" });
+      res.status(500);
+      throw new Error({ message: "failed to revoke token" });
     }
 
     const cookies = req.cookies;
@@ -281,9 +313,9 @@ router.get("/refresh-token", async (req, res, next) => {
   try {
     const cookies = req.cookies;
 
-    console.log(req.cookies);
     if (!cookies?.refreshToken) {
-      return res.status(403).json("refresh token not found");
+      res.status(401);
+      throw new Error({ message: "unauthorized" });
     }
 
     const refreshToken = cookies.refreshToken;
@@ -293,21 +325,23 @@ router.get("/refresh-token", async (req, res, next) => {
       process.env.REFRESH_TOKEN_SECRET,
       async (err, decoded) => {
         if (err) {
-          return res.status(403).json("forbidden");
+          res.status(403);
+          throw new Error({ message: "forbidden" });
         }
 
-        const user = await User.findOne({ username: decoded.username });
+        const user = await User.findOne({ email: decoded.email });
 
         if (!user) {
-          return res.status(401).json("unauthorized");
+          res.status(401);
+          throw new Error({ message: "unauthorized" });
         }
 
         const accessToken = jwt.sign(
           {
-            userInfo: {
-              username: user.username,
-              role: user.role,
-            },
+            userId: user._id,
+            role: user.role,
+            email: user.email,
+            username: user.username,
           },
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "1h" }

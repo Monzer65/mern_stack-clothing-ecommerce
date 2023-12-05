@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/** @format */
+import { Routes, Route } from "react-router-dom";
+import Layout from "./layouts/Layout";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+// import ProfileLayout from "./componentss/profile/ProfileLayout";
+import ProductsList from "./pages/ProductsList";
+
+import RequireAuth from "./componentss/auth/RequireAuth";
+import Welcome from "./pages/Welcome";
+
+import PersistLogin from "./componentss/auth/PersistLogin";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+
+        <Route path="profile" element={<Welcome />}>
+          {/* <Route path="profile" element={<ProfileLayout />}> */}
+          {/* <Route
+              index
+              element={<div style={{ color: "red" }}>Profile</div>}
+            /> */}
+        </Route>
+
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth />}>
+            <Route path="products">
+              <Route index element={<ProductsList />} />
+            </Route>
+          </Route>
+        </Route>
+
+        <Route
+          path="*"
+          element={<div style={{ color: "red" }}>Not Found</div>}
+        />
+      </Route>
+    </Routes>
+  );
 }
 
-export default App
+export default App;

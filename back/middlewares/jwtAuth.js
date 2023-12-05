@@ -4,32 +4,38 @@ const jwt = require("jsonwebtoken");
 const RevokedToken = require("../models/RevokedToken");
 
 const jwtAuth = async (req, res, next) => {
-  const authHeader = req.headers.authorization || req.headers.Authorization;
-
-  if (!authHeader?.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-
-  const token = authHeader.split(" ")[1];
-
   try {
+    const authHeader = req.headers.authorization || req.headers.Authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      res.status(401);
+      throw new Error("No token provided");
+    }
+
+    const token = authHeader.split(" ")[1];
+
     const isRevoked = await RevokedToken.findOne({ token });
 
     if (isRevoked) {
-      return res
-        .status(403)
-        .json({ message: "Access token revoked. Log in again!" });
+      res.status(403);
+      throw new Error("Token revoked");
     }
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-      if (err) return res.status(403).json({ message: "Forbidden" });
+      if (err) {
+        res.status(403);
+        throw new Error("Invalid token");
+      }
 
-      req.user = decoded.userInfo.username;
-      req.role = decoded.userInfo.role;
+      req.userId = decoded.userId;
+      req.email = decoded.email;
+      req.role = decoded.role;
+      req.username = decoded.username;
+
       next();
     });
   } catch (error) {
-    return res.status(500).json({ message: "Internal Server Error" });
+    next(error);
   }
 };
 

@@ -4,60 +4,61 @@ const mongoose = require("mongoose");
 
 const bcrypt = require("bcrypt");
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: [true, "Email is required"],
-    trim: true,
-    lowercase: true,
-    validate: {
-      validator: (email) => {
-        const regex = new RegExp(
-          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-        );
-        return regex.test(email);
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Email is required"],
+      trim: true,
+      lowercase: true,
+      validate: {
+        validator: (email) => {
+          const regex = new RegExp(
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+          );
+          return regex.test(email);
+        },
+        message: "Invalid email format",
       },
-      message: "Invalid email format",
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      minlength: [6, "Password must be at least 6 characters"],
+    },
+    verificationCode: { type: String, minlength: 6, maxlength: 6 },
+    verificationCodeExpiration: Date,
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    role: {
+      type: [String],
+      enum: ["admin", "user"],
+      default: ["user"],
+    },
+    address: {
+      type: String,
+      default: "",
+    },
+    refreshToken: {
+      type: String,
+      default: "",
+    },
+    refreshTokenVersion: {
+      type: Number,
+      default: 0,
     },
   },
-  password: {
-    type: String,
-    required: [true, "Password is required"],
-    minlength: [6, "Password must be at least 6 characters"],
-  },
-  verificationCode: { type: String, minlength: 6, maxlength: 6 },
-  verificationCodeExpiration: Date,
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  role: {
-    type: [String],
-    enum: ["admin", "user"],
-    default: ["user"],
-  },
-  address: {
-    type: String,
-    default: "",
-  },
-  refreshToken: {
-    type: String,
-    default: "",
-  },
-  refreshTokenVersion: {
-    type: Number,
-    default: 0,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const saltRounds = 10;
 

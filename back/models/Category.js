@@ -11,6 +11,7 @@ const categorySchema = new mongoose.Schema({
   parentCategory: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
+    index: true,
   },
   description: {
     type: String,
@@ -22,6 +23,8 @@ const categorySchema = new mongoose.Schema({
   },
   slug: {
     type: String,
+    index: true,
+    unique: true,
   },
   createdAt: {
     type: Date,

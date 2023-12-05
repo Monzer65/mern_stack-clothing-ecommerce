@@ -2,16 +2,11 @@
 
 const express = require("express");
 const router = express.Router();
+const jwtAuth = require("../middlewares/jwtAuth");
 const Product = require("../models/Product");
-const adminAuth = require("../middlewares/adminAuth");
-const errorHandler = require("../middlewares/errorHandler");
 const Category = require("../models/Category");
 const mongoose = require("mongoose");
 
-router.use(errorHandler);
-
-// Recursive function to get all descendant categories
-// Recursive function to get all descendant category IDs
 // Recursive function to get all descendant category IDs including the parent category
 async function getAllCategoryIds(categorySlug) {
   try {
@@ -120,9 +115,7 @@ router.get("/", async (req, res, next) => {
 
     if (category) {
       const categoryIds = await getAllCategoryIds(category);
-
       console.log("Category IDs:", categoryIds);
-
       pipeline.push({
         $match: { category: { $in: categoryIds } },
       });
@@ -196,15 +189,40 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
+    const id = req.params.id;
+    const product = await Product.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(id),
+        },
+      },
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "_id",
+          foreignField: "product",
+          as: "reviews",
+        },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "populatedCategory",
+        },
+      },
+    ]);
+
+    if (product.length === 0) {
       const error = new Error("Product not found");
       error.status = 404;
       throw error;
     }
+
     res.status(200).json(product);
   } catch (error) {
-    if (error.kind === "ObjectId") {
+    if (error.name === "CastError") {
       res.status(400).json({ message: "Invalid product ID" });
     } else {
       next(error);
@@ -212,7 +230,12 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", adminAuth, async (req, res, next) => {
+router.post("/", jwtAuth, async (req, res, next) => {
+  if (req.role[0] !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Forbidden. Admin access required." });
+  }
   try {
     const newProduct = await Product.create(req.body);
     res.status(201).json(newProduct);
@@ -221,7 +244,12 @@ router.post("/", adminAuth, async (req, res, next) => {
   }
 });
 
-router.put("/:id", adminAuth, async (req, res, next) => {
+router.put("/:id", jwtAuth, async (req, res, next) => {
+  if (req.role[0] !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Forbidden. Admin access required." });
+  }
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -243,7 +271,12 @@ router.put("/:id", adminAuth, async (req, res, next) => {
   }
 });
 
-router.delete("/:id", adminAuth, async (req, res, next) => {
+router.delete("/:id", jwtAuth, async (req, res, next) => {
+  if (req.role[0] !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Forbidden. Admin access required." });
+  }
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
     if (!deletedProduct) {
