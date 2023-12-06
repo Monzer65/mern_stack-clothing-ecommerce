@@ -55,7 +55,7 @@ router.post("/register", async (req, res, next) => {
 
     if (existingUser && existingUser.isVerified) {
       res.status(409);
-      throw new Error({ message: "the user is already registered" });
+      throw new Error("the user is already registered");
     }
 
     if (
@@ -64,7 +64,7 @@ router.post("/register", async (req, res, next) => {
       existingUser.verificationCodeExpiration > Date.now()
     ) {
       res.status(409);
-      throw new Error({ message: "the user is already registered" });
+      throw new Error("the user is already registered");
     }
 
     if (
@@ -107,12 +107,12 @@ router.post("/verify", async (req, res, next) => {
 
     if (!user) {
       res.status(404);
-      throw new Error({ message: "user not found" });
+      throw new Error("user not found");
     }
 
     if (user.isVerified) {
       res.status(409);
-      throw new Error({ message: "the user is already verified" });
+      throw new Error("the user is already verified");
     }
 
     if (
@@ -120,7 +120,7 @@ router.post("/verify", async (req, res, next) => {
       user.verificationCodeExpiration < Date.now()
     ) {
       res.status(401);
-      throw new Error({ message: "invalid verification code" });
+      throw new Error("invalid verification code");
     }
 
     await User.updateOne(user, {
@@ -155,7 +155,14 @@ router.post("/verify", async (req, res, next) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({ success: true, accessToken });
+    res
+      .status(200)
+      .json({
+        accessToken,
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+      });
   } catch (error) {
     next(error);
   }
@@ -168,12 +175,12 @@ router.post("/login", authLimmiter, async (req, res, next) => {
 
     if (!user) {
       res.status(404);
-      throw new Error({ message: "user not found" });
+      throw new Error("user not found");
     }
 
     if (!user.isVerified) {
       res.status(401);
-      throw new Error({ message: "the user is not verified" });
+      throw new Error("the user is not verified");
     }
 
     const isPasswordValid = await user.comparePassword(password);
@@ -209,7 +216,12 @@ router.post("/login", authLimmiter, async (req, res, next) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({ accessToken });
+    res.status(200).json({
+      accessToken,
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+    });
   } catch (error) {
     next(error);
   }
@@ -221,12 +233,12 @@ router.post("/forgot-password", async (req, res, next) => {
     const user = await User.findOne({ email });
     if (!user) {
       res.status(404);
-      throw new Error({ message: "user not found" });
+      throw new Error("user not found");
     }
 
     if (!user.isVerified) {
       res.status(401);
-      throw new Error({ message: "the user is not verified" });
+      throw new Error("the user is not verified");
     }
 
     await sendCodeToEmail(user, email);
@@ -244,7 +256,7 @@ router.post("/reset-password", async (req, res, next) => {
 
     if (!user) {
       res.status(404);
-      throw new Error({ message: "user not found" });
+      throw new Error("user not found");
     }
 
     if (
@@ -252,7 +264,7 @@ router.post("/reset-password", async (req, res, next) => {
       user.verificationCodeExpiration < Date.now()
     ) {
       res.status(401);
-      throw new Error({ message: "invalid verification code" });
+      throw new Error("invalid verification code");
     }
 
     user.password = password;
@@ -269,7 +281,14 @@ router.post("/reset-password", async (req, res, next) => {
 
 router.post("/logout", async (req, res, next) => {
   try {
-    const accessToken = req.headers.authorization.split(" ")[1];
+    const authorizationHeader = req.headers.authorization;
+
+    if (!authorizationHeader) {
+      res.status(401);
+      throw new Error("Authorization header missing");
+    }
+
+    const accessToken = authorizationHeader.split(" ")[1];
 
     const existingrevokedToken = await RevokedToken.findOne({
       token: accessToken,
@@ -284,7 +303,7 @@ router.post("/logout", async (req, res, next) => {
 
     if (!revokedToken) {
       res.status(500);
-      throw new Error({ message: "failed to revoke token" });
+      throw new Error("failed to revoke token");
     }
 
     const cookies = req.cookies;
@@ -301,9 +320,7 @@ router.post("/logout", async (req, res, next) => {
       sameSite: "none",
     });
 
-    res
-      .status(200)
-      .json({ message: "cookie cleared. logged out successfully" });
+    res.status(200).json("cookie cleared. logged out successfully");
   } catch (error) {
     next(error);
   }
@@ -315,7 +332,7 @@ router.get("/refresh-token", async (req, res, next) => {
 
     if (!cookies?.refreshToken) {
       res.status(401);
-      throw new Error({ message: "unauthorized" });
+      throw new Error("unauthorized");
     }
 
     const refreshToken = cookies.refreshToken;
@@ -326,14 +343,14 @@ router.get("/refresh-token", async (req, res, next) => {
       async (err, decoded) => {
         if (err) {
           res.status(403);
-          throw new Error({ message: "forbidden" });
+          throw new Error("forbidden");
         }
 
         const user = await User.findOne({ email: decoded.email });
 
         if (!user) {
           res.status(401);
-          throw new Error({ message: "unauthorized" });
+          throw new Error("unauthorized");
         }
 
         const accessToken = jwt.sign(

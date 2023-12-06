@@ -1,5 +1,3 @@
-/** @format */
-
 import { apiSlice } from "./apiSlice";
 import { logout } from "./authSlice";
 
@@ -9,7 +7,23 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: (credentials) => ({
         url: "/auth/login",
         method: "POST",
-        body: { ...credentials },
+        body: credentials,
+      }),
+    }),
+
+    register: builder.mutation({
+      query: (credentials) => ({
+        url: "/auth/register",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
+
+    verify: builder.mutation({
+      query: (credentials) => ({
+        url: "/auth/verify",
+        method: "POST",
+        body: credentials,
       }),
     }),
 
@@ -38,5 +52,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation } =
-  authApiSlice;
+export const {
+  useLoginMutation,
+  useSendLogoutMutation,
+  useRefreshMutation,
+  useRegisterMutation,
+  useVerifyMutation,
+} = authApiSlice;

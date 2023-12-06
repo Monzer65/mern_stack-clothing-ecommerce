@@ -1,12 +1,11 @@
-/** @format */
-
 import { Outlet, Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useRefreshMutation } from "../../reducers/authApiSlice";
 import { useSelector } from "react-redux";
+import LoadingGrid from "../spinners/LoadingGrid";
 
 const PersistLogin = () => {
-  const token = useSelector((state) => state.auth.token);
+  const token = useSelector((state) => state.auth.userInfo?.accessToken);
   const effectRan = useRef(false);
 
   const [trueSuccess, setTrueSuccess] = useState(false);
@@ -42,14 +41,14 @@ const PersistLogin = () => {
   if (isLoading) {
     //persist: yes, token: no
     console.log("loading");
-    content = <div>loading...</div>;
+    content = <LoadingGrid />;
   } else if (isError) {
     //persist: yes, token: no
     console.log("error");
     content = (
-      <p className="errmsg">
+      <p className='errmsg'>
         {`${error?.data?.message} - `}
-        <Link to="/login">Please login again</Link>.
+        <Link to='/login'>Please login again</Link>.
       </p>
     );
   } else if (isSuccess && trueSuccess) {

@@ -1,190 +1,45 @@
-/** @format */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,500&family=Rubik:wght@300;400;500;700&display=swap");
 
-.lds-grid-container {
-  position: absolute;
-
-  top: 40%;
-  left: 45%;
-}
-.lds-grid {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.lds-grid div {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #000000;
-  animation: lds-grid 1.2s linear infinite;
-}
-.lds-grid div:nth-child(1) {
-  top: 8px;
-  left: 8px;
-  animation-delay: 0s;
-}
-.lds-grid div:nth-child(2) {
-  top: 8px;
-  left: 32px;
-  animation-delay: -0.4s;
-}
-.lds-grid div:nth-child(3) {
-  top: 8px;
-  left: 56px;
-  animation-delay: -0.8s;
-}
-.lds-grid div:nth-child(4) {
-  top: 32px;
-  left: 8px;
-  animation-delay: -0.4s;
-}
-.lds-grid div:nth-child(5) {
-  top: 32px;
-  left: 32px;
-  animation-delay: -0.8s;
-}
-.lds-grid div:nth-child(6) {
-  top: 32px;
-  left: 56px;
-  animation-delay: -1.2s;
-}
-.lds-grid div:nth-child(7) {
-  top: 56px;
-  left: 8px;
-  animation-delay: -0.8s;
-}
-.lds-grid div:nth-child(8) {
-  top: 56px;
-  left: 32px;
-  animation-delay: -1.2s;
-}
-.lds-grid div:nth-child(9) {
-  top: 56px;
-  left: 56px;
-  animation-delay: -1.6s;
-}
-@keyframes lds-grid {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.dash-header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background-color: skyblue;
-  padding: 0 0.5em;
-  border-bottom: 1px solid gray;
+html {
+  font-family: "Roboto", sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
-.dash-header__container {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
+body {
+  background-color: #f5f5f5;
+  min-height: 100vh;
 }
 
-.dash-header__container--small {
-  max-width: 800px;
+a,
+button,
+input,
+input::placeholder-shown,
+select,
+textarea {
+  font-family: "Roboto", sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
-.dash-header__nav {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  gap: 0.5em;
+a {
+  text-decoration: none;
 }
 
-.dash-header .icon-button {
-  font-size: 30px;
+button {
   cursor: pointer;
 }
 
-#loginform-container {
-  max-width: 500px;
-  min-width: 300px;
-  max-height: 700px;
-  width: 30%;
-  height: 60%;
-  margin: 100px auto;
-  background-color: #beb6b6;
-  border-radius: 25px;
+ul {
+  list-style: none;
 }
 
-#loginform-container h2 {
-  text-align: center;
-  font-family: "open sans", sans-serif;
-  margin: 2rem 0;
-  font-size: 2rem;
-}
-
-#loginform-container form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 0;
-}
-
-#loginform-container form .form-group {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  margin: 0.5rem 0;
-  font-size: 1.3rem;
-  font-family: "open sans", sans-serif;
-}
-
-#loginform-container form label {
-  position: absolute;
-  left: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-#loginform-container form input {
-  width: 100%;
-  height: 40px;
-  border-radius: 25px;
-  border: 0;
-  outline: 0;
-  font-size: 1.3rem;
-  padding: 0.5rem;
-  font-family: "open sans", sans-serif;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-#loginform-container form button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 25px;
-  width: 80%;
-  height: 40px;
-  font-size: 1.3rem;
-  color: white;
-  font-weight: 700;
-  background: rgb(34, 193, 195);
-  background: linear-gradient(
-    90deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(253, 187, 45, 1) 100%
-  );
-  border: 0px;
-  cursor: pointer;
-  transition: opacity 0.25s ease-out;
-}
-
-#loginform-container form button:hover {
-  opacity: 0.8;
+img {
+  max-width: 100%;
 }

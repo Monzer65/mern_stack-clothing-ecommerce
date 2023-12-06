@@ -1,13 +1,11 @@
-/** @format */
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { loginSuccess, logout } from "../reducers/authSlice";
+import { setCredentials, logout } from "../reducers/authSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:3000",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
-    const token = getState().auth.token;
+    const token = getState().auth.userInfo?.accessToken;
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
@@ -28,7 +26,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     if (refreshResult?.data) {
       const user = api.getState().auth.user;
-      api.dispatch(loginSuccess(...refreshResult.data, user));
+      api.dispatch(setCredentials(...refreshResult.data, user));
       result = await baseQuery(args, api, extraOptions);
     } else {
       refreshResult.error.data.message = "your login expired";
@@ -42,5 +40,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
+  tagTypes: ["User"],
   endpoints: (builder) => ({}),
 });

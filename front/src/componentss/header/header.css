@@ -1,0 +1,112 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  /* more blue color for background */
+  background-color: #404040;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.header h1 {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: #e7e7e7;
+}
+
+.header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #e7e7e7;
+  color: #494949;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #191919;
+  color: #e7e7e7;
+}
+
+button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* YourComponent.css or your global CSS file */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  display: none;
+}
+
+.dropdown-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  cursor: pointer;
+  background-color: #e7e7e7;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.25s ease-in-out;
+
+  &:hover {
+    background-color: #191919;
+    color: #e7e7e7;
+  }
+}
+
+.dropdown-label svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0.5rem 1rem;
+  }
+
+  .header nav {
+    gap: 0.5rem;
+  }
+
+  svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}

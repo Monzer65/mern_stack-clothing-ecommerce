@@ -1,5 +1,3 @@
-/** @format */
-
 import { apiSlice } from "./apiSlice";
 
 export const productsApiSlice = apiSlice.injectEndpoints({
