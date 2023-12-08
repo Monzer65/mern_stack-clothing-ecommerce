@@ -1,5 +1,3 @@
-/** @format */
-
 const allowedOrigins = [
   "https://www.yoursite.com",
   "https://yoursite.com",

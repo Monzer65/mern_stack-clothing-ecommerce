@@ -21,7 +21,7 @@ body {
 a,
 button,
 input,
-input::placeholder-shown,
+input::placeholder,
 select,
 textarea {
   font-family: "Roboto", sans-serif;

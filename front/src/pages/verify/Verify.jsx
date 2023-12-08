@@ -3,20 +3,19 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setCredentials } from "../../reducers/authSlice";
 import { useVerifyMutation } from "../../reducers/authApiSlice";
+import "./verify.css";
 
 export default function Verify() {
+  const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
-  const [errMsg, setErrMsg] = useState("");
   const errRef = useRef();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [errMsg, setErrMsg] = useState("");
   const location = useLocation();
   const { state } = location;
-  const [email, setEmail] = useState("");
-
-  const { userInfo } = useSelector((state) => state.auth);
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [verify, { isLoading }] = useVerifyMutation();
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (state && state.email) {

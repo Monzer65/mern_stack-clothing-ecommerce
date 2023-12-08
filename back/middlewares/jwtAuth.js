@@ -1,5 +1,3 @@
-/** @format */
-
 const jwt = require("jsonwebtoken");
 const RevokedToken = require("../models/RevokedToken");
 

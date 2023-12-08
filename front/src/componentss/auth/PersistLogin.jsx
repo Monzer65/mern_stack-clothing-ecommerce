@@ -5,9 +5,8 @@ import { useSelector } from "react-redux";
 import LoadingGrid from "../spinners/LoadingGrid";
 
 const PersistLogin = () => {
-  const token = useSelector((state) => state.auth.userInfo?.accessToken);
+  const token = useSelector((state) => state.auth.token);
   const effectRan = useRef(false);
-
   const [trueSuccess, setTrueSuccess] = useState(false);
 
   const [refresh, { isUninitialized, isLoading, isSuccess, isError, error }] =
@@ -20,8 +19,9 @@ const PersistLogin = () => {
       const verifyRefreshToken = async () => {
         console.log("verifying refresh token");
         try {
-          //const response =
-          await refresh();
+          const response = await refresh();
+
+          console.log(response);
           //const { accessToken } = response.data
           setTrueSuccess(true);
         } catch (err) {
@@ -44,6 +44,7 @@ const PersistLogin = () => {
     content = <LoadingGrid />;
   } else if (isError) {
     //persist: yes, token: no
+    localStorage.removeItem("username");
     console.log("error");
     content = (
       <p className='errmsg'>

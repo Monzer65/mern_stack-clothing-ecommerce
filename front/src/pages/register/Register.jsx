@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import "./register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useRegisterMutation } from "../../reducers/authApiSlice";
+import "./register.css";
 
 export default function Register() {
-  const userRef = useRef();
-  const errRef = useRef();
-  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
+  const userRef = useRef();
+  const errRef = useRef();
+  const navigate = useNavigate();
   const [register, { isLoading }] = useRegisterMutation();
+  const token = useSelector((state) => state.auth.token);
   const [errMsg, setErrMsg] = useState("");
-  const userInfo = useSelector((state) => state.auth.userInfo);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,16 +37,15 @@ export default function Register() {
       navigate("/verify", { state: { email } });
     } catch (err) {
       setErrMsg(err?.data?.message || err.error);
-      console.log(err?.data?.message || err.error);
       errRef.current.focus();
     }
   };
 
   useEffect(() => {
-    if (userInfo) {
+    if (token) {
       navigate("/");
     }
-  }, [userInfo, navigate]);
+  }, [token, navigate]);
 
   useEffect(() => {
     userRef.current.focus();

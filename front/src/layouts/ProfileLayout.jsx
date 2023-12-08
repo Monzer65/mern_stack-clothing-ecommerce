@@ -1,17 +1,17 @@
 import { Outlet } from "react-router-dom";
-
+import "./profileLayout.css";
 // import { Link } from "react-router-dom";
 export default function ProfileLayout() {
   return (
     <>
       <header>
-        <p>Profile header</p>
+        <h1>User Profile</h1>
       </header>
-      <div>
+      <main>
         <Outlet />
-      </div>
+      </main>
       <footer>
-        <p>Profile footer</p>
+        <p>&copy; 2023 YourWebsite.com</p>
       </footer>
     </>
   );

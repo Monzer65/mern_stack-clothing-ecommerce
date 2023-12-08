@@ -17,7 +17,8 @@ export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
-  const user = useSelector((state) => state.auth.userInfo);
+  const token = useSelector((state) => state.auth.token);
+  // const username = useSelector((state) => state.auth.username)
 
   useEffect(() => {
     userRef.current.focus();
@@ -28,16 +29,17 @@ export default function Login() {
   }, [email, password]);
 
   useEffect(() => {
-    if (user) {
+    if (token) {
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [token, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const userData = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...userData }));
+      console.log({ ...userData });
       setEmail("");
       setPassword("");
       navigate("/");

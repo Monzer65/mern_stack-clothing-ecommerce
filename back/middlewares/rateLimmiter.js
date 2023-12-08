@@ -1,5 +1,3 @@
-/** @format */
-
 const rateLimit = require("express-rate-limit");
 module.exports = {
   authLimmiter: rateLimit({

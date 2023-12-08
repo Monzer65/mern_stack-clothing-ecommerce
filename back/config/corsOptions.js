@@ -1,5 +1,3 @@
-/** @format */
-
 const allowedOrigins = require("./allowedOrigins");
 const corsOptions = {
   origin: function (origin, callback) {

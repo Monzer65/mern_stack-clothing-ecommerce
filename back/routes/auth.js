@@ -1,4 +1,3 @@
-/** @format */
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
@@ -139,13 +138,13 @@ router.post("/verify", async (req, res, next) => {
         username: user.username,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "20s" }
     );
 
     const refreshToken = jwt.sign(
       { email: user.email },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "30d" }
+      { expiresIn: "30s" }
     );
 
     res.cookie("refreshToken", refreshToken, {
@@ -155,14 +154,10 @@ router.post("/verify", async (req, res, next) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    res
-      .status(200)
-      .json({
-        accessToken,
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-      });
+    res.status(200).json({
+      accessToken,
+      username: user.username,
+    });
   } catch (error) {
     next(error);
   }
@@ -199,28 +194,26 @@ router.post("/login", authLimmiter, async (req, res, next) => {
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: "1h",
+        expiresIn: "10s",
       }
     );
 
     const refreshToken = jwt.sign(
       { email: user.email },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "30d" }
+      { expiresIn: "30s" }
     );
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
       sameSite: "strict",
-      maxAge: 30 * 24 * 60 * 60 * 1000,
+      maxAge: 30 * 1000,
     });
 
     res.status(200).json({
       accessToken,
-      _id: user._id,
       username: user.username,
-      email: user.email,
     });
   } catch (error) {
     next(error);
@@ -332,7 +325,7 @@ router.get("/refresh-token", async (req, res, next) => {
 
     if (!cookies?.refreshToken) {
       res.status(401);
-      throw new Error("unauthorized");
+      throw new Error("no refresh token found");
     }
 
     const refreshToken = cookies.refreshToken;
@@ -361,10 +354,10 @@ router.get("/refresh-token", async (req, res, next) => {
             username: user.username,
           },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "1h" }
+          { expiresIn: "10s" }
         );
 
-        res.status(200).json({ accessToken });
+        res.status(200).json({ accessToken, username: user.username });
       }
     );
   } catch (error) {

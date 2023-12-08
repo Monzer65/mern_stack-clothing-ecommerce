@@ -1,5 +1,5 @@
 import { apiSlice } from "./apiSlice";
-import { logout } from "./authSlice";
+import { logout, setCredentials } from "./authSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,7 +7,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: (credentials) => ({
         url: "/auth/login",
         method: "POST",
-        body: credentials,
+        body: { ...credentials },
       }),
     }),
 
@@ -15,7 +15,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: (credentials) => ({
         url: "/auth/register",
         method: "POST",
-        body: credentials,
+        body: { ...credentials },
       }),
     }),
 
@@ -23,7 +23,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: (credentials) => ({
         url: "/auth/verify",
         method: "POST",
-        body: credentials,
+        body: { ...credentials },
       }),
     }),
 
@@ -48,6 +48,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: "/auth/refresh-token",
         method: "GET",
       }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log(data);
+          const { accessToken, username } = data;
+          dispatch(setCredentials({ accessToken, username }));
+        } catch (err) {
+          console.log(err);
+        }
+      },
     }),
   }),
 });

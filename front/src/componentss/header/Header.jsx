@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSendLogoutMutation } from "../../reducers/authApiSlice";
+// import { useSelector } from "react-redux";
 import LoadingSpinner from "../spinners/LoadingGrid";
 import {
   IoLogInOutline,
@@ -8,7 +9,6 @@ import {
   IoLockClosedOutline,
   IoArrowDownCircleOutline,
 } from "react-icons/io5";
-import { useSelector } from "react-redux";
 
 import "./header.css";
 export default function Header() {
@@ -19,7 +19,7 @@ export default function Header() {
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
 
-  const userInfo = useSelector((state) => state.auth.userInfo);
+  const username = JSON.parse(localStorage.getItem("username"));
 
   const handleItemClick = () => {
     setIsOpen(false);
@@ -73,7 +73,7 @@ export default function Header() {
         <h1 className='header__title'>LOGO</h1>
       </Link>
       <nav className='header__nav'>
-        {userInfo ? (
+        {username ? (
           <>
             <div className='dropdown' ref={dropdownRef}>
               <input
@@ -84,7 +84,7 @@ export default function Header() {
                 onChange={() => setIsOpen(!isOpen)}
               />
               <label htmlFor='dropdown-toggle' className='dropdown-label'>
-                welcome {userInfo.username} <IoArrowDownCircleOutline />
+                welcome {username} <IoArrowDownCircleOutline />
               </label>
               {isOpen && (
                 <ul className='dropdown-menu'>

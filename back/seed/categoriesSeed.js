@@ -1,5 +1,3 @@
-/** @format */
-
 const mongoose = require("mongoose");
 const Category = require("../models/Category");
 const data = require("./data");

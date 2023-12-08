@@ -1,5 +1,3 @@
-/** @format */
-
 const express = require("express");
 const router = express.Router();
 const jwtAuth = require("../middlewares/jwtAuth");
@@ -27,6 +25,7 @@ router.put("/", jwtAuth, async (req, res, next) => {
   try {
     const user = await User.findById(req.userId);
 
+    console.log(user.userId);
     if (!user) {
       res.status(404);
       throw new Error("User not found");

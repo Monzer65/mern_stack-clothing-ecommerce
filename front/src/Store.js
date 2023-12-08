@@ -1,5 +1,3 @@
-/** @format */
-
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./reducers/authSlice";
 import { apiSlice } from "./reducers/apiSlice";

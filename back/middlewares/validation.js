@@ -1,5 +1,3 @@
-/** @format */
-
 module.exports = {
   categoryValidation: [
     function categoryPostValidation(req, res, next) {
