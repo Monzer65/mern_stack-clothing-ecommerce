@@ -1,0 +1,8 @@
+.profileLayout h1 {
+  text-align: center;
+  padding: 10px;
+}
+
+.profileLayout main {
+  padding-inline: 2rem;
+}

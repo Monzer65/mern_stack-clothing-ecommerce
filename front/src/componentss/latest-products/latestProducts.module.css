@@ -1,0 +1,42 @@
+.latestProducts {
+  padding: 2rem;
+  margin-bottom: 6rem;
+}
+
+.latestProducts h2 {
+  margin: 20px 0;
+}
+
+.productCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+@media (min-width: 576px) {
+  .productCards {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(200px, 1fr)
+    ); /* Adjust min width */
+  }
+}
+
+@media (min-width: 768px) {
+  .productCards {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(250px, 1fr)
+    ); /* Adjust min width */
+  }
+}
+
+@media (min-width: 1200px) {
+  .productCards {
+    grid-template-columns: repeat(
+      5,
+      minmax(150px, 1fr)
+    ); /* Maximum of 5 cards */
+  }
+}

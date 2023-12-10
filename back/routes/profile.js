@@ -25,7 +25,6 @@ router.put("/", jwtAuth, async (req, res, next) => {
   try {
     const user = await User.findById(req.userId);
 
-    console.log(user.userId);
     if (!user) {
       res.status(404);
       throw new Error("User not found");
@@ -33,7 +32,8 @@ router.put("/", jwtAuth, async (req, res, next) => {
 
     user.address = req.body.address || user.address;
     user.username = req.body.username || user.username;
-    user.email = req.body.email || user.email;
+    // the email update disabled for now
+    // user.email = req.body.email || user.email;
     if (req.body.password) {
       user.password = req.body.password;
     }
@@ -46,6 +46,42 @@ router.put("/", jwtAuth, async (req, res, next) => {
       email: updatedUser.email,
       address: updatedUser.address,
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/", jwtAuth, async (req, res, next) => {
+  try {
+    const tobeDeletedUser = await User.findByIdAndDelete(req.userId);
+
+    if (!tobeDeletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const oldAccessToken = req.headers.authorization.split(" ")[1];
+
+    const revokedToken = await RevokedToken.create({ token: oldAccessToken });
+
+    if (!revokedToken) {
+      return res.status(500).json({ message: "Failed to revoke token" });
+    }
+    const cookies = req.cookies;
+    if (!cookies?.refreshToken) {
+      return res.sendStatus(204);
+    }
+    const refreshToken = cookies.refreshToken;
+    res.clearCookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: "strict",
+    });
+
+    res
+      .status(200)
+      .json({
+        message: `User: ${tobeDeletedUser.username} deleted successfully`,
+      });
   } catch (error) {
     next(error);
   }

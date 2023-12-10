@@ -138,13 +138,13 @@ router.post("/verify", async (req, res, next) => {
         username: user.username,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "20s" }
+      { expiresIn: "10m" }
     );
 
     const refreshToken = jwt.sign(
       { email: user.email },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "30s" }
+      { expiresIn: "30d" }
     );
 
     res.cookie("refreshToken", refreshToken, {
@@ -194,21 +194,21 @@ router.post("/login", authLimmiter, async (req, res, next) => {
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: "10s",
+        expiresIn: "10m",
       }
     );
 
     const refreshToken = jwt.sign(
       { email: user.email },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "30s" }
+      { expiresIn: "30d" }
     );
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
       sameSite: "strict",
-      maxAge: 30 * 1000,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
@@ -220,7 +220,7 @@ router.post("/login", authLimmiter, async (req, res, next) => {
   }
 });
 
-router.post("/forgot-password", async (req, res, next) => {
+router.post("/forgot-password", authLimmiter, async (req, res, next) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -354,7 +354,7 @@ router.get("/refresh-token", async (req, res, next) => {
             username: user.username,
           },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "10s" }
+          { expiresIn: "10m" }
         );
 
         res.status(200).json({ accessToken, username: user.username });

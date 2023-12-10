@@ -1,0 +1,82 @@
+/* 
+
+.carouselButton {
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+} */
+
+/* .productImagesCarousel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.productImage {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain; 
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+
+.carouselContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Add other necessary styles */
+}
+
+.productImagesContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Add other necessary styles */
+}
+
+.productImagesCarousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  /* Add other necessary styles */
+}
+
+.productImage {
+  /* Styles for thumbnails */
+  width: 100px; /* Adjust width as needed */
+  height: 100px; /* Adjust height as needed */
+  margin: 5px; /* Adjust margin as needed */
+  cursor: pointer;
+  /* Add other necessary styles */
+}
+
+.mainProductImage {
+  /* Styles for main product image */
+  width: 100%; /* Ensure it takes full width of its container */
+  height: auto; /* Maintain aspect ratio */
+  /* Add other necessary styles */
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 768px) {
+  .productImagesContainer {
+    flex-direction: row;
+    /* Modify styles for smaller screens */
+  }
+
+  .productImage {
+    /* Adjust thumbnail styles for smaller screens */
+    width: 50px;
+    height: 50px;
+    /* Modify other styles */
+  }
+
+  /* Add other responsive styles as needed */
+}

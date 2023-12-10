@@ -139,6 +139,7 @@ router.get("/", async (req, res, next) => {
       {
         $addFields: {
           ratings: "$reviews.rating",
+          reviewsCount: { $size: "$reviews" },
         },
       },
       {
@@ -147,6 +148,7 @@ router.get("/", async (req, res, next) => {
       {
         $addFields: {
           averageRating: { $avg: "$ratings" },
+          reviewsCount: { $sum: "$reviewsCount" },
         },
       }
     );

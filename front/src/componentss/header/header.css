@@ -85,15 +85,29 @@ button svg {
   width: 100%;
   background-color: #fff;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 4;
 }
 
 .dropdown-menu li {
   padding: 10px;
-  cursor: pointer;
 }
 
-.dropdown-menu li:hover {
-  background-color: #f2f2f2;
+.dropdown-menu li a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 0.5rem;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  background-color: #e7e7e7;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.25s ease-in-out;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #191919;
+  color: #e7e7e7;
 }
 
 @media (max-width: 768px) {

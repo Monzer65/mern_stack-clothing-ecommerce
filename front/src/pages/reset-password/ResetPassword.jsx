@@ -1,32 +1,34 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// useSelector,
-import { useDispatch } from "react-redux";
-import { setCredentials } from "../../reducers/authSlice";
-import { useVerifyMutation } from "../../reducers/authApiSlice";
+import { useResetPasswordMutation } from "../../reducers/authApiSlice";
 import { HiOutlineLockOpen } from "react-icons/hi2";
-import { MdNumbers } from "react-icons/md";
+import {
+  MdNumbers,
+  MdPassword,
+  MdOutlineConfirmationNumber,
+} from "react-icons/md";
 
-import styles from "./verify.module.css";
+import styles from "./resetPassword.module.css";
 
-export default function Verify() {
+export default function ResetPassword() {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [timer, setTimer] = useState(180);
   const errRef = useRef();
   const [errMsg, setErrMsg] = useState("");
   const location = useLocation();
   const { state } = location;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [verify, { isLoading }] = useVerifyMutation();
-  // const { token } = useSelector((state) => state.auth);
+  const [reset, { isLoading }] = useResetPasswordMutation();
 
   useEffect(() => {
     if (state && state.email) {
       setEmail(state.email);
     } else {
-      navigate("/register");
+      navigate("/forgot-password");
     }
   }, [state, navigate]);
 
@@ -49,10 +51,14 @@ export default function Verify() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+      setErrMsg("Passwords do not match");
+      return;
+    }
+
     try {
-      const res = await verify({ email, verificationCode }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      navigate("/");
+      await reset({ email, verificationCode, password }).unwrap();
+      navigate("/login");
     } catch (err) {
       console.log(err);
       setErrMsg(err?.data?.message || err.error);
@@ -61,22 +67,53 @@ export default function Verify() {
 
   return (
     <div className={styles.container}>
-      <h2> Verify </h2>
+      <h2> Reset your password </h2>
 
       <form onSubmit={handleSubmit}>
         <input type='hidden' id='email' name='email' value={email} readOnly />
 
         <div className={styles.formGroup}>
-          <label htmlFor='verificationCode'>
+          <label htmlFor='verificationCode'>Enter the verification code</label>
+          <div className={styles.icon}>
             <MdNumbers />
-          </label>
+          </div>
           <input
             id='verificationCode'
             name='verificationCode'
             type='text'
             onChange={(e) => setVerificationCode(e.target.value)}
             value={verificationCode}
-            placeholder='Verification Code'
+            required
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor='password'>Enter new password</label>
+          <div className={styles.icon}>
+            <MdPassword />
+          </div>
+          <input
+            id='password'
+            name='password'
+            type='password'
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            required
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor='confirmPassword'>confirm new password</label>
+          <div className={styles.icon}>
+            <MdOutlineConfirmationNumber />
+          </div>
+
+          <input
+            id='confirmPassword'
+            name='confirmPassword'
+            type='password'
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={confirmPassword}
             required
           />
         </div>

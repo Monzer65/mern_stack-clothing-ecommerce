@@ -1,0 +1,114 @@
+.container {
+  max-width: 500px;
+  min-width: 300px;
+  max-height: 700px;
+  width: 30%;
+  height: 60%;
+  margin: 100px auto;
+  background-color: #beb6b6;
+  border-radius: 25px;
+}
+
+.container h2 {
+  text-align: center;
+  padding-block: 0.5rem;
+  font-size: clamp(1rem, 2vw, 1.8rem);
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.container form .formGroup {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 0.5rem 0;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+.container form label {
+  position: absolute;
+  left: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.container form input {
+  width: 100%;
+  height: 40px;
+  border-radius: 25px;
+  border: 0;
+  outline: 0;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  padding: 0.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.container form button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 25px;
+  width: 80%;
+  height: 40px;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: white;
+  font-weight: 700;
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    90deg,
+    rgb(0, 226, 230) 0%,
+    rgb(114, 64, 207) 100%
+  );
+  border: 0px;
+  cursor: pointer;
+  transition: opacity 0.25s ease-out;
+}
+
+.container form button:hover {
+  opacity: 0.8;
+}
+
+.container form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.errmsg {
+  color: red;
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  text-align: center;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.registerLink {
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  padding-block: 0.5rem;
+  text-align: center;
+}
+
+.registerLink a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  color: blue;
+  text-decoration: none;
+}
+
+.registerLink a:hover {
+  text-decoration: underline;
+}

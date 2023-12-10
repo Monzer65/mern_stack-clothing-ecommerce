@@ -1,11 +1,34 @@
-import { useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import {
   useFetchUserProfileQuery,
   useUpdateUserProfileMutation,
+  useDeleteUserProfileMutation,
 } from "../../reducers/profileApiSlice";
+import { setCredentials } from "../../reducers/authSlice";
+import LoadingSpinner from "../../componentss/spinners/LoadingSpinner";
+import { GrUpdate } from "react-icons/gr";
+import { FaRegTrashAlt } from "react-icons/fa";
+import ConfirmationModal from "../../componentss/modal/ConfirmationModal";
+import styles from "./Profile.module.css";
 
 const Profile = () => {
-  // Fetch user profile data hook
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [confirmPwd, setConfirmPwd] = useState("");
+  const [updateLoading, setUpdateLoading] = useState(false);
+
+  const [errMsg, setErrMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const errRef = useRef();
+  const successRef = useRef();
+
+  const dispatch = useDispatch();
+
   const {
     data: userProfileData,
     isLoading,
@@ -13,234 +36,217 @@ const Profile = () => {
     refetch,
   } = useFetchUserProfileQuery();
 
-  // Update user profile data hook
-  const [updateProfile, { isLoading: isUpdating }] =
-    useUpdateUserProfileMutation();
+  const [updateProfile] = useUpdateUserProfileMutation();
+
+  const [deleteProfile] = useDeleteUserProfileMutation();
 
   useEffect(() => {
-    // Fetch user profile data when the component mounts
     refetch();
-  }, [refetch]);
+    if (userProfileData) {
+      setUsername(userProfileData.username || "");
+      setEmail(userProfileData.email || "");
+      setAddress(userProfileData.address || "");
+    }
+  }, [userProfileData, refetch]);
 
-  const handleUpdateProfile = async (updatedData) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setUpdateLoading(true);
+    setErrMsg("");
+    setSuccessMsg("");
+
+    if (pwd !== confirmPwd) {
+      setErrMsg("Passwords do not match");
+      return;
+    }
+
     try {
-      // Make an API call to update user profile data
-      const { data } = await updateProfile(updatedData);
+      const response = await updateProfile({
+        username,
+        email,
+        address,
+        password: pwd,
+      }).unwrap();
 
-      // Handle successful profile update, if needed
-      console.log("Profile updated:", data);
-    } catch (error) {
-      // Handle errors, if any
-      console.error("Error updating profile:", error);
+      const { username: updatedUsername } = response;
+
+      dispatch(setCredentials({ username: updatedUsername }));
+      // update localStorage ("username")
+      // localStorage.setItem("username", JSON.stringify(updatedUsername));
+      setErrMsg("");
+      setSuccessMsg("Profile updated successfully!");
+      refetch();
+      successRef.current.focus();
+      successRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      setUpdateLoading(false);
+    } catch (err) {
+      setSuccessMsg("");
+      setErrMsg(err?.data?.message || err.error);
+      console.log(err?.data?.message || err.error);
+      errRef.current.focus();
+      errRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteProfile().unwrap();
+      dispatch(setCredentials({}));
+      setUsername("");
+      setEmail("");
+      setAddress("");
+      setPwd("");
+      setConfirmPwd("");
+      setErrMsg("");
+      setSuccessMsg("Profile deleted successfully!");
+      console.log("Profile deleted successfully!");
+      refetch();
+    } catch (err) {
+      setSuccessMsg("");
+      setErrMsg(err?.data?.message || err.error);
+      console.log(err?.data?.message || err.error);
+      errRef.current.focus();
+      errRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  // Function to handle confirming deletion
+  const confirmDeletion = async () => {
+    await handleDelete();
+    setShowModal(false);
+  };
+
   return (
-    <div>
+    <div className={styles.profileContainer}>
       {isLoading ? (
-        <p>Loading profile...</p>
+        <LoadingSpinner />
       ) : isError ? (
         <p>Error fetching profile data</p>
       ) : (
-        <div>
-          {/* Display user profile data */}
-          <p>Username: {userProfileData.username}</p>
-          <p>Email: {userProfileData.email}</p>
-          <p>Address: {userProfileData.address}</p>
+        <>
+          <div className={styles.profile}>
+            <form>
+              <div className={styles.formGroup}>
+                <label htmlFor='username'>Username</label>
+                <input
+                  id='username'
+                  name='username'
+                  type='text'
+                  autoComplete='off'
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
+                  placeholder='Username'
+                  key={userProfileData.username}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                {/* <label htmlFor='email'>Email</label>
+              <input
+                id='email'
+                name='email'
+                type='email'
+                autoComplete='off'
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                placeholder='Email'
+                key={userProfileData.email}
+              /> */}
+                <div className={styles.email}>
+                  <p>Email:</p>
+                  <p>{userProfileData.email}</p>
+                </div>
+              </div>
 
-          {/* Update profile form */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const updatedData = {
-                // Collect updated profile data from form fields
-                // For example: username, email, address, etc.
-              };
-              handleUpdateProfile(updatedData);
-            }}
-          >
-            {/* Form fields for updating profile */}
-            {/* ... */}
-            <button type='submit' disabled={isUpdating}>
-              {isUpdating ? "Updating..." : "Update Profile"}
+              <div className={styles.formGroup}>
+                <label htmlFor='address'>Address</label>
+                <input
+                  id='address'
+                  name='address'
+                  type='text'
+                  autoComplete='off'
+                  onChange={(e) => setAddress(e.target.value)}
+                  value={address}
+                  placeholder='Address'
+                  key={userProfileData.address}
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor='password'>Password</label>
+                <input
+                  id='password'
+                  name='password'
+                  type='password'
+                  autoComplete='off'
+                  onChange={(e) => setPwd(e.target.value)}
+                  value={pwd}
+                  placeholder='Password'
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor='confirmPassword'>Confirm Password</label>
+                <input
+                  id='confirmPassword'
+                  name='confirmPassword'
+                  type='password'
+                  autoComplete='off'
+                  onChange={(e) => setConfirmPwd(e.target.value)}
+                  value={confirmPwd}
+                  placeholder='Confirm Password'
+                />
+              </div>
+
+              <button
+                type='submit'
+                onClick={handleSubmit}
+                disabled={updateLoading}
+              >
+                {updateLoading ? (
+                  <GrUpdate className={styles.spin} />
+                ) : (
+                  <>
+                    <GrUpdate className={styles.update} /> Update
+                  </>
+                )}
+              </button>
+
+              <p
+                ref={errRef}
+                className={errMsg ? `${styles.errmsg}` : `${styles.offscreen}`}
+              >
+                {errMsg}
+              </p>
+
+              <p
+                ref={successRef}
+                className={
+                  successMsg ? `${styles.successmsg}` : `${styles.offscreen}`
+                }
+              >
+                {successMsg}
+              </p>
+            </form>
+          </div>
+          <div>
+            <button className={styles.delete} onClick={handleShowModal}>
+              <FaRegTrashAlt /> Delete Account
             </button>
-          </form>
-        </div>
+
+            <ConfirmationModal
+              isOpen={showModal}
+              onCancel={() => setShowModal(false)}
+              onConfirm={confirmDeletion}
+            />
+          </div>
+        </>
       )}
     </div>
   );
 };
 
 export default Profile;
-
-// import { useEffect, useRef, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useUpdateMutation } from "../../reducers/authApiSlice";
-// import { setCredentials } from "../../reducers/authSlice";
-// import "./profile.css";
-
-// export default function Profile() {
-//   const [username, setUsername] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [address, setAddress] = useState("");
-//   const [pwd, setPwd] = useState("");
-//   const [confirmPwd, setConfirmPwd] = useState("");
-
-//   const userRef = useRef();
-//   const errRef = useRef();
-//   const successRef = useRef();
-
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-
-//   const [updateProfile, { isLoading, isSuccess }] = useUpdateMutation();
-//   const userInfo = useSelector((state) => state.auth.username);
-//   const token = useSelector((state) => state.auth.token);
-
-//   const [errMsg, setErrMsg] = useState("");
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     if (pwd !== confirmPwd) {
-//       setErrMsg("Passwords do not match");
-//       return;
-//     }
-
-//     try {
-//       const userData = await updateProfile({
-//         username,
-//         email,
-//         address,
-//         password: pwd,
-//       }).unwrap();
-//       setUsername("");
-//       setEmail("");
-//       setAddress("");
-//       setPwd("");
-//       setConfirmPwd("");
-//       dispatch(setCredentials({ ...userData }));
-//       successRef.current.focus();
-//       successRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-//     } catch (err) {
-//       setErrMsg(err?.data?.message || err.error);
-//       console.log(err?.data?.message || err.error);
-//       errRef.current.focus();
-//       errRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-//     }
-//   };
-
-//   useEffect(() => {
-//     if (!token) {
-//       navigate("/login");
-//     }
-//   }, [token, navigate]);
-
-//   useEffect(() => {
-//     setUsername(userInfo);
-//     // setEmail(userInfo.email);
-//     // setAddress(userInfo.address);
-//   }, [userInfo]);
-
-//   useEffect(() => {
-//     setErrMsg("");
-//   }, [username, email, address, pwd, confirmPwd]);
-
-//   const errClass = errMsg ? "errmsg" : "offscreen";
-
-//   return (
-//     <>
-//       <div id='loginform-container'>
-//         <h2> Profile </h2>
-
-//         <form onSubmit={handleSubmit}>
-//           <div className='form-group'>
-//             <label htmlFor='username'>{/* <MdAlternateEmail /> */}</label>
-//             <input
-//               id='username'
-//               name='username'
-//               type='text'
-//               ref={userRef}
-//               autoComplete='off'
-//               onChange={(e) => setUsername(e.target.value)}
-//               value={username}
-//               placeholder='Username'
-//             />
-//           </div>
-//           <div className='form-group'>
-//             <label htmlFor='email'>{/* <MdAlternateEmail /> */}</label>
-//             <input
-//               id='email'
-//               name='email'
-//               type='email'
-//               autoComplete='off'
-//               onChange={(e) => setEmail(e.target.value)}
-//               value={email}
-//               placeholder='Email'
-//             />
-//           </div>
-
-//           <div className='form-group'>
-//             <label htmlFor='address'>{/* <MdAlternateAddress /> */}</label>
-//             <input
-//               id='address'
-//               name='address'
-//               type='text'
-//               autoComplete='off'
-//               onChange={(e) => setAddress(e.target.value)}
-//               value={address}
-//               placeholder='Address'
-//             />
-//           </div>
-
-//           <div className='form-group'>
-//             <label htmlFor='password'>{/* <MdOutlinePassword /> */}</label>
-//             <input
-//               id='password'
-//               name='password'
-//               type='password'
-//               onChange={(e) => setPwd(e.target.value)}
-//               value={pwd}
-//               placeholder='Password'
-//             />
-//           </div>
-
-//           <div className='form-group'>
-//             <label htmlFor='password2'>{/* <MdOutlinePassword /> */}</label>
-//             <input
-//               id='password2'
-//               name='password2'
-//               type='password'
-//               onChange={(e) => setConfirmPwd(e.target.value)}
-//               value={confirmPwd}
-//               placeholder='Confirm Password'
-//             />
-//           </div>
-
-//           <button type='submit' disabled={isLoading}>
-//             {isLoading ? (
-//               <div className='spinner-container'>
-//                 <div className='spinner'></div>
-//               </div>
-//             ) : (
-//               <>
-//                 Update
-//                 {/* <MdLogin /> */}
-//               </>
-//             )}
-//           </button>
-//         </form>
-
-//         <p className={errClass} ref={errRef} aria-live='assertive'>
-//           {errMsg}
-//         </p>
-//         {isSuccess && (
-//           <p className='success-message' ref={successRef} aria-live='assertive'>
-//             updated successfully
-//           </p>
-//         )}
-//       </div>
-//     </>
-//   );
-// }

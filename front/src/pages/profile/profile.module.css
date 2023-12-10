@@ -1,0 +1,103 @@
+/* Define styles for the profile container */
+.profileContainer {
+  max-width: 500px; /* Adjust as needed */
+  margin: 0 auto;
+  padding: 20px;
+  margin-bottom: 10rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profileContainer p.errmsg {
+  color: red;
+  font-weight: bold;
+}
+
+.profileContainer p.successmsg {
+  color: green;
+  font-weight: bold;
+}
+
+.profileContainer form {
+  display: grid;
+  grid-gap: 15px;
+}
+
+.profileContainer .formGroup {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 8px;
+}
+
+.profileContainer label {
+  font-weight: bold;
+}
+
+.profileContainer input[type="text"],
+.profileContainer input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.profileContainer input[type="text"]:focus,
+.profileContainer input[type="password"]:focus {
+  outline: none;
+  border-color: #5c9be2;
+}
+
+.profileContainer .email p:nth-child(1) {
+  font-weight: bold;
+}
+
+.profileContainer .email p:nth-child(2) {
+  color: #5c9be2;
+}
+
+.profileContainer button[type="submit"],
+.profileContainer button.delete {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.profileContainer button[type="submit"]:hover,
+.profileContainer button.delete:hover {
+  background-color: #5c9be2; /* Change to your desired hover color */
+  color: white;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.profileContainer button[type="submit"] .spin {
+  animation: spin 1s linear infinite;
+}
+
+.profileContainer button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.profileContainer button.delete {
+  margin-top: 20px;
+  background-color: #ff6347;
+  color: white;
+}
+
+.profileContainer button.delete:hover {
+  background-color: #d32f2f;
+}

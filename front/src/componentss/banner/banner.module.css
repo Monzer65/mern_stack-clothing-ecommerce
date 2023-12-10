@@ -1,0 +1,5 @@
+.banner h2 {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: violet;
+}

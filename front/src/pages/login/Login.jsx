@@ -1,4 +1,11 @@
-import { MdAlternateEmail, MdOutlinePassword, MdLogin } from "react-icons/md";
+import {
+  MdAlternateEmail,
+  MdOutlinePassword,
+  MdLogin,
+  MdOutlineLockReset,
+} from "react-icons/md";
+import { IoLockOpenOutline } from "react-icons/io5";
+
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -6,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../../reducers/authSlice";
 import { useLoginMutation } from "../../reducers/authApiSlice";
 import LoadingSpinner from "../../componentss/spinners/LoadingSpinner";
-import "./login.css";
+import styles from "./Login.module.css";
 
 export default function Login() {
   const userRef = useRef();
@@ -60,15 +67,15 @@ export default function Login() {
 
   const handlePasswordInput = (e) => setPassword(e.target.value);
 
-  const errClass = errMsg ? "errmsg" : "offscreen";
+  const errClass = errMsg ? `${styles.errmsg}` : `${styles.offscreen}`;
 
   return (
     <>
-      <div id='loginform-container'>
+      <div className={styles.loginformContainer}>
         <h2> Login </h2>
 
         <form onSubmit={handleSubmit}>
-          <div className='form-group'>
+          <div className={styles.formGroup}>
             <label htmlFor='email'>
               <MdAlternateEmail />
             </label>
@@ -84,7 +91,7 @@ export default function Login() {
               required
             />
           </div>
-          <div className='form-group'>
+          <div className={styles.formGroup}>
             <label htmlFor='password'>
               <MdOutlinePassword />{" "}
             </label>
@@ -100,12 +107,13 @@ export default function Login() {
           </div>
 
           <button type='submit' disabled={isLoading}>
+            <MdLogin />
             {isLoading ? (
-              <LoadingSpinner />
-            ) : (
               <>
-                Sign In <MdLogin />
+                <LoadingSpinner /> Signin In...
               </>
+            ) : (
+              <>Sign In</>
             )}
           </button>
         </form>
@@ -113,13 +121,26 @@ export default function Login() {
         <p className={errClass} ref={errRef} aria-live='assertive'>
           {errMsg}
         </p>
-
-        <p className='register-link'>
-          Need an Account? <br />
-          <span className='line'>
-            <Link to='/register'>Sign Up</Link>
-          </span>
-        </p>
+        <hr />
+        <div className={styles.registerReset}>
+          <p className={styles.registerLink}>
+            Need an Account? <br />
+            <span className={styles.line}>
+              <Link to='/register'>
+                <IoLockOpenOutline /> Sign Up
+              </Link>
+            </span>
+          </p>
+          <div className={styles.divider}></div>
+          <p className={styles.registerLink}>
+            Forgot your password? <br />
+            <span className={styles.line}>
+              <Link to='/forgot-password'>
+                <MdOutlineLockReset /> Reset Password
+              </Link>
+            </span>
+          </p>
+        </div>
       </div>
     </>
   );

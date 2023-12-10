@@ -14,8 +14,18 @@ export const profileApiSlice = apiSlice.injectEndpoints({
         body: updatedProfileData,
       }),
     }),
+
+    deleteUserProfile: builder.mutation({
+      query: () => ({
+        url: "/profile",
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useFetchUserProfileQuery, useUpdateUserProfileMutation } =
-  profileApiSlice;
+export const {
+  useFetchUserProfileQuery,
+  useUpdateUserProfileMutation,
+  useDeleteUserProfileMutation,
+} = profileApiSlice;

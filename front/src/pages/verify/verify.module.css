@@ -1,4 +1,4 @@
-#loginform-container {
+.container {
   max-width: 500px;
   min-width: 300px;
   max-height: 700px;
@@ -9,13 +9,13 @@
   border-radius: 25px;
 }
 
-#loginform-container h2 {
+.container h2 {
   text-align: center;
   padding-block: 0.5rem;
   font-size: clamp(1rem, 2vw, 1.8rem);
 }
 
-#loginform-container form {
+.container form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,7 +23,7 @@
   padding: 2rem 0;
 }
 
-#loginform-container form .form-group {
+.container form .formGroup {
   position: relative;
   display: flex;
   justify-content: center;
@@ -33,13 +33,13 @@
   font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
-#loginform-container form label {
+.container form label {
   position: absolute;
   left: 1rem;
   margin-bottom: 0.5rem;
 }
 
-#loginform-container form input {
+.container form input {
   width: 100%;
   height: 40px;
   border-radius: 25px;
@@ -51,7 +51,7 @@
   margin-bottom: 1rem;
 }
 
-#loginform-container form button {
+.container form button {
   position: relative;
   display: flex;
   justify-content: center;
@@ -74,11 +74,11 @@
   transition: opacity 0.25s ease-out;
 }
 
-#loginform-container form button:hover {
+.container form button:hover {
   opacity: 0.8;
 }
 
-#loginform-container form button:disabled {
+.container form button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -94,17 +94,17 @@
   left: -9999px;
 }
 
-.register-link {
+.registerLink {
   font-size: clamp(0.95rem, 2vw, 1.2rem);
   padding-block: 0.5rem;
   text-align: center;
 }
 
-.register-link a {
+.registerLink a {
   color: blue;
   text-decoration: none;
 }
 
-.register-link a:hover {
+.registerLink a:hover {
   text-decoration: underline;
 }

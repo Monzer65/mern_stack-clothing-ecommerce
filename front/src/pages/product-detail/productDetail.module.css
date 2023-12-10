@@ -1,0 +1,48 @@
+/* YourStyles.module.css */
+
+.latestProducts {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.latestProducts h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.latestProducts p {
+  margin-bottom: 8px;
+  color: #666;
+}
+
+.productImages {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.productImage {
+  max-width: 100px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.productVariations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.variation {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+/* Additional styling can be added based on your design requirements */

@@ -8,18 +8,24 @@ import {
   IoLogOutOutline,
   IoLockClosedOutline,
   IoArrowDownCircleOutline,
+  IoBasketOutline,
+  IoPencilOutline,
 } from "react-icons/io5";
-
+import { useSelector } from "react-redux";
 import "./header.css";
+
 export default function Header() {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [name, setName] = useState("");
+  const username = useSelector((state) => state.auth.username);
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
 
-  const username = JSON.parse(localStorage.getItem("username"));
+  useEffect(() => {
+    setName(username);
+  }, [username, navigate]);
 
   const handleItemClick = () => {
     setIsOpen(false);
@@ -67,14 +73,23 @@ export default function Header() {
     </Link>
   );
 
+  const cart = (
+    <Link to='/cart'>
+      <button className='icon-button'>
+        <IoBasketOutline /> Cart
+      </button>
+    </Link>
+  );
+
   return (
     <header className='header'>
       <Link to='/' className='header__logo-link'>
         <h1 className='header__title'>LOGO</h1>
       </Link>
       <nav className='header__nav'>
-        {username ? (
+        {name ? (
           <>
+            {cart}
             <div className='dropdown' ref={dropdownRef}>
               <input
                 type='checkbox'
@@ -84,12 +99,14 @@ export default function Header() {
                 onChange={() => setIsOpen(!isOpen)}
               />
               <label htmlFor='dropdown-toggle' className='dropdown-label'>
-                welcome {username} <IoArrowDownCircleOutline />
+                welcome {name} <IoArrowDownCircleOutline />
               </label>
               {isOpen && (
                 <ul className='dropdown-menu'>
                   <li onClick={handleItemClick}>
-                    <Link to='/profile'>Profile</Link>
+                    <Link to='/profile'>
+                      <IoPencilOutline /> Profile
+                    </Link>
                   </li>
                   <li onClick={handleItemClick}>{logoutButton}</li>
                 </ul>

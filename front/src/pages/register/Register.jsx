@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useRegisterMutation } from "../../reducers/authApiSlice";
-import "./register.css";
+import { IoLockOpenOutline } from "react-icons/io5";
+import { FaRegCircleUser } from "react-icons/fa6";
+import { MdLogin, MdOutlineConfirmationNumber } from "react-icons/md";
+
+import styles from "./register.module.css";
+import { MdAlternateEmail, MdOutlinePassword } from "react-icons/md";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -55,16 +60,18 @@ export default function Register() {
     setErrMsg("");
   }, [username, email, pwd, confirmPwd]);
 
-  const errClass = errMsg ? "errmsg" : "offscreen";
+  const errClass = errMsg ? `${styles.errmsg}` : `${styles.offscreen}`;
 
   return (
     <>
-      <div id='loginform-container'>
+      <div className={styles.container}>
         <h2> Register </h2>
 
         <form onSubmit={handleSubmit}>
-          <div className='form-group'>
-            <label htmlFor='username'>{/* <MdAlternateEmail /> */}</label>
+          <div className={styles.formGroup}>
+            <label htmlFor='username'>
+              <FaRegCircleUser />
+            </label>
             <input
               id='username'
               name='username'
@@ -77,8 +84,10 @@ export default function Register() {
               required
             />
           </div>
-          <div className='form-group'>
-            <label htmlFor='email'>{/* <MdAlternateEmail /> */}</label>
+          <div className={styles.formGroup}>
+            <label htmlFor='email'>
+              <MdAlternateEmail />
+            </label>
             <input
               id='email'
               name='email'
@@ -90,8 +99,10 @@ export default function Register() {
               required
             />
           </div>
-          <div className='form-group'>
-            <label htmlFor='password'>{/* <MdOutlinePassword /> */}</label>
+          <div className={styles.formGroup}>
+            <label htmlFor='password'>
+              <MdOutlinePassword />
+            </label>
             <input
               id='password'
               name='password'
@@ -103,8 +114,10 @@ export default function Register() {
             />
           </div>
 
-          <div className='form-group'>
-            <label htmlFor='password2'>{/* <MdOutlinePassword /> */}</label>
+          <div className={styles.formGroup}>
+            <label htmlFor='password2'>
+              <MdOutlineConfirmationNumber />
+            </label>
             <input
               id='password2'
               name='password2'
@@ -117,15 +130,16 @@ export default function Register() {
           </div>
 
           <button type='submit' disabled={isLoading}>
+            <IoLockOpenOutline />
             {isLoading ? (
-              <div className='spinner-container'>
-                <div className='spinner'></div>
-              </div>
-            ) : (
               <>
-                Sign Up
-                {/* <MdLogin /> */}
+                <div className='spinner-container'>
+                  <div className='spinner'></div>
+                </div>
+                Signing Up...
               </>
+            ) : (
+              <>Sign Up</>
             )}
           </button>
         </form>
@@ -133,11 +147,13 @@ export default function Register() {
         <p className={errClass} ref={errRef} aria-live='assertive'>
           {errMsg}
         </p>
-
-        <p className='register-link'>
+        <hr />
+        <p className={styles.registerLink}>
           Already have an account? <br />
-          <span className='line'>
-            <Link to='/login'>Sign In</Link>
+          <span className={styles.line}>
+            <Link to='/login'>
+              <MdLogin /> Sign In
+            </Link>
           </span>
         </p>
       </div>
