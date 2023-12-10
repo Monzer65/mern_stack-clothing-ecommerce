@@ -3,16 +3,14 @@ import PropTypes from "prop-types";
 import styles from "./productCard.module.css";
 
 const ProductCard = ({ products }) => {
-  // Function to generate stars based on the average rating
   const renderStars = (rating) => {
     const stars = [];
-    const totalStars = 5; // Total number of stars
-
-    const fullStars = Math.floor(rating); // Get the number of full stars
-    const hasHalfStar = rating % 1 !== 0; // Check if there's a half star
+    const totalStars = 5;
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
 
     for (let i = 0; i < fullStars; i++) {
-      stars.push(<span key={i}>&#9733;</span>); // Full star symbol
+      stars.push(<span key={i}>&#9733;</span>);
     }
 
     if (hasHalfStar) {
@@ -20,13 +18,13 @@ const ProductCard = ({ products }) => {
         <span key='half' style={{ width: "0.5em", overflow: "hidden" }}>
           &#9733;
         </span>
-      ); // Half star symbol
+      );
     }
 
-    const remainingStars = totalStars - Math.ceil(rating); // Calculate remaining empty stars
+    const remainingStars = totalStars - Math.ceil(rating);
 
     for (let i = 0; i < remainingStars; i++) {
-      stars.push(<span key={`empty-${i}`}>&#9734;</span>); // Empty star symbol
+      stars.push(<span key={`empty-${i}`}>&#9734;</span>);
     }
 
     return stars;

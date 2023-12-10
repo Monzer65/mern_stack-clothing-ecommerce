@@ -1,82 +1,73 @@
-/* 
-
-.carouselButton {
-  background-color: #ddd;
-  color: #333;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-} */
-
-/* .productImagesCarousel {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.productImage {
-  max-width: 100%;
-  max-height: 300px;
-  object-fit: contain; 
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-} */
-
 .carouselContainer {
-  position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: row-reverse;
   align-items: center;
-  /* Add other necessary styles */
+  justify-content: center;
+  gap: 10px;
+  max-width: fit-content;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  overflow: hidden;
 }
 
-.productImagesContainer {
-  position: relative;
+.mainImage {
+  max-width: 500px;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.thumbnailsContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Add other necessary styles */
-}
-
-.productImagesCarousel {
-  display: flex;
   justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  /* Add other necessary styles */
+  margin-bottom: 20px;
+  padding: 5px;
 }
 
-.productImage {
-  /* Styles for thumbnails */
-  width: 100px; /* Adjust width as needed */
-  height: 100px; /* Adjust height as needed */
-  margin: 5px; /* Adjust margin as needed */
+.thumbnailImage {
+  width: 60px;
+  height: 60px;
+  margin: 5px;
   cursor: pointer;
-  /* Add other necessary styles */
+  border: 1px solid #ccc;
+  transition: transform 0.3s ease;
 }
 
-.mainProductImage {
-  /* Styles for main product image */
-  width: 100%; /* Ensure it takes full width of its container */
-  height: auto; /* Maintain aspect ratio */
-  /* Add other necessary styles */
+.thumbnailImage:hover {
+  transform: scale(1.1);
 }
 
-/* Media query for responsiveness */
-@media screen and (max-width: 768px) {
-  .productImagesContainer {
-    flex-direction: row;
-    /* Modify styles for smaller screens */
+.thumbnailActive {
+  border: 2px solid blue;
+  transform: scale(1.1);
+}
+
+@media screen and (width < 768px) {
+  .mainImageContainer {
+    margin-bottom: 15px;
   }
-
-  .productImage {
-    /* Adjust thumbnail styles for smaller screens */
+  .mainImage {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .thumbnailImage {
     width: 50px;
     height: 50px;
-    /* Modify other styles */
   }
+}
 
-  /* Add other responsive styles as needed */
+@media screen and (width < 992px) {
+  .carouselContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .thumbnailsContainer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
 }
