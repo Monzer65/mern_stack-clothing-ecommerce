@@ -1,0 +1,29 @@
+.brandsContainer {
+  /* Your existing styles for the container */
+  margin-bottom: 10rem;
+  padding: 20px;
+}
+
+.carousel {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 20px 0;
+}
+
+.brandCards {
+  display: inline-flex;
+  gap: 20px;
+}
+
+.brandCards a {
+  overflow: hidden;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.brandCards a:hover {
+  transform: scale(1.05); /* Enlarge card on hover */
+}

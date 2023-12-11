@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
-import { useFetchProductsQuery } from "../../reducers/productsApiSlice";
-import ProductCard from "../product-card/ProductCard";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import styles from "./latestProducts.module.css";
+import StarsRating from "../starsRating/StarsRating";
 
-const LatestProducts = () => {
-  const {
-    data: products,
-    isLoading,
-    isError,
-    refetch,
-  } = useFetchProductsQuery();
-
+const LatestProducts = ({ products }) => {
   const [productsData, setProductsData] = useState([]);
 
   useEffect(() => {
@@ -19,20 +13,60 @@ const LatestProducts = () => {
     }
   }, [products]);
 
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
+  const calculateDiscountedPrice = (price, discountPercentage) => {
+    return price - (price * discountPercentage) / 100;
+  };
 
   return (
     <div className={styles.latestProducts}>
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Error</p>}
       <h2>Latest Products</h2>
       <div className={styles.productCards}>
-        <ProductCard products={productsData.products} />
+        {productsData?.map((product) => (
+          <Link
+            key={product._id}
+            to={`/products/${product._id}`}
+            className={styles.link}
+          >
+            <div className={styles.product}>
+              <img src={product.images[0]} alt={product.name} />
+              <h3>{product.name}</h3>
+              {product.reviewsCount !== 0 && (
+                <div className={styles.rating}>
+                  <StarsRating rating={product.averageRating} />
+                  <span className={styles.count}>({product.reviewsCount})</span>
+                </div>
+              )}
+              <p className={styles.shortDescription}>
+                {product.shortDescription}
+              </p>
+              {product.discount && product.discount.isActive ? (
+                <>
+                  <p className={styles.price}>
+                    <span className={styles.discountedPrice}>
+                      $
+                      {calculateDiscountedPrice(
+                        product.price,
+                        product.discount.discountPercentage
+                      ).toFixed(2)}
+                    </span>{" "}
+                    <span className={styles.originalPrice}>
+                      ${product.price.toFixed(2)}
+                    </span>
+                  </p>
+                </>
+              ) : (
+                <p className={styles.price}>${product.price.toFixed(2)}</p>
+              )}
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );
+};
+
+LatestProducts.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default LatestProducts;

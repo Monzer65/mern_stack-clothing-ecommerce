@@ -495,7 +495,11 @@ module.exports = {
         { color: "Green", size: "XL", quantity: 54 },
         { color: "Goldenrod", size: "L", quantity: 64 },
       ],
-      brand: "Flashdog",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319610/row-2-column-1_b5iqgz.jpg",
+        name: "Flashdog",
+      },
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700926440/men%27s%20wear%20products/blank-1886008_640_qn5xpa.png",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700926437/men%27s%20wear%20products/blank-1886001_640_tgis1t.png",
@@ -522,7 +526,12 @@ module.exports = {
         { color: "Red", size: "XL", quantity: 154 },
         { color: "Pink", size: "L", quantity: 145 },
       ],
-      brand: "Roomm",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319609/row-1-column-2_xkqzi9.jpg",
+
+        name: "Roomm",
+      },
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700928343/men%27s%20wear%20products/alex-haigh-fEt6Wd4t4j0-unsplash_egjjn0.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700928342/men%27s%20wear%20products/download_kmbieo.jpg",
@@ -553,7 +562,12 @@ module.exports = {
         { color: "Red", size: "S", quantity: 16 },
         { color: "Pink", size: "M", quantity: 41 },
       ],
-      brand: "Flashpoint",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319608/row-1-column-4_q5d9l0.jpg",
+
+        name: "Flashpoint",
+      },
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700929193/men%27s%20wear%20products/nimble-made-hMMXhKSZk7k-unsplash_rn5vxk.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700929193/men%27s%20wear%20products/santhosh-kumar-RqYTuWkTdEs-unsplash_cuig6e.jpg",
@@ -576,7 +590,12 @@ module.exports = {
       },
       category: "6561c4749ef7bf78863ade08",
       variations: [],
-      brand: "Tanoodle",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319609/row-2-column-2_bxuybr.jpg",
+
+        name: "Tanoodle",
+      },
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700929496/men%27s%20wear%20products/clement-vatte-Y-00g_VgQTc-unsplash_1_jaxmbc.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700929501/men%27s%20wear%20products/clement-vatte-o5-3txB1M3w-unsplash_vlt2eg.jpg",
@@ -599,7 +618,13 @@ module.exports = {
       },
       category: "6561c4749ef7bf78863ade09",
       variations: [{ color: "Fuscia", size: "L", quantity: 181 }],
-      brand: "Brainbox",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319607/row-4-column-1_nzjv9g.jpg",
+
+        name: "Brainbox",
+      },
+
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700929750/men%27s%20wear%20products/t-shirt-3995093_640_dicazo.png",
       ],
@@ -631,7 +656,13 @@ module.exports = {
         { color: "Crimson", size: "XL", quantity: 36 },
         { color: "Orange", size: "M", quantity: 94 },
       ],
-      brand: "Gigazoom",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319607/row-4-column-4_rlcrrs.jpg",
+
+        name: "Gigazoom",
+      },
+
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700931278/men%27s%20wear%20products/OIP1_dwxcux.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700931277/men%27s%20wear%20products/R_o4qrh1.jpg",
@@ -658,7 +689,13 @@ module.exports = {
         { color: "Blue", size: "S", quantity: 122 },
         { color: "Crimson", size: "L", quantity: 162 },
       ],
-      brand: "Zoozzy",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319606/row-1-column-1_mkaqmr.jpg",
+
+        name: "Zoozzy",
+      },
+
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700935058/men%27s%20wear%20products/R_1_nbcqlf.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700935049/men%27s%20wear%20products/R_2_acsk2g.jpg",
@@ -681,7 +718,13 @@ module.exports = {
       },
       category: "6561c4749ef7bf78863ade0d",
       variations: [],
-      brand: "Flipopia",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319606/row-1-column-1_mkaqmr.jpg",
+
+        name: "Zoozzy",
+      },
+
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700935278/men%27s%20wear%20products/OIP_fj2b8b.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700935278/men%27s%20wear%20products/R_eq1qru.jpg",
@@ -709,7 +752,13 @@ module.exports = {
         { color: "Goldenrod", size: "XL", quantity: 57 },
         { color: "Pink", size: "L", quantity: 97 },
       ],
-      brand: "Twinder",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319605/row-3-column-4_a9kcl4.jpg",
+
+        name: "Twinder",
+      },
+
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700936171/men%27s%20wear%20products/SE2060_NAVY_vdy3he.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700938774/men%27s%20wear%20products/men-s-short_ritrib.jpg",
@@ -732,7 +781,13 @@ module.exports = {
       },
       category: "6561c4749ef7bf78863ade0f",
       variations: [{ color: "Aquamarine", size: "XL", quantity: 79 }],
-      brand: "Realblab",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319605/row-3-column-4_a9kcl4.jpg",
+
+        name: "Twinder",
+      },
+
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700938968/men%27s%20wear%20products/OIP_1_lcyke9.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700938969/men%27s%20wear%20products/R_1_zawwqy.jpg",
@@ -765,7 +820,13 @@ module.exports = {
         { color: "Indigo", size: "L", quantity: 103 },
         { color: "Crimson", size: "XL", quantity: 123 },
       ],
-      brand: "Midel",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319605/row-3-column-2_swxk2x.jpg",
+
+        name: "Midel",
+      },
+
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939156/men%27s%20wear%20products/OIP_2_yeuycu.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939161/men%27s%20wear%20products/R_2_iz9gzv.jpg",
@@ -794,7 +855,12 @@ module.exports = {
         { color: "Purple", size: "L", quantity: 194 },
         { color: "Mauv", size: "S", quantity: 14 },
       ],
-      brand: "Fivebridge",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319605/row-3-column-2_swxk2x.jpg",
+        name: "Midel",
+      },
+
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939509/men%27s%20wear%20products/R_3_vrlcna.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939506/men%27s%20wear%20products/OIP_3_tfpctp.jpg",
@@ -824,7 +890,13 @@ module.exports = {
         { color: "Turquoise", size: "XL", quantity: 169 },
         { color: "Khaki", size: "XL", quantity: 165 },
       ],
-      brand: "Roombo",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319614/row-1-column-3_gugzrw.jpg",
+
+        name: "Roombo",
+      },
+
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939738/men%27s%20wear%20products/R_4_yxa3ld.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939734/men%27s%20wear%20products/OIP_4_e5nn4w.jpg",
@@ -857,7 +929,13 @@ module.exports = {
         { color: "Yellow", size: "XL", quantity: 78 },
         { color: "Green", size: "S", quantity: 36 },
       ],
-      brand: "Yodel",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319614/row-1-column-3_gugzrw.jpg",
+
+        name: "Roombo",
+      },
+
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939912/men%27s%20wear%20products/OIP_5_pppyoq.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939912/men%27s%20wear%20products/OIP_6_nbsvpl.jpg",
@@ -883,7 +961,12 @@ module.exports = {
         { color: "Turquoise", size: "M", quantity: 122 },
         { color: "Puce", size: "S", quantity: 6 },
       ],
-      brand: "Bluejam",
+      brand: {
+        image:
+          "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319614/row-1-column-3_gugzrw.jpg",
+
+        name: "Roombo",
+      },
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700940116/men%27s%20wear%20products/2017KE3922_zrupli.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700940124/men%27s%20wear%20products/OIP_7_uathec.jpg",

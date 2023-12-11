@@ -40,3 +40,87 @@
     ); /* Maximum of 5 cards */
   }
 }
+
+.product {
+  border: 1px solid #e1e1e1; /* Neutral border color */
+  border-radius: 10px;
+  height: 100%;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f7f7f7; /* Light grey for a modern, clean look */
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* .product img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+} */
+
+.product img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.product h3 {
+  font-size: 1.5em;
+  margin: 10px;
+  color: #333; /* Dark grey for readability */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.shortDescription {
+  color: #707070; /* Slightly darker grey for better readability */
+  font-size: 0.9em;
+  margin: 0 10px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.price {
+  font-size: 1.2em;
+  margin: 10px;
+  color: #4caf50; /* Green for positive associations with affordability */
+}
+
+.discountedPrice {
+  font-weight: bold;
+  color: #333; /* Dark grey to maintain focus on the price */
+  margin-right: 5px;
+}
+
+.originalPrice {
+  font-size: 0.9em;
+  text-decoration: line-through;
+  color: #ff6d6d; /* Red to indicate a discount from the original price */
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.rating span {
+  color: #f5b301;
+  margin-right: 5px;
+}
+
+.rating .count {
+  font-size: 0.8em;
+  color: rgb(67, 116, 207);
+}

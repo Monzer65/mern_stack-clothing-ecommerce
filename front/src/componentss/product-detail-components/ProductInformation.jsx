@@ -33,7 +33,7 @@ const ProductInformation = ({
       </div>
 
       <div className={styles.productInfo}>
-        <p className={styles.brand}>Brand: {brand}</p>
+        <p className={styles.brand}>Brand: {brand?.name}</p>
         {discount && discount.isActive ? (
           <div className={styles.price}>
             <p>

@@ -18,9 +18,16 @@ const ProductVariations = ({ variations }) => {
   const uniqueColors = [
     ...new Set(variations?.map((variation) => variation.color)),
   ];
+
   return (
     <div className={styles.productVariations}>
-      <h3>Select Color:</h3>
+      {uniqueColors ? (
+        <h3>
+          Color: <span>{selectedColor}</span>
+        </h3>
+      ) : (
+        <h3>Color selection is not available for this product</h3>
+      )}
       <div className={styles.colorsContainer}>
         {uniqueColors.map((color, index) => (
           <div

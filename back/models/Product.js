@@ -48,8 +48,12 @@ const productSchema = new mongoose.Schema({
     },
   ],
   brand: {
-    type: String,
-    trim: true,
+    image: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
   },
   images: [
     {

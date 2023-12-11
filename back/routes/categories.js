@@ -7,13 +7,26 @@ const jwtAuth = require("../middlewares/jwtAuth");
 
 router.get("/", async (req, res, next) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().populate({
+      path: "parentCategory",
+      populate: { path: "parentCategory" },
+    });
     if (!categories || categories.length === 0) {
       throw new error("Categories not found");
     }
-    res.status(200).json(categories);
+    // Filter out categories that are deeper than 3 levels
+    const filteredCategories = categories.filter((category) => {
+      let level = 0;
+      let currentCategory = category;
+      while (currentCategory.parentCategory) {
+        level++;
+        currentCategory = currentCategory.parentCategory;
+      }
+      return level < 3;
+    });
+    res.status(200).json(filteredCategories);
   } catch (error) {
-    next(error); // Pass the error to the error-handling middleware
+    next(error);
   }
 });
 
