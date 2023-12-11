@@ -18,12 +18,12 @@
   color: #333;
 }
 
-.productRating span {
+.productRating {
+  display: flex;
+  align-items: center;
   font-size: clamp(0.85rem, 2vw, 0.95rem);
-}
-
-.productRating .ratingStars > span {
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  gap: 5px;
+  color: #666;
 }
 
 .productInfo {
@@ -216,11 +216,9 @@ input[type="radio"] {
 .reviewRating {
   display: flex;
   align-items: center;
-}
-
-.ratingStars {
-  color: #f5b301;
-  margin: 8px 0;
+  gap: 5px;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  margin-block: 5px 16px;
 }
 
 .reviewComment {

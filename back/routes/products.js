@@ -205,6 +205,26 @@ router.get("/:id", async (req, res, next) => {
         },
       },
       {
+        $addFields: {
+          reviewRatings: "$reviews.rating",
+          reviewsCount: { $size: "$reviews" },
+        },
+      },
+      {
+        $addFields: {
+          averageRating: {
+            $cond: {
+              if: { $eq: [{ $size: "$reviewRatings" }, 0] },
+              then: 0, // Set a default value when there are no reviews
+              else: { $avg: "$reviewRatings" },
+            },
+          },
+          // Unset the unnecessary reviewRatings field after calculating averageRating
+          reviewRatings: { $ifNull: ["$reviewRatings", "$$REMOVE"] },
+        },
+      },
+
+      {
         $lookup: {
           from: "categories",
           localField: "category",

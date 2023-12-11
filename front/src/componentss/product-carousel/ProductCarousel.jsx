@@ -20,9 +20,8 @@ ImageThumbnail.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const ProductCarousel = ({ productData }) => {
+const ProductCarousel = ({ images }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const { images } = productData;
 
   return (
     <div className={styles.carouselContainer}>
@@ -51,7 +50,7 @@ const ProductCarousel = ({ productData }) => {
 };
 
 ProductCarousel.propTypes = {
-  productData: PropTypes.object.isRequired,
+  images: PropTypes.array,
 };
 
 export default ProductCarousel;

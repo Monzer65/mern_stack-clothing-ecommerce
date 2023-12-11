@@ -1,42 +1,16 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./productCard.module.css";
+import StarsRating from "../starsRating/StarsRating";
 
 const ProductCard = ({ products }) => {
-  const renderStars = (rating) => {
-    const stars = [];
-    const totalStars = 5;
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<span key={i}>&#9733;</span>);
-    }
-
-    if (hasHalfStar) {
-      stars.push(
-        <span key='half' style={{ width: "0.5em", overflow: "hidden" }}>
-          &#9733;
-        </span>
-      );
-    }
-
-    const remainingStars = totalStars - Math.ceil(rating);
-
-    for (let i = 0; i < remainingStars; i++) {
-      stars.push(<span key={`empty-${i}`}>&#9734;</span>);
-    }
-
-    return stars;
-  };
-
   const calculateDiscountedPrice = (price, discountPercentage) => {
     return price - (price * discountPercentage) / 100;
   };
 
   return (
     <>
-      {products?.products?.map((product) => (
+      {products?.map((product) => (
         <Link
           key={product._id}
           to={`/products/${product._id}`}
@@ -47,7 +21,7 @@ const ProductCard = ({ products }) => {
             <h3>{product.name}</h3>
             {product.reviewsCount !== 0 && (
               <div className={styles.rating}>
-                {renderStars(product.averageRating)}
+                <StarsRating rating={product.averageRating} />
                 <span className={styles.count}>({product.reviewsCount})</span>
               </div>
             )}
@@ -80,7 +54,7 @@ const ProductCard = ({ products }) => {
 };
 
 ProductCard.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.object).isRequired,
+  products: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default ProductCard;

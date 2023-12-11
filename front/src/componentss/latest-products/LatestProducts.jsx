@@ -29,7 +29,7 @@ const LatestProducts = () => {
       {isError && <p>Error</p>}
       <h2>Latest Products</h2>
       <div className={styles.productCards}>
-        <ProductCard products={productsData} />
+        <ProductCard products={productsData.products} />
       </div>
     </div>
   );
