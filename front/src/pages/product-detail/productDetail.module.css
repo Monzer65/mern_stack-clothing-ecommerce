@@ -7,6 +7,7 @@
 .productDetail {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: flex-start;
   gap: 20px;
   margin-bottom: 20px;
 }
@@ -15,6 +16,14 @@
   font-size: clamp(1.5rem, 4vw, 4rem);
   margin-bottom: 10px;
   color: #333;
+}
+
+.productRating span {
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
+}
+
+.productRating .ratingStars > span {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
 }
 
 .productInfo {
@@ -97,6 +106,26 @@
   gap: 10px;
   margin-bottom: 10px;
   align-items: center;
+}
+
+.colorsContainer .outerColorIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.colorsContainer .outerColorIndicator.active {
+  border: 1px solid black;
+}
+
+.colorIndicator {
+  width: 85%;
+  height: 85%;
+  border-radius: inherit;
 }
 
 .sizesContainer li {
@@ -207,6 +236,16 @@ input[type="radio"] {
 .reviewDate {
   font-size: clamp(0.75rem, 2vw, 1rem);
   color: #999;
+}
+
+.redBorder {
+  border-left: 4px solid orangered;
+}
+.orangeBorder {
+  border-left: 4px solid orange;
+}
+.greenBorder {
+  border-left: 4px solid green;
 }
 
 @media screen and (max-width: 600px) {

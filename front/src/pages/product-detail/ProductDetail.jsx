@@ -88,10 +88,29 @@ const ProductDetail = () => {
     );
   };
 
+  const endDate = new Date(productData?.discount?.endDate);
+  const formattedDate = endDate.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  const borderColorClass = (review) => {
+    return review.rating < 2
+      ? styles.redBorder
+      : review.rating >= 2 && review.rating < 4
+      ? styles.orangeBorder
+      : review.rating >= 4 && review.rating <= 5
+      ? styles.greenBorder
+      : "";
+  };
+
   return (
     <div className={styles.productDetailContainer}>
       {isLoading ? (
         <LoadingGrid />
+      ) : isError ? (
+        <p>Error fetching product data</p>
       ) : (
         <>
           {productData && (
@@ -100,21 +119,23 @@ const ProductDetail = () => {
                 <ProductCarousel productData={productData} />
                 <div>
                   <h2>{productData.name}</h2>
-                  <p>
-                    {productData?.reviews?.length || null}{" "}
-                    {productData?.reviews?.length > 0
-                      ? productData?.reviews?.length > 1
-                        ? "Reviews"
-                        : "Review"
-                      : ""}
-                    {renderStars(calculateAverageRating(productData.reviews))}
+                  <p className={styles.productRating}>
+                    {renderStars(calculateAverageRating(productData.reviews))}{" "}
+                    <span>
+                      ({productData?.reviews?.length || null}){" "}
+                      {productData?.reviews?.length > 0
+                        ? productData?.reviews?.length > 1
+                          ? "Reviews"
+                          : "Review"
+                        : ""}
+                    </span>
                   </p>
 
                   <div className={styles.productInfo}>
                     <p className={styles.brand}>Brand: {productData.brand}</p>
                     {productData.discount && productData.discount.isActive ? (
-                      <>
-                        <p className={styles.price}>
+                      <div className={styles.price}>
+                        <p>
                           <span className={styles.discountedPrice}>
                             $
                             {calculateDiscountedPrice(
@@ -123,8 +144,10 @@ const ProductDetail = () => {
                             ).toFixed(2)}
                           </span>{" "}
                           <span className={styles.originalPrice}>
-                            ${productData?.price?.toFixed(2)}
+                            ${productData?.price.toFixed(2)}
                           </span>
+                        </p>
+                        <p>
                           <span className={styles.saveAmount}>
                             Save $
                             {(
@@ -133,13 +156,14 @@ const ProductDetail = () => {
                                 productData.price,
                                 productData.discount.discountPercentage
                               )
-                            ).toFixed(2)}
+                            ).toFixed(2)}{" "}
+                            ({productData?.discount?.discountPercentage}% off)
                           </span>
                           <span className={styles.discountText}>
-                            Until {productData?.discount?.endDate.split("T")[0]}
+                            Until {formattedDate}
                           </span>
                         </p>
-                      </>
+                      </div>
                     ) : (
                       <p className={styles.price}>
                         ${productData?.price?.toFixed(2)}
@@ -151,17 +175,22 @@ const ProductDetail = () => {
                     <h3>Select Color:</h3>
                     <div className={styles.colorsContainer}>
                       {uniqueColors.map((color, index) => (
-                        <button
+                        <div
                           key={index}
-                          style={{
-                            backgroundColor: color,
-                            marginRight: "5px",
-                            marginBottom: "5px",
-                          }}
                           onClick={() => handleColorSelect(color)}
+                          className={`${styles.outerColorIndicator} ${
+                            color === selectedColor
+                              ? styles.active
+                              : styles.outerColorIndicator
+                          }`}
                         >
-                          {color}
-                        </button>
+                          <div
+                            style={{
+                              backgroundColor: color,
+                            }}
+                            className={styles.colorIndicator}
+                          ></div>
+                        </div>
                       ))}
                     </div>
                     <div className={styles.sizesContainer}>
@@ -214,7 +243,12 @@ const ProductDetail = () => {
               </p>
 
               {productData.reviews?.map((review, index) => (
-                <div key={index} className={styles.reviewContainer}>
+                <div
+                  key={index}
+                  className={`${styles.reviewContainer} ${borderColorClass(
+                    review
+                  )}`}
+                >
                   <div className={styles.reviewHeader}>
                     <p className={styles.reviewAuthor}>User: {review.author}</p>
                     <p className={styles.reviewDate}>
@@ -224,6 +258,7 @@ const ProductDetail = () => {
                   <p className={styles.reviewRating}>
                     Rating: {renderStars(review.rating)}
                   </p>
+
                   <p className={styles.reviewComment}>{review.comment}</p>
                 </div>
               ))}
@@ -231,7 +266,6 @@ const ProductDetail = () => {
           )}
         </>
       )}
-      {isError && <p>Error</p>}
     </div>
   );
 };
