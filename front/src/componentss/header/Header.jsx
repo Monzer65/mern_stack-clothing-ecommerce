@@ -12,7 +12,7 @@ import {
   IoPencilOutline,
 } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import "./header.css";
+import styles from "./header.module.css";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -52,14 +52,14 @@ export default function Header() {
   if (isError) return <p>Error: {error.data?.message}</p>;
 
   const logoutButton = (
-    <button className='icon-button' title='Logout' onClick={sendLogout}>
+    <button className={styles.logout} title='Logout' onClick={sendLogout}>
       <IoLogOutOutline /> Logout
     </button>
   );
 
   const registerButton = (
     <Link to='/register'>
-      <button className='icon-button'>
+      <button className={styles.register}>
         <IoLockClosedOutline /> Register
       </button>
     </Link>
@@ -67,7 +67,7 @@ export default function Header() {
 
   const loginButton = (
     <Link to='/login'>
-      <button className='icon-button'>
+      <button className={styles.login}>
         <IoLogInOutline /> Login
       </button>
     </Link>
@@ -75,34 +75,34 @@ export default function Header() {
 
   const cart = (
     <Link to='/cart'>
-      <button className='icon-button'>
+      <button className={styles.cart}>
         <IoBasketOutline /> Cart
       </button>
     </Link>
   );
 
   return (
-    <header className='header'>
-      <Link to='/' className='header__logo-link'>
-        <h1 className='header__title'>LOGO</h1>
+    <header className={styles.header}>
+      <Link to='/' className={styles.logo}>
+        <h1 className={styles.logoText}>LOGO</h1>
       </Link>
-      <nav className='header__nav'>
+      <nav className={styles.nav}>
         {name ? (
           <>
             {cart}
-            <div className='dropdown' ref={dropdownRef}>
+            <div className={styles.dropdown} ref={dropdownRef}>
               <input
                 type='checkbox'
                 id='dropdown-toggle'
-                className='dropdown-toggle'
+                className={styles.dropdownToggle}
                 checked={isOpen}
                 onChange={() => setIsOpen(!isOpen)}
               />
-              <label htmlFor='dropdown-toggle' className='dropdown-label'>
+              <label htmlFor='dropdown-toggle' className={styles.dropdownLabel}>
                 welcome {name} <IoArrowDownCircleOutline />
               </label>
               {isOpen && (
-                <ul className='dropdown-menu'>
+                <ul className={styles.dropdownMenu}>
                   <li onClick={handleItemClick}>
                     <Link to='/profile'>
                       <IoPencilOutline /> Profile

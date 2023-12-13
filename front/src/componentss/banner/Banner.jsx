@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styles from "./banner.module.css";
+import { Link } from "react-router-dom";
 const ImageBanner = ({ imageUrl, altText, linkUrl, bannerText }) => {
   const bannerStyle = {
     width: "100%",
@@ -42,7 +43,7 @@ const ImageBanner = ({ imageUrl, altText, linkUrl, bannerText }) => {
       <div style={textStyle}>
         <h2>{bannerText}</h2>
       </div>
-      <a href={linkUrl} style={linkStyle}></a>
+      <Link to={linkUrl} style={linkStyle}></Link>
     </div>
   );
 };

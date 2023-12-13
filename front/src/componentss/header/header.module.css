@@ -20,7 +20,7 @@
   gap: 1rem;
 }
 
-button {
+.header button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,12 +35,12 @@ button {
   transition: background-color 0.2s ease-in-out;
 }
 
-button:hover {
+.header button:not(:disabled):hover {
   background-color: #191919;
   color: #e7e7e7;
 }
 
-button svg {
+.header button svg {
   width: 1.5rem;
   height: 1.5rem;
 }
@@ -51,11 +51,11 @@ button svg {
   display: inline-block;
 }
 
-.dropdown-toggle {
+.dropdownToggle {
   display: none;
 }
 
-.dropdown-label {
+.dropdownLabel {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -72,12 +72,12 @@ button svg {
   }
 }
 
-.dropdown-label svg {
+.dropdownLabel svg {
   width: 1.5rem;
   height: 1.5rem;
 }
 
-.dropdown-menu {
+.dropdownMenu {
   position: absolute;
   list-style: none;
   padding: 0;
@@ -88,11 +88,11 @@ button svg {
   z-index: 4;
 }
 
-.dropdown-menu li {
+.dropdownMenu li {
   padding: 10px;
 }
 
-.dropdown-menu li a {
+.dropdownMenu li a {
   display: flex;
   align-items: center;
   width: 100%;
@@ -105,7 +105,7 @@ button svg {
   transition: background-color 0.25s ease-in-out;
 }
 
-.dropdown-menu li a:hover {
+.dropdownMenu li a:hover {
   background-color: #191919;
   color: #e7e7e7;
 }

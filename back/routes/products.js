@@ -4,6 +4,7 @@ const jwtAuth = require("../middlewares/jwtAuth");
 const Product = require("../models/Product");
 const Category = require("../models/Category");
 const mongoose = require("mongoose");
+const { ObjectId } = require("mongoose").Types;
 
 // Recursive function to get all descendant category IDs including the parent category
 async function getAllCategoryIds(categorySlug) {
@@ -47,8 +48,13 @@ router.get("/", async (req, res, next) => {
       ratings,
     } = req.query;
 
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
+    const numericLimit = parseInt(limit, 10); // Convert limit to a number
+    if (isNaN(numericLimit)) {
+      return res.status(400).send("Limit must be a number");
+    }
+
+    const startIndex = (page - 1) * numericLimit;
+    const endIndex = page * numericLimit;
     let pipeline = [];
 
     if (search) {
@@ -85,23 +91,32 @@ router.get("/", async (req, res, next) => {
     }
 
     if (brand) {
-      pipeline.push({ $match: { brand: brand } });
+      const brandRegex = new RegExp(brand, "i"); // 'i' flag for case insensitivity
+      pipeline.push({ $match: { "brand.name": { $regex: brandRegex } } });
     }
 
     if (newArrival) {
-      const oneWeekAgo = new Date();
-      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
+      console.log("newArrival:", newArrival);
       pipeline.push({
         $match: {
-          createdAt: { $gte: oneWeekAgo },
+          $expr: {
+            $and: [
+              {
+                $gte: [
+                  "$createdAt",
+                  new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+                ],
+              }, // Check for newArrival
+            ],
+          },
         },
       });
+      console.log("pipeline:", pipeline);
     }
 
     if (discount) {
       pipeline.push({
-        $match: { "discount.isActive": true },
+        $match: { $expr: { $eq: ["$discount.isActive", true] } },
       });
     }
 
@@ -158,7 +173,7 @@ router.get("/", async (req, res, next) => {
     pipeline.push(
       { $sort: sortOptions },
       { $skip: startIndex },
-      { $limit: limit }
+      { $limit: numericLimit }
     );
 
     const products = await Product.aggregate(pipeline);
@@ -187,9 +202,38 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/brands", async (req, res, next) => {
+  try {
+    const brands = await Product.aggregate([
+      {
+        $group: {
+          _id: "$brand.name", // Group by the brand name
+          featured: { $first: "$brand.featured" }, // Get the 'featured' field from the first document in each group
+          image: { $first: "$brand.image" }, // Get the 'image' field from the first document in each group
+        },
+      },
+      {
+        $project: {
+          _id: 0, // Exclude the _id field
+          name: "$_id", // Set the name of the brand
+          featured: 1, // Include the 'featured' field
+          image: 1, // Include the 'image' field
+        },
+      },
+    ]);
+    res.status(200).json(brands);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).send("Invalid ID format");
+    }
+
     const product = await Product.aggregate([
       {
         $match: {

@@ -478,6 +478,7 @@ module.exports = {
 
   products: [
     {
+      _id: "657764e91ad5c1a03648622a",
       name: "Egretta thula T-shirts",
       shortDescription:
         "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
@@ -488,14 +489,26 @@ module.exports = {
         isActive: true,
         discountPercentage: 21,
         startDate: "2023-12-10T00:00:00.000Z",
+
         endDate: "2023-12-20T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade06",
       variations: [
-        { color: "Green", size: "XL", quantity: 54 },
-        { color: "Goldenrod", size: "L", quantity: 64 },
+        {
+          color: "Green",
+          size: "XL",
+          quantity: 54,
+          _id: "657764e91ad5c1a03648622b",
+        },
+        {
+          color: "Goldenrod",
+          size: "L",
+          quantity: 64,
+          _id: "657764e91ad5c1a03648622c",
+        },
       ],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319610/row-2-column-1_b5iqgz.jpg",
         name: "Flashdog",
@@ -504,11 +517,15 @@ module.exports = {
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700926440/men%27s%20wear%20products/blank-1886008_640_qn5xpa.png",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700926437/men%27s%20wear%20products/blank-1886001_640_tgis1t.png",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "egretta-thula-t-shirts",
       createdAt: "2023-08-13T01:48:56.000Z",
+      __v: 0,
     },
     {
-      name: " nigricans T-shirts",
+      _id: "657764e91ad5c1a03648622d",
+      name: "nigricans T-shirts",
       shortDescription:
         "Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.",
       longDescription:
@@ -518,28 +535,48 @@ module.exports = {
         isActive: true,
         discountPercentage: 23,
         startDate: "2023-12-04T00:00:00.000Z",
+
         endDate: "2023-12-14T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade06",
       variations: [
-        { color: "Violet", size: "XL", quantity: 32 },
-        { color: "Red", size: "XL", quantity: 154 },
-        { color: "Pink", size: "L", quantity: 145 },
+        {
+          color: "Violet",
+          size: "XL",
+          quantity: 32,
+          _id: "657764e91ad5c1a03648622e",
+        },
+        {
+          color: "Red",
+          size: "XL",
+          quantity: 154,
+          _id: "657764e91ad5c1a03648622f",
+        },
+        {
+          color: "Pink",
+          size: "L",
+          quantity: 145,
+          _id: "657764e91ad5c1a036486230",
+        },
       ],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319609/row-1-column-2_xkqzi9.jpg",
-
         name: "Roomm",
       },
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700928343/men%27s%20wear%20products/alex-haigh-fEt6Wd4t4j0-unsplash_egjjn0.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700928342/men%27s%20wear%20products/download_kmbieo.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "nigricans-t-shirts",
       createdAt: "2023-09-29T23:29:38.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a036486231",
       name: "Sarkidornis shirts",
       shortDescription:
         "Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.",
@@ -550,32 +587,72 @@ module.exports = {
         isActive: true,
         discountPercentage: 17,
         startDate: "2023-12-12T00:00:00.000Z",
+
         endDate: "2023-12-30T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade07",
       variations: [
-        { color: "Orange", size: "M", quantity: 70 },
-        { color: "Violet", size: "S", quantity: 39 },
-        { color: "Blue", size: "L", quantity: 89 },
-        { color: "Khaki", size: "XL", quantity: 192 },
-        { color: "Puce", size: "L", quantity: 66 },
-        { color: "Red", size: "S", quantity: 16 },
-        { color: "Pink", size: "M", quantity: 41 },
+        {
+          color: "Orange",
+          size: "M",
+          quantity: 70,
+          _id: "657764e91ad5c1a036486232",
+        },
+        {
+          color: "Violet",
+          size: "S",
+          quantity: 39,
+          _id: "657764e91ad5c1a036486233",
+        },
+        {
+          color: "Blue",
+          size: "L",
+          quantity: 89,
+          _id: "657764e91ad5c1a036486234",
+        },
+        {
+          color: "Khaki",
+          size: "XL",
+          quantity: 192,
+          _id: "657764e91ad5c1a036486235",
+        },
+        {
+          color: "Puce",
+          size: "L",
+          quantity: 66,
+          _id: "657764e91ad5c1a036486236",
+        },
+        {
+          color: "Red",
+          size: "S",
+          quantity: 16,
+          _id: "657764e91ad5c1a036486237",
+        },
+        {
+          color: "Pink",
+          size: "M",
+          quantity: 41,
+          _id: "657764e91ad5c1a036486238",
+        },
       ],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319608/row-1-column-4_q5d9l0.jpg",
-
         name: "Flashpoint",
       },
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700929193/men%27s%20wear%20products/nimble-made-hMMXhKSZk7k-unsplash_rn5vxk.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700929193/men%27s%20wear%20products/santhosh-kumar-RqYTuWkTdEs-unsplash_cuig6e.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "sarkidornis-shirts",
       createdAt: "2023-01-04T11:03:36.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a036486239",
       name: "Meles polo shirts",
       shortDescription:
         "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
@@ -586,24 +663,29 @@ module.exports = {
         isActive: true,
         discountPercentage: 18,
         startDate: "2023-12-11T00:00:00.000Z",
+
         endDate: "2023-12-26T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade08",
       variations: [],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319609/row-2-column-2_bxuybr.jpg",
-
         name: "Tanoodle",
       },
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700929496/men%27s%20wear%20products/clement-vatte-Y-00g_VgQTc-unsplash_1_jaxmbc.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700929501/men%27s%20wear%20products/clement-vatte-o5-3txB1M3w-unsplash_vlt2eg.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "meles-polo-shirts",
       createdAt: "2023-05-03T00:16:14.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a03648623a",
       name: "Falco sweatshirt",
       shortDescription:
         "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
@@ -614,24 +696,35 @@ module.exports = {
         isActive: true,
         discountPercentage: 20,
         startDate: "2023-11-28T00:00:00.000Z",
+
         endDate: "2023-12-10T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade09",
-      variations: [{ color: "Fuscia", size: "L", quantity: 181 }],
+      variations: [
+        {
+          color: "Fuscia",
+          size: "L",
+          quantity: 181,
+          _id: "657764e91ad5c1a03648623b",
+        },
+      ],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319607/row-4-column-1_nzjv9g.jpg",
-
         name: "Brainbox",
       },
-
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700929750/men%27s%20wear%20products/t-shirt-3995093_640_dicazo.png",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "falco-sweatshirt",
       createdAt: "2022-12-18T04:19:18.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a03648623c",
       name: "Cercatetus cardigan sweaters",
       shortDescription:
         "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
@@ -642,35 +735,84 @@ module.exports = {
         isActive: true,
         discountPercentage: 25,
         startDate: "2023-12-02T00:00:00.000Z",
+
         endDate: "2023-12-12T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade0a",
       variations: [
-        { color: "Yellow", size: "XL", quantity: 30 },
-        { color: "Yellow", size: "XL", quantity: 58 },
-        { color: "Mauv", size: "XL", quantity: 36 },
-        { color: "Aquamarine", size: "S", quantity: 158 },
-        { color: "Goldenrod", size: "M", quantity: 42 },
-        { color: "Puce", size: "S", quantity: 4 },
-        { color: "Red", size: "M", quantity: 78 },
-        { color: "Crimson", size: "XL", quantity: 36 },
-        { color: "Orange", size: "M", quantity: 94 },
+        {
+          color: "Yellow",
+          size: "XL",
+          quantity: 30,
+          _id: "657764e91ad5c1a03648623d",
+        },
+        {
+          color: "Yellow",
+          size: "XL",
+          quantity: 58,
+          _id: "657764e91ad5c1a03648623e",
+        },
+        {
+          color: "Mauv",
+          size: "XL",
+          quantity: 36,
+          _id: "657764e91ad5c1a03648623f",
+        },
+        {
+          color: "Aquamarine",
+          size: "S",
+          quantity: 158,
+          _id: "657764e91ad5c1a036486240",
+        },
+        {
+          color: "Goldenrod",
+          size: "M",
+          quantity: 42,
+          _id: "657764e91ad5c1a036486241",
+        },
+        {
+          color: "Puce",
+          size: "S",
+          quantity: 4,
+          _id: "657764e91ad5c1a036486242",
+        },
+        {
+          color: "Red",
+          size: "M",
+          quantity: 78,
+          _id: "657764e91ad5c1a036486243",
+        },
+        {
+          color: "Crimson",
+          size: "XL",
+          quantity: 36,
+          _id: "657764e91ad5c1a036486244",
+        },
+        {
+          color: "Orange",
+          size: "M",
+          quantity: 94,
+          _id: "657764e91ad5c1a036486245",
+        },
       ],
       brand: {
+        featured: false,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319607/row-4-column-4_rlcrrs.jpg",
-
         name: "Gigazoom",
       },
-
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700931278/men%27s%20wear%20products/OIP1_dwxcux.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700931277/men%27s%20wear%20products/R_o4qrh1.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "cercatetus-cardigan-sweaters",
       createdAt: "2023-01-16T22:26:06.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a036486246",
       name: "Marmota jeans",
       shortDescription:
         "Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
@@ -681,29 +823,48 @@ module.exports = {
         isActive: true,
         discountPercentage: 22,
         startDate: "2023-11-29T00:00:00.000Z",
+
         endDate: "2023-12-08T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade0c",
       variations: [
-        { color: "Indigo", size: "XL", quantity: 187 },
-        { color: "Blue", size: "S", quantity: 122 },
-        { color: "Crimson", size: "L", quantity: 162 },
+        {
+          color: "Indigo",
+          size: "XL",
+          quantity: 187,
+          _id: "657764e91ad5c1a036486247",
+        },
+        {
+          color: "Blue",
+          size: "S",
+          quantity: 122,
+          _id: "657764e91ad5c1a036486248",
+        },
+        {
+          color: "Crimson",
+          size: "L",
+          quantity: 162,
+          _id: "657764e91ad5c1a036486249",
+        },
       ],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319606/row-1-column-1_mkaqmr.jpg",
-
         name: "Zoozzy",
       },
-
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700935058/men%27s%20wear%20products/R_1_nbcqlf.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700935049/men%27s%20wear%20products/R_2_acsk2g.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "marmota-jeans",
       createdAt: "2023-03-29T10:45:24.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a03648624a",
       name: "Haliaetus pants",
       shortDescription:
         "Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.",
@@ -714,25 +875,29 @@ module.exports = {
         isActive: false,
         discountPercentage: 0,
         startDate: "2023-12-01T00:00:00.000Z",
+
         endDate: "2023-12-31T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade0d",
       variations: [],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319606/row-1-column-1_mkaqmr.jpg",
-
         name: "Zoozzy",
       },
-
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700935278/men%27s%20wear%20products/OIP_fj2b8b.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700935278/men%27s%20wear%20products/R_eq1qru.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "haliaetus-pants",
       createdAt: "2023-09-28T14:10:06.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a03648624b",
       name: "Myiarchus shorts",
       shortDescription:
         "Phasellus in felis. Donec semper sapien a libero. Nam dui.",
@@ -743,30 +908,54 @@ module.exports = {
         isActive: false,
         discountPercentage: 0,
         startDate: "2023-12-01T00:00:00.000Z",
+
         endDate: "2023-12-31T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade0e",
       variations: [
-        { color: "Indigo", size: "XL", quantity: 86 },
-        { color: "Goldenrod", size: "XL", quantity: 196 },
-        { color: "Goldenrod", size: "XL", quantity: 57 },
-        { color: "Pink", size: "L", quantity: 97 },
+        {
+          color: "Indigo",
+          size: "XL",
+          quantity: 86,
+          _id: "657764e91ad5c1a03648624c",
+        },
+        {
+          color: "Goldenrod",
+          size: "XL",
+          quantity: 196,
+          _id: "657764e91ad5c1a03648624d",
+        },
+        {
+          color: "Goldenrod",
+          size: "XL",
+          quantity: 57,
+          _id: "657764e91ad5c1a03648624e",
+        },
+        {
+          color: "Pink",
+          size: "L",
+          quantity: 97,
+          _id: "657764e91ad5c1a03648624f",
+        },
       ],
       brand: {
+        featured: false,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319605/row-3-column-4_a9kcl4.jpg",
-
         name: "Twinder",
       },
-
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700936171/men%27s%20wear%20products/SE2060_NAVY_vdy3he.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700938774/men%27s%20wear%20products/men-s-short_ritrib.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "myiarchus-shorts",
       createdAt: "2023-06-30T05:24:57.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a036486250",
       name: "Felis Trousers",
       shortDescription:
         "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.",
@@ -777,25 +966,37 @@ module.exports = {
         isActive: false,
         discountPercentage: 0,
         startDate: "2023-12-01T00:00:00.000Z",
+
         endDate: "2023-12-31T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade0f",
-      variations: [{ color: "Aquamarine", size: "XL", quantity: 79 }],
+      variations: [
+        {
+          color: "Aquamarine",
+          size: "XL",
+          quantity: 79,
+          _id: "657764e91ad5c1a036486251",
+        },
+      ],
       brand: {
+        featured: false,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319605/row-3-column-4_a9kcl4.jpg",
-
         name: "Twinder",
       },
-
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700938968/men%27s%20wear%20products/OIP_1_lcyke9.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700938969/men%27s%20wear%20products/R_1_zawwqy.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "felis-trousers",
       createdAt: "2023-10-17T01:01:01.000Z",
+
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a036486252",
       name: "Papio jackets",
       shortDescription:
         "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
@@ -806,35 +1007,84 @@ module.exports = {
         isActive: false,
         discountPercentage: 0,
         startDate: "2023-12-01T00:00:00.000Z",
+
         endDate: "2023-12-31T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade11",
       variations: [
-        { color: "Puce", size: "S", quantity: 101 },
-        { color: "Puce", size: "M", quantity: 33 },
-        { color: "Pink", size: "XL", quantity: 156 },
-        { color: "Purple", size: "M", quantity: 52 },
-        { color: "Orange", size: "S", quantity: 15 },
-        { color: "Mauv", size: "XL", quantity: 194 },
-        { color: "Goldenrod", size: "XL", quantity: 141 },
-        { color: "Indigo", size: "L", quantity: 103 },
-        { color: "Crimson", size: "XL", quantity: 123 },
+        {
+          color: "Puce",
+          size: "S",
+          quantity: 101,
+          _id: "657764e91ad5c1a036486253",
+        },
+        {
+          color: "Puce",
+          size: "M",
+          quantity: 33,
+          _id: "657764e91ad5c1a036486254",
+        },
+        {
+          color: "Pink",
+          size: "XL",
+          quantity: 156,
+          _id: "657764e91ad5c1a036486255",
+        },
+        {
+          color: "Purple",
+          size: "M",
+          quantity: 52,
+          _id: "657764e91ad5c1a036486256",
+        },
+        {
+          color: "Orange",
+          size: "S",
+          quantity: 15,
+          _id: "657764e91ad5c1a036486257",
+        },
+        {
+          color: "Mauv",
+          size: "XL",
+          quantity: 194,
+          _id: "657764e91ad5c1a036486258",
+        },
+        {
+          color: "Goldenrod",
+          size: "XL",
+          quantity: 141,
+          _id: "657764e91ad5c1a036486259",
+        },
+        {
+          color: "Indigo",
+          size: "L",
+          quantity: 103,
+          _id: "657764e91ad5c1a03648625a",
+        },
+        {
+          color: "Crimson",
+          size: "XL",
+          quantity: 123,
+          _id: "657764e91ad5c1a03648625b",
+        },
       ],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319605/row-3-column-2_swxk2x.jpg",
-
         name: "Midel",
       },
-
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939156/men%27s%20wear%20products/OIP_2_yeuycu.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939161/men%27s%20wear%20products/R_2_iz9gzv.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "papio-jackets",
       createdAt: "2023-09-18T15:10:49.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a03648625c",
       name: "latifrons coats",
       shortDescription:
         "Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
@@ -845,30 +1095,60 @@ module.exports = {
         isActive: true,
         discountPercentage: 28,
         startDate: "2023-12-03T00:00:00.000Z",
+
         endDate: "2023-12-16T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade12",
       variations: [
-        { color: "Crimson", size: "S", quantity: 168 },
-        { color: "Pink", size: "XL", quantity: 66 },
-        { color: "Green", size: "S", quantity: 70 },
-        { color: "Purple", size: "L", quantity: 194 },
-        { color: "Mauv", size: "S", quantity: 14 },
+        {
+          color: "Crimson",
+          size: "S",
+          quantity: 168,
+          _id: "657764e91ad5c1a03648625d",
+        },
+        {
+          color: "Pink",
+          size: "XL",
+          quantity: 66,
+          _id: "657764e91ad5c1a03648625e",
+        },
+        {
+          color: "Green",
+          size: "S",
+          quantity: 70,
+          _id: "657764e91ad5c1a03648625f",
+        },
+        {
+          color: "Purple",
+          size: "L",
+          quantity: 194,
+          _id: "657764e91ad5c1a036486260",
+        },
+        {
+          color: "Mauv",
+          size: "S",
+          quantity: 14,
+          _id: "657764e91ad5c1a036486261",
+        },
       ],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319605/row-3-column-2_swxk2x.jpg",
         name: "Midel",
       },
-
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939509/men%27s%20wear%20products/R_3_vrlcna.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939506/men%27s%20wear%20products/OIP_3_tfpctp.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "latifrons-coats",
       createdAt: "2023-10-18T05:54:39.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a036486262",
       name: "Ateles blazers",
       shortDescription:
         "In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
@@ -879,32 +1159,66 @@ module.exports = {
         isActive: false,
         discountPercentage: 0,
         startDate: "2023-12-01T00:00:00.000Z",
+
         endDate: "2023-12-31T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade13",
       variations: [
-        { color: "Red", size: "M", quantity: 17 },
-        { color: "Mauv", size: "S", quantity: 31 },
-        { color: "Green", size: "XL", quantity: 34 },
-        { color: "Fuscia", size: "L", quantity: 124 },
-        { color: "Turquoise", size: "XL", quantity: 169 },
-        { color: "Khaki", size: "XL", quantity: 165 },
+        {
+          color: "Red",
+          size: "M",
+          quantity: 17,
+          _id: "657764e91ad5c1a036486263",
+        },
+        {
+          color: "Mauv",
+          size: "S",
+          quantity: 31,
+          _id: "657764e91ad5c1a036486264",
+        },
+        {
+          color: "Green",
+          size: "XL",
+          quantity: 34,
+          _id: "657764e91ad5c1a036486265",
+        },
+        {
+          color: "Fuscia",
+          size: "L",
+          quantity: 124,
+          _id: "657764e91ad5c1a036486266",
+        },
+        {
+          color: "Turquoise",
+          size: "XL",
+          quantity: 169,
+          _id: "657764e91ad5c1a036486267",
+        },
+        {
+          color: "Khaki",
+          size: "XL",
+          quantity: 165,
+          _id: "657764e91ad5c1a036486268",
+        },
       ],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319614/row-1-column-3_gugzrw.jpg",
-
         name: "Roombo",
       },
-
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939738/men%27s%20wear%20products/R_4_yxa3ld.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939734/men%27s%20wear%20products/OIP_4_e5nn4w.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "ateles-blazers",
       createdAt: "2022-12-16T04:00:25.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a036486269",
       name: "Merops vests",
       shortDescription:
         "Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.",
@@ -915,35 +1229,84 @@ module.exports = {
         isActive: true,
         discountPercentage: 15,
         startDate: "2023-12-01T00:00:00.000Z",
+
         endDate: "2023-12-15T00:00:00.000Z",
       },
       category: "6561c4749ef7bf78863ade14",
       variations: [
-        { color: "Turquoise", size: "M", quantity: 118 },
-        { color: "Aquamarine", size: "XL", quantity: 7 },
-        { color: "Orange", size: "XL", quantity: 30 },
-        { color: "Green", size: "M", quantity: 153 },
-        { color: "Yellow", size: "S", quantity: 177 },
-        { color: "Violet", size: "S", quantity: 142 },
-        { color: "Puce", size: "XL", quantity: 198 },
-        { color: "Yellow", size: "XL", quantity: 78 },
-        { color: "Green", size: "S", quantity: 36 },
+        {
+          color: "Turquoise",
+          size: "M",
+          quantity: 118,
+          _id: "657764e91ad5c1a03648626a",
+        },
+        {
+          color: "Aquamarine",
+          size: "XL",
+          quantity: 7,
+          _id: "657764e91ad5c1a03648626b",
+        },
+        {
+          color: "Orange",
+          size: "XL",
+          quantity: 30,
+          _id: "657764e91ad5c1a03648626c",
+        },
+        {
+          color: "Green",
+          size: "M",
+          quantity: 153,
+          _id: "657764e91ad5c1a03648626d",
+        },
+        {
+          color: "Yellow",
+          size: "S",
+          quantity: 177,
+          _id: "657764e91ad5c1a03648626e",
+        },
+        {
+          color: "Violet",
+          size: "S",
+          quantity: 142,
+          _id: "657764e91ad5c1a03648626f",
+        },
+        {
+          color: "Puce",
+          size: "XL",
+          quantity: 198,
+          _id: "657764e91ad5c1a036486270",
+        },
+        {
+          color: "Yellow",
+          size: "XL",
+          quantity: 78,
+          _id: "657764e91ad5c1a036486271",
+        },
+        {
+          color: "Green",
+          size: "S",
+          quantity: 36,
+          _id: "657764e91ad5c1a036486272",
+        },
       ],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319614/row-1-column-3_gugzrw.jpg",
-
         name: "Roombo",
       },
-
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939912/men%27s%20wear%20products/OIP_5_pppyoq.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700939912/men%27s%20wear%20products/OIP_6_nbsvpl.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "merops-vests",
       createdAt: "2023-01-28T10:55:19.000Z",
+      __v: 0,
     },
     {
+      _id: "657764e91ad5c1a036486273",
       name: "Diomedea suits",
       shortDescription:
         "Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.",
@@ -954,25 +1317,39 @@ module.exports = {
         isActive: true,
         discountPercentage: 30,
         startDate: "2023-12-08T00:00:00.000Z",
+
         endDate: "2023-12-18T00:00:00.000Z",
       },
       category: "656199a075fd9c58437a1123",
       variations: [
-        { color: "Turquoise", size: "M", quantity: 122 },
-        { color: "Puce", size: "S", quantity: 6 },
+        {
+          color: "Turquoise",
+          size: "M",
+          quantity: 122,
+          _id: "657764e91ad5c1a036486274",
+        },
+        {
+          color: "Puce",
+          size: "S",
+          quantity: 6,
+          _id: "657764e91ad5c1a036486275",
+        },
       ],
       brand: {
+        featured: true,
         image:
           "https://res.cloudinary.com/dh6ec5elc/image/upload/v1702319614/row-1-column-3_gugzrw.jpg",
-
         name: "Roombo",
       },
       images: [
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700940116/men%27s%20wear%20products/2017KE3922_zrupli.jpg",
         "https://res.cloudinary.com/dh6ec5elc/image/upload/v1700940124/men%27s%20wear%20products/OIP_7_uathec.jpg",
       ],
+      averageRating: 0,
+      reviewsCount: 0,
       slug: "diomedea-suits",
       createdAt: "2023-01-21T02:17:47.000Z",
+      __v: 0,
     },
   ],
 };

@@ -58,7 +58,8 @@ const ProductDetail = () => {
               </div>
 
               <p className={styles.description}>
-                Description: {productData.longDescription}
+                <span className={styles.bold}>Description:</span>{" "}
+                {productData.longDescription}
               </p>
 
               <ProductReviews reviews={reviews} />

@@ -1,0 +1,88 @@
+.searchForm {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+  max-width: 350px;
+  margin: 1rem 2rem;
+}
+
+.searchInput,
+.searchButton {
+  position: relative;
+  transition: all 0.5s ease;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.searchInput:focus + .searchButton,
+.searchButton:focus {
+  animation: fadeInButton 0.5s forwards;
+}
+
+@keyframes fadeInButton {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.searchInput:focus {
+  animation: expandInput 0.5s forwards;
+  z-index: 999;
+}
+
+@keyframes expandInput {
+  0% {
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+  }
+  100% {
+    width: calc(100% - 16px);
+    max-width: calc(100% - 16px);
+    height: 80px;
+    padding: 12px;
+  }
+}
+
+.searchButton {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  z-index: 999;
+}
+
+.searchButton:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.searchOverlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 998;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: none;
+}

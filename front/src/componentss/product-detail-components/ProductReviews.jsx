@@ -16,6 +16,7 @@ const borderColorClass = (review) => {
 const ProductReviews = ({ reviews }) => {
   return (
     <>
+      <h3 className={styles.reviewsTitle}>Reviews:</h3>
       {reviews?.map((review, index) => (
         <div
           key={index}

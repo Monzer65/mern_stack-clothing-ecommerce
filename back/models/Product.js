@@ -21,10 +21,20 @@ const productSchema = new mongoose.Schema({
     min: [0, "Product price cannot be negative"],
   },
   discount: {
-    isActive: Boolean,
-    discountPercentage: Number,
-    startDate: Date,
-    endDate: Date,
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
+    discountPercentage: {
+      type: Number,
+      default: 0,
+    },
+    startDate: {
+      type: Date,
+    },
+    endDate: {
+      type: Date,
+    },
   },
   category: {
     type: mongoose.Schema.Types.ObjectId,
@@ -48,12 +58,9 @@ const productSchema = new mongoose.Schema({
     },
   ],
   brand: {
-    image: {
-      type: String,
-    },
-    name: {
-      type: String,
-    },
+    featured: Boolean,
+    image: String,
+    name: { type: String, trim: true },
   },
   images: [
     {

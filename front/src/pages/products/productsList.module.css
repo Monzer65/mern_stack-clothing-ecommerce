@@ -1,0 +1,227 @@
+.productsListContainer {
+  margin-bottom: 10rem;
+}
+
+.productsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Define a custom variable for the primary color */
+:root {
+  --primary-color: #4a90e2;
+}
+
+/* Style the filter container */
+.filterContainer {
+  /* Use a flex layout with wrap */
+  display: flex;
+  flex-wrap: wrap;
+  /* Add some padding and margin */
+  padding: 10px;
+  /* Add a border and a box shadow */
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+/* Style the filter elements */
+.filter {
+  /* Use a flex layout with center alignment */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Add some margin and padding */
+  margin: 10px;
+  padding: 5px;
+  /* Add a border and a border radius */
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  overflow: auto;
+}
+
+/* Style the labels */
+.filter label {
+  /* Use a bold font weight */
+  font-weight: bold;
+  /* Add some margin */
+  margin-right: 10px;
+}
+
+/* Style the select and input elements */
+.filter select,
+.filter input {
+  /* Adjust the height and width */
+  height: 25px;
+  width: 100px;
+  /* Add some padding */
+  padding: 5px;
+  /* Remove the default border and outline */
+  border: none;
+  outline: none;
+}
+
+/* Style the button */
+.filterContainer button {
+  /* Use the primary color for the background and text */
+  background-color: var(--primary-color);
+  color: white;
+  /* Adjust the height and width */
+  height: 40px;
+  width: 150px;
+  /* Add some padding and margin */
+  padding: 10px;
+  margin: 10px;
+  /* Add a border radius and a box shadow */
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  /* Use a pointer cursor on hover */
+  cursor: pointer;
+}
+
+/* Style the sort element */
+.sort {
+  /* Use a flex layout with center alignment */
+  display: flex;
+  align-items: center;
+  /* Add some margin and padding */
+  margin: 10px;
+  padding: 10px;
+  /* Add a border and a border radius */
+  border: 1px solid #4a90e2;
+  border-radius: 10px;
+}
+
+/* Style the labels */
+.sort label {
+  /* Use a bold font weight */
+  font-weight: bold;
+  /* Add some margin */
+  margin-right: 10px;
+}
+
+/* Style the select elements */
+.sort select {
+  /* Adjust the height and width */
+  height: 30px;
+  width: 100px;
+  /* Add some padding */
+  padding: 5px;
+  /* Remove the default border and outline */
+  border: none;
+  outline: none;
+}
+
+/* Style the products list element */
+.productsList {
+  /* Use a grid layout with three columns */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* Add some gap between the grid items */
+  grid-gap: 20px;
+  /* Add some margin and padding */
+  margin: 20px;
+  padding: 20px;
+}
+
+/* Style the product item element */
+.productItem {
+  /* Add a border and a box shadow */
+  border: 1px solid #4a90e2;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Add some padding */
+  padding: 10px;
+  /* Use a pointer cursor on hover */
+  cursor: pointer;
+}
+
+/* Style the product image element */
+.productItem img {
+  /* Adjust the height and width */
+  height: 200px;
+  width: 200px;
+  /* Center the image */
+  display: block;
+  margin: auto;
+}
+
+/* Style the product name element */
+.productItem h3 {
+  /* Use a center text alignment */
+  text-align: center;
+  /* Use a bold font weight */
+  font-weight: bold;
+}
+
+/* Style the product description element */
+.productItem p {
+  /* Use a justify text alignment */
+  text-align: justify;
+  /* Add some margin */
+  margin: 10px;
+}
+
+/* Style the product price element */
+.productItem span {
+  /* Use a center text alignment */
+  text-align: center;
+  /* Use a bold font weight */
+  font-weight: bold;
+  /* Use a green color */
+  color: green;
+}
+
+/* Use a media query for screens that are wider than 768px */
+@media screen and (min-width: 768px) {
+  /* Make the filter container a sidebar with fixed position and width */
+  .filterContainer {
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Adjust the margin of the products list container to avoid overlapping with the sidebar */
+  .productsListContainer {
+    position: relative;
+    margin-left: 250px;
+  }
+}
+
+/* Use a media query for screens that are narrower than 768px */
+@media screen and (max-width: 768px) {
+  /* Make the filter container a top bar with relative position and width */
+  .filterContainer {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Make the filter elements display horizontally with flex layout */
+  .filter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  /* Adjust the width of the select and input elements to fit the screen */
+  .filter select,
+  .filter input {
+    width: 80px;
+  }
+
+  /* Adjust the margin of the products list container to avoid overlapping with the top bar */
+  .productsListContainer {
+    margin-top: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .productsList {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

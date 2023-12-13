@@ -2,4 +2,5 @@
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: violet;
+  object-position: calc(100% - 1000px, 100% - 1000px);
 }

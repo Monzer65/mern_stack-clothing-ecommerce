@@ -187,6 +187,8 @@ input[type="radio"] {
 }
 
 .description {
+  display: flex;
+  flex-direction: column;
   font-family: "Open Sans", sans-serif; /* Use a clean and modern font */
   font-size: 18px; /* Set a comfortable reading size */
   line-height: 1.6; /* Space out the lines for better readability */
@@ -197,6 +199,20 @@ input[type="radio"] {
   background-color: #f8f8f8; /* Use a subtle background color */
   border-left: 4px solid #5b9bd5; /* Add an accent border to the left */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow */
+}
+
+.description .bold {
+  font-weight: bold;
+}
+
+.reviewsTitle {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  margin-block: 2rem 16px;
+  color: #333;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .reviewContainer {

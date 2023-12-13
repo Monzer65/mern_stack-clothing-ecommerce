@@ -3,8 +3,47 @@ import { apiSlice } from "./apiSlice";
 // Define your profile API slice
 export const productApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    fetchNoQueryProducts: builder.query({
+      query: () => ({
+        url: "/products",
+      }),
+    }),
+
     fetchProducts: builder.query({
-      query: () => "/products",
+      query: (arg) => {
+        const {
+          page,
+          limit,
+          sortBy,
+          sortOrder,
+          search,
+          minPrice,
+          maxPrice,
+          brand,
+          discount,
+          newArrival,
+          category,
+          ratings,
+        } = arg;
+        console.log("arg: ", arg);
+        return {
+          url: "/products",
+          params: {
+            page,
+            limit,
+            sortBy,
+            sortOrder,
+            search,
+            minPrice,
+            maxPrice,
+            brand,
+            discount,
+            newArrival,
+            category,
+            ratings,
+          },
+        };
+      },
     }),
 
     fetchProductDetail: builder.query({
@@ -12,8 +51,18 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `/products/${id}`,
       }),
     }),
+
+    fetchBrands: builder.query({
+      query: () => ({
+        url: "/products/brands",
+      }),
+    }),
   }),
 });
 
-export const { useFetchProductsQuery, useFetchProductDetailQuery } =
-  productApiSlice;
+export const {
+  useFetchNoQueryProductsQuery,
+  useFetchProductsQuery,
+  useFetchProductDetailQuery,
+  useFetchBrandsQuery,
+} = productApiSlice;
