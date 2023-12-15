@@ -1,0 +1,230 @@
+/* .filterSortContainer {
+  justify-content: space-between;
+}
+
+.filterContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filterContainer {
+  display: flex;
+
+  padding: 10px;
+
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+  margin: 10px;
+  padding: 5px;
+
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+
+  overflow: auto;
+}
+
+.filter label {
+  font-weight: bold;
+
+  margin-right: 10px;
+}
+
+.filter select,
+.filter input {
+  height: 25px;
+  width: 100px;
+
+  padding: 5px;
+
+  border: none;
+  outline: none;
+}
+
+.filterContainer button {
+  background-color: var(--primary-color);
+  color: white;
+
+  height: 40px;
+  width: 150px;
+
+  padding: 10px;
+  margin: 10px;
+
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  cursor: pointer;
+}
+
+.sort {
+  display: flex;
+  align-items: center;
+
+  margin: 10px;
+  padding: 10px;
+
+  border: 1px solid #4a90e2;
+  border-radius: 10px;
+}
+
+.sort label {
+  font-weight: bold;
+
+  margin-right: 10px;
+}
+
+.sort select {
+  height: 30px;
+  width: 100px;
+
+  padding: 5px;
+
+  border: none;
+  outline: none;
+}
+
+@media screen and (max-width: 768px) {
+  .filterContainer {
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+} */
+
+.sortContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  margin: 20px;
+  border: 2px solid #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sortContainer label {
+  font-weight: bold;
+}
+
+.sortContainer select {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  padding: 5px 10px;
+  margin-right: 15px;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+/* Define a custom class for the filter sort container */
+.filterSortContainer {
+  padding: 10px;
+  margin: 20px;
+  border: 2px solid #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Define a custom class for the filter container */
+.filterContainer {
+  /* Use flexbox to align the elements vertically */
+  display: flex;
+  flex-direction: column;
+  /* Add some space between the elements */
+  gap: 10px;
+}
+
+/* Style the filter elements */
+.filter {
+  /* Use flexbox to align the elements horizontally */
+  display: flex;
+  /* Add some space between the elements */
+  gap: 10px;
+  /* Center the elements vertically */
+  align-items: center;
+}
+
+/* Style the labels */
+.filter label {
+  /* Use a bold font weight */
+  font-weight: bold;
+  /* Add some margin to the right */
+  margin-right: 5px;
+}
+
+/* Style the input elements */
+.filter input {
+  /* Use a custom font family */
+  font-family: Arial, sans-serif;
+  /* Use a custom font size */
+  font-size: 16px;
+  /* Add some padding for the input elements */
+  padding: 5px 10px;
+  /* Add a border and a border radius for the input elements */
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+/* Style the checkbox elements */
+.filter input[type="checkbox"] {
+  /* Remove the default appearance of the checkbox elements */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Use a custom width and height for the checkbox elements */
+  width: 20px;
+  height: 20px;
+  /* Use a custom background color for the checkbox elements */
+  background-color: #fff;
+  /* Add a custom background image for the checkbox elements when checked */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333'%3E%3Cpath d='M5.5 10.5l-3-3 1.5-1.5 1.5 1.5 4.5-4.5 1.5 1.5-6 6z'/%3E%3C/svg%3E");
+  /* Position the background image to the center */
+  background-position: center;
+  /* Prevent the background image from repeating */
+  background-repeat: no-repeat;
+  /* Hide the background image when not checked */
+  background-size: 0;
+}
+
+/* Show the background image when checked */
+.filter input[type="checkbox"]:checked {
+  background-size: contain;
+}
+
+/* Example CSS styling for range inputs */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  margin: 5px 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #4caf50;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #4caf50;
+  cursor: pointer;
+}

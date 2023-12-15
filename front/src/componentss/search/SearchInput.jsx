@@ -9,11 +9,13 @@ const SearchInput = ({ setSearchParams }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const updatedSearchParams = new URLSearchParams();
-    updatedSearchParams.set("search", search);
-    setSearchParams(updatedSearchParams);
-    inputRef.current.blur();
-    overlayRef.current.style.display = "none";
+    if (search.trim() !== "") {
+      const updatedSearchParams = new URLSearchParams();
+      updatedSearchParams.set("search", search);
+      setSearchParams(updatedSearchParams);
+      inputRef.current.blur();
+      overlayRef.current.style.display = "none";
+    }
   };
 
   return (

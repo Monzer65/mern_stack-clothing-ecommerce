@@ -6,9 +6,9 @@ export default function Layout() {
     <>
       <Header />
       <Outlet />
-      <footer>
+      {/* <footer>
         <p>&copy; 2023 YourWebsite.com</p>
-      </footer>
+      </footer> */}
     </>
   );
 }

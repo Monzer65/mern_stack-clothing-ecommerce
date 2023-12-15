@@ -1,5 +1,7 @@
 import propTypes from "prop-types";
 import styles from "./filterSort.module.css"; // Import your styles if needed
+import CustomCategoryTree from "../categories/CategoryTree";
+import TwoWayRangeInput from "../two-ways-range-input/TwoWaysRangeInput";
 
 function FilterSort({
   category,
@@ -14,42 +16,46 @@ function FilterSort({
   handleFilterChange,
 }) {
   return (
-    <div className={styles.filterContainer}>
-      {/* filter */}
+    <div className={styles.filterSortContainer}>
       <div className={styles.filterContainer}>
+        <CustomCategoryTree
+          category={category}
+          handleFilterChange={handleFilterChange}
+        />
         <div className={styles.filter}>
-          <label htmlFor='category'>Category:</label>
-          <select
-            id='category'
-            name='category'
-            value={category || ""}
-            onChange={(e) => handleFilterChange(e)}
-          >
-            <option value=''>All</option>
-            <option value='shoes'>shoes</option>
-            <option value='clothing'>clothing</option>
-          </select>
-        </div>
-
-        <div className={styles.filter}>
-          <label htmlFor='minPrice'>Min Price:</label>
+          <TwoWayRangeInput
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            handleFilterChange={handleFilterChange}
+          />
+          {/* <label htmlFor='minPrice'>Min Price:</label>
           <input
-            type='number'
+            type='range'
             id='minPrice'
             name='minPrice'
             value={minPrice || ""}
             onChange={(e) => handleFilterChange(e)}
+            onInput={(e) => {
+              updateRangeValue(e, "minRangeValue");
+              updateMaxPriceRange();
+            }}
           />
+
+          <span id='minRangeValue'>0</span>
+
           <label htmlFor='maxPrice'>Max Price:</label>
           <input
-            type='number'
+            type='range'
             id='maxPrice'
             name='maxPrice'
             value={maxPrice || ""}
             onChange={(e) => handleFilterChange(e)}
-          />
+            onInput={(e) => updateRangeValue(e, "maxRangeValue")}
+            min={minPrice}
+          /> 
+          <span id='maxRangeValue'>0</span>
+          */}
         </div>
-
         <div className={styles.filter}>
           <label htmlFor='ratings'>Ratings:</label>
           <input
@@ -60,7 +66,6 @@ function FilterSort({
             onChange={(e) => handleFilterChange(e)}
           />
         </div>
-
         <div className={styles.filter}>
           <label htmlFor='brand'>Brand:</label>
           <input
@@ -71,7 +76,6 @@ function FilterSort({
             onChange={(e) => handleFilterChange(e)}
           />
         </div>
-
         <div className={styles.filter}>
           <label htmlFor='newArrival'>New Arrival:</label>
           <input
@@ -82,7 +86,6 @@ function FilterSort({
             onChange={(e) => handleFilterChange(e)}
           />
         </div>
-
         <div className={styles.filter}>
           <label htmlFor='discount'>Discount:</label>
           <input
@@ -94,8 +97,9 @@ function FilterSort({
           />
         </div>
       </div>
+
       {/* sort */}
-      <div className={styles.sort}>
+      <div className={styles.sortContainer}>
         <label htmlFor='sort'>Sort By:</label>
         <select
           id='sort'

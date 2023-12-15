@@ -81,7 +81,7 @@ function Pagination({ currentPage, totalPages, handlePageChange }) {
 
 Pagination.propTypes = {
   currentPage: propTypes.number.isRequired,
-  totalPages: propTypes.number.isRequired,
+  totalPages: propTypes.number,
   handlePageChange: propTypes.func.isRequired,
 };
 

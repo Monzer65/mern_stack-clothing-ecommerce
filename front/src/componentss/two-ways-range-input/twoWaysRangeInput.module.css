@@ -1,0 +1,42 @@
+:root {
+  --slider-width: 300px;
+  --slider-height: 25px;
+  --slider-thumb-size: 25px;
+  --slider-thumb-color: #808080;
+  --slider-track-color: #d3d3d3;
+  --slider-active-color: #04aa6d;
+}
+
+.slidecontainer {
+  width: var(--slider-width);
+}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: var(--slider-height);
+  background: transparent;
+  outline: none;
+}
+
+.trackLine {
+  height: var(--slider-height);
+  background: var(--slider-track-color);
+  border-radius: 10px;
+}
+
+.thumb {
+  cursor: pointer;
+  border: 1px solid var(--slider-thumb-color);
+  background-color: var(--slider-thumb-color);
+  height: var(--slider-thumb-size);
+  width: var(--slider-thumb-size);
+  padding-inline: 5px;
+  border-radius: 999px;
+}
+
+.activeThumb {
+  background: var(--slider-active-color);
+  border: 1px solid var(--slider-active-color);
+}

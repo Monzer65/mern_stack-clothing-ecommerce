@@ -96,7 +96,6 @@ router.get("/", async (req, res, next) => {
     }
 
     if (newArrival) {
-      console.log("newArrival:", newArrival);
       pipeline.push({
         $match: {
           $expr: {
@@ -111,7 +110,6 @@ router.get("/", async (req, res, next) => {
           },
         },
       });
-      console.log("pipeline:", pipeline);
     }
 
     if (discount) {
@@ -128,7 +126,6 @@ router.get("/", async (req, res, next) => {
 
     if (category) {
       const categoryIds = await getAllCategoryIds(category);
-      console.log("Category IDs:", categoryIds);
       pipeline.push({
         $match: { category: { $in: categoryIds } },
       });

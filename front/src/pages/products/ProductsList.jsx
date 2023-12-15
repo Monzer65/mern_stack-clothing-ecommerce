@@ -54,6 +54,15 @@ export default function ProductsList() {
     if (name === "search") {
       newFilterParams = new URLSearchParams();
       newFilterParams.set("page", "1");
+    } else if (name === "category") {
+      newFilterParams.set("category", value);
+      newFilterParams.set("page", "1");
+    } else if (name === "priceRange") {
+      // Assuming priceRange is an object containing minPrice and maxPrice
+      const { minPrice, maxPrice } = value;
+      newFilterParams.set("minPrice", minPrice);
+      newFilterParams.set("maxPrice", maxPrice);
+      newFilterParams.set("page", "1");
     } else {
       if (newValue) {
         newFilterParams.set(name, newValue);
@@ -106,10 +115,6 @@ export default function ProductsList() {
   useEffect(() => {
     if (data) {
       setProductsData(data);
-      // setMinPriceRange(data.minMaxPrice[0]);
-      // setMaxPriceRange(data.maxPrice);
-      // setCategories(data.category?.name || "");
-      // setBrands(data.brand?.name || "");
     }
     refetch();
   }, [data, refetch]);

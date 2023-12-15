@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useFetchCategoriesQuery } from "../../reducers/categoriesApiSlice";
-import styles from "./categories.module.css";
+import styles from "./secondLevelCategories.module.css";
 
-export default function Categories() {
+export default function SecondLevelCategories() {
   // const [categoriesData, setCategoriesData] = useState([]);
   const [secondLevelCategories, setSecondLevelCategories] = useState([]);
 
@@ -16,11 +16,7 @@ export default function Categories() {
   useEffect(() => {
     if (categories) {
       // Filter categories to display only second-level categories
-      const secondLevel = categories.filter(
-        (category) =>
-          category.parentCategory &&
-          category.parentCategory.parentCategory == null
-      );
+      const secondLevel = categories.filter((category) => category.level === 1);
 
       setSecondLevelCategories(secondLevel);
     }

@@ -7,26 +7,32 @@ const jwtAuth = require("../middlewares/jwtAuth");
 
 router.get("/", async (req, res, next) => {
   try {
-    const categories = await Category.find().populate({
-      path: "parentCategory",
-      populate: { path: "parentCategory" },
-    });
+    const categories = await Category.find();
+
     if (!categories || categories.length === 0) {
-      throw new error("Categories not found");
+      throw new Error("Categories not found");
     }
-    // Filter out categories that are deeper than 3 levels
-    const filteredCategories = categories.filter((category) => {
-      let level = 0;
-      let currentCategory = category;
-      while (currentCategory.parentCategory) {
-        level++;
-        currentCategory = currentCategory.parentCategory;
+
+    const calculateCategoryLevel = async (categoryId, level) => {
+      if (!categoryId) {
+        return level; // Base case: Return the level when there's no parent category
       }
-      return level < 3;
-    });
-    res.status(200).json(filteredCategories);
-  } catch (error) {
-    next(error);
+      const parentCategory = await Category.findById(categoryId); // Find the parent category by ID
+      return calculateCategoryLevel(parentCategory.parentCategory, level + 1); // Recursively calculate the level
+    };
+
+    // Add level to each category
+    const categoriesWithLevel = await Promise.all(
+      categories?.map(async (category) => {
+        const level = await calculateCategoryLevel(category.parentCategory, 0);
+        return { ...category._doc, level };
+      })
+    );
+
+    res.json(categoriesWithLevel); // Send categories with their levels as JSON response
+  } catch (err) {
+    console.error(err);
+    next(err);
   }
 });
 

@@ -7,7 +7,7 @@ import SearchInput from "../componentss/search/SearchInput";
 import { useNavigate } from "react-router-dom";
 
 const LazyCategories = lazy(() =>
-  import("../componentss/categories/Categories")
+  import("../componentss/categories/SecondLevelCategories")
 );
 const LazyFeaturedProducts = lazy(() =>
   import("../componentss/featured-products/FeaturedProducts")

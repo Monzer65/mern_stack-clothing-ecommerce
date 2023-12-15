@@ -55,3 +55,18 @@ footer {
   width: 100%;
   margin-top: 6rem;
 }
+
+.track {
+  height: 25px;
+  background-color: #ccc;
+  border-radius: 999px;
+}
+
+.track.track-0,
+.track.track-2 {
+  background-color: #ee8a8a;
+}
+
+.track.track-1 {
+  background-color: #6de66d;
+}
