@@ -1,0 +1,57 @@
+/* YourStyles.module.css */
+
+/* Styles for the cart page */
+.cartPage {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.pageTitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Cart container styles */
+.cartContainer {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+/* Cart table styles */
+.cartTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cartTable th,
+.cartTable td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.cartTable th {
+  background-color: #f2f2f2;
+}
+
+/* Message for empty cart */
+.emptyCartMessage {
+  font-size: 18px;
+  text-align: center;
+  color: #888;
+}
+
+.cartImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.total {
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+  text-align: right;
+  padding-right: 10px;
+}

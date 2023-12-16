@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import styles from "./searchInput.module.css";
 import { FaSearch } from "react-icons/fa";
 
-const SearchInput = ({ setSearchParams }) => {
+const SearchInput = ({ setSearchParams, setIsFilterOpen }) => {
   const formRef = useRef(null);
   const overlayRef = useRef(null);
   const [search, setSearch] = useState("");
@@ -21,6 +21,7 @@ const SearchInput = ({ setSearchParams }) => {
         button.blur();
       });
     }
+    setIsFilterOpen(false);
   };
 
   return (
@@ -60,6 +61,7 @@ const SearchInput = ({ setSearchParams }) => {
 
 SearchInput.propTypes = {
   setSearchParams: PropTypes.func.isRequired,
+  setIsFilterOpen: PropTypes.func,
 };
 
 export default SearchInput;

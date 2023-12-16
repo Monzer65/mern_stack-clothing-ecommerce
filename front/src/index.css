@@ -50,8 +50,8 @@ footer {
   color: #fff;
   text-align: center;
   padding: 10px;
-  position: fixed;
-  bottom: 0;
+  /* position: fixed; */
+  /* bottom: 0; */
   width: 100%;
   margin-top: 6rem;
 }
@@ -60,14 +60,17 @@ footer {
   height: 20px;
   background-color: white;
   border-radius: 20px;
+  border: 1px solid rgb(211, 195, 195);
 }
 
 .track.track-0 {
   background-color: hsl(10, 80%, 60%);
 }
 
-.track.track-1 {
-  /* background-color: hsl(230, 50%, 30%); */
+@media screen and (max-width: 768px) {
+  .track.track-1 {
+    background-color: hsl(230, 50%, 30%);
+  }
 }
 
 .track.track-2 {

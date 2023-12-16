@@ -70,7 +70,7 @@ ProductInformation.propTypes = {
   name: PropTypes.string,
   averageRating: PropTypes.number,
   reviewsCount: PropTypes.number,
-  brand: PropTypes.string,
+  brand: PropTypes.object,
   discount: PropTypes.object,
   price: PropTypes.number,
 };

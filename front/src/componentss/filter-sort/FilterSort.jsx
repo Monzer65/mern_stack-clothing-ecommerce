@@ -5,7 +5,14 @@ import TwoWayRangeInput from "../two-ways-range-input/TwoWaysRangeInput";
 import { useFetchBrandsQuery } from "../../reducers/productsApiSlice";
 import { TbCategory } from "react-icons/tb";
 import { useEffect, useState } from "react";
-import { AiOutlineClear, AiOutlinePlus } from "react-icons/ai";
+import {
+  AiOutlineClear,
+  AiOutlinePlus,
+  AiOutlineMinus,
+  AiOutlineSortAscending,
+  AiOutlineClose,
+} from "react-icons/ai";
+import { MdSort, MdOutlineCheck } from "react-icons/md";
 
 const useWindowWidth = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -35,9 +42,10 @@ function FilterSort({
   sortOrder,
   handleFilterChange,
   setSearchParams,
+  isFilterOpen,
+  setIsFilterOpen,
 }) {
   const { data } = useFetchBrandsQuery();
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const width = useWindowWidth();
   const [showFilters, setShowFilters] = useState({
     category: false,
@@ -66,31 +74,67 @@ function FilterSort({
     }
 
     console.log(isMobile, width);
-  }, [isMobile, width]);
+  }, [isMobile, width, setIsFilterOpen]);
 
   return (
     <div className={styles.filterSortContainer}>
       <div className={styles.filterContainer}>
         <button
-          className={styles.clearButton}
+          className={styles.clearButtonDesktop}
           onClick={() => setSearchParams({})}
           aria-label='clear filters'
         >
           <AiOutlineClear /> Clear Filters
         </button>
         {isMobile && (
-          <div className={styles.filterIcon} onClick={handleToggle}>
+          <div className={styles.toggleFilterButton} onClick={handleToggle}>
             <TbCategory />
           </div>
         )}
         {isFilterOpen && (
           <div className={styles.filters}>
+            <div className={styles.closeAndclearButtonsContainer}>
+              <button
+                className={styles.clearButtonMobile}
+                onClick={() => {
+                  setSearchParams({});
+                  handleToggle();
+                }}
+                aria-label='clear filters'
+              >
+                <AiOutlineClear /> Clear Filters
+              </button>
+              <button
+                className={styles.closeButtonCross + " " + styles.closeButton}
+                onClick={handleToggle}
+              >
+                <AiOutlineClose />
+              </button>
+            </div>
             <div className={styles.filter}>
               <div
                 className={styles.filterHeader}
                 onClick={() => toggleFilter("category")}
               >
-                Category <AiOutlinePlus />
+                {showFilters.category ? (
+                  <p
+                    style={{
+                      backgroundColor: "red",
+                      color: "white",
+                      borderRadius: "4px",
+                      padding: "4px 8px",
+                    }}
+                  >
+                    Category
+                  </p>
+                ) : (
+                  <p>Category</p>
+                )}
+                {showFilters.category ? (
+                  <AiOutlineMinus style={{ color: "red" }} />
+                ) : (
+                  <AiOutlinePlus />
+                )}
               </div>
               {showFilters.category && (
                 <CustomCategoryTree
@@ -104,8 +148,25 @@ function FilterSort({
                 className={styles.filterHeader}
                 onClick={() => toggleFilter("price")}
               >
-                Price
-                <AiOutlinePlus />
+                {showFilters.price ? (
+                  <p
+                    style={{
+                      backgroundColor: "red",
+                      color: "white",
+                      borderRadius: "4px",
+                      padding: "4px 8px",
+                    }}
+                  >
+                    Price
+                  </p>
+                ) : (
+                  <p>Price</p>
+                )}
+                {showFilters.price ? (
+                  <AiOutlineMinus style={{ color: "red" }} />
+                ) : (
+                  <AiOutlinePlus />
+                )}
               </div>
               {showFilters.price && (
                 <TwoWayRangeInput
@@ -120,8 +181,26 @@ function FilterSort({
                 className={styles.filterHeader}
                 onClick={() => toggleFilter("brand")}
               >
-                Brand
-                <AiOutlinePlus />
+                {showFilters.brand ? (
+                  <p
+                    style={{
+                      backgroundColor: "red",
+                      color: "white",
+                      borderRadius: "4px",
+                      padding: "4px 8px",
+                    }}
+                  >
+                    Brand
+                  </p>
+                ) : (
+                  <p>Brand</p>
+                )}
+
+                {showFilters.brand ? (
+                  <AiOutlineMinus style={{ color: "red" }} />
+                ) : (
+                  <AiOutlinePlus />
+                )}
               </div>
               {showFilters.brand && (
                 <div>
@@ -142,6 +221,9 @@ function FilterSort({
                 </div>
               )}
             </div>
+            <button className={styles.applyButton} onClick={handleToggle}>
+              <MdOutlineCheck /> apply and close
+            </button>
           </div>
         )}
       </div>
@@ -150,8 +232,12 @@ function FilterSort({
       <div className={styles.sortContainer}>
         <div className={styles.sortGroup}>
           <label htmlFor='sort' aria-label='sort by'>
-            Sort By:
+            <span className={styles.sortLabelDesktop}>Sort By:</span>{" "}
+            <span className={styles.sortLabelMobile}>
+              <MdSort /> sort
+            </span>
           </label>
+
           <select
             id='sort'
             name='sortBy'
@@ -168,7 +254,10 @@ function FilterSort({
         </div>
         <div className={styles.sortGroup}>
           <label htmlFor='order' aria-label='sorting order'>
-            Order:
+            <span className={styles.sortLabelDesktop}>Order:</span>
+            <span className={styles.sortLabelMobile}>
+              <AiOutlineSortAscending /> order
+            </span>
           </label>
           <select
             id='order'
@@ -196,6 +285,8 @@ FilterSort.propTypes = {
   sortOrder: propTypes.string,
   handleFilterChange: propTypes.func,
   setSearchParams: propTypes.func,
+  setIsFilterOpen: propTypes.func,
+  isFilterOpen: propTypes.bool,
 };
 
 export default FilterSort;

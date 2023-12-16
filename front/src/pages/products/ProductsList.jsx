@@ -10,6 +10,8 @@ import LoadingSpinner from "../../componentss/spinners/LoadingGrid";
 
 export default function ProductsList() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   let filterParams = useMemo(() => {
     const params = new URLSearchParams();
     const filterValues = [
@@ -48,6 +50,7 @@ export default function ProductsList() {
     if (name === "search") {
       newFilterParams = new URLSearchParams();
       newFilterParams.set("page", "1");
+      setIsFilterOpen(false);
     } else if (name === "category") {
       newFilterParams.set("category", value);
       newFilterParams.set("page", "1");
@@ -128,13 +131,19 @@ export default function ProductsList() {
   return (
     <div className={styles.productsListwrapper}>
       <div className={styles.searchWrapper}>
-        <SearchInput setSearchParams={setSearchParams} />
+        <SearchInput
+          setSearchParams={setSearchParams}
+          isFilterOpen={isFilterOpen}
+          setIsFilterOpen={setIsFilterOpen}
+        />
       </div>
 
       <div className={styles.ProductsAndFiltersContainer}>
         <FilterSort
           handleFilterChange={handleFilterChange}
           setSearchParams={setSearchParams}
+          isFilterOpen={isFilterOpen}
+          setIsFilterOpen={setIsFilterOpen}
           category={category}
           minPrice={minPrice}
           maxPrice={maxPrice}

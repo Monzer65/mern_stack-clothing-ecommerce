@@ -1,0 +1,14 @@
+.searchContainer {
+  position: sticky;
+  margin: 2rem auto;
+  width: 100%;
+  padding: 0 2rem;
+  z-index: 1000;
+  max-width: 1000px;
+  top: 0;
+}
+
+.searchContainer > form {
+  width: 100%;
+  margin: auto;
+}

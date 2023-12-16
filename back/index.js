@@ -39,6 +39,8 @@ app.use("/products", require("./routes/products"));
 
 app.use("/reviews", require("./routes/reviews"));
 
+app.use("/cart", require("./routes/cart"));
+
 app.use("/auth", require("./routes/auth"));
 
 app.use("/profile", require("./routes/profile"));

@@ -186,6 +186,20 @@ input[type="radio"] {
   background-color: #45a049;
 }
 
+.productDetail .errMessage {
+  color: #ff0000;
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  text-align: center;
+  margin-top: 10px;
+}
+
+.productDetail .successMessage {
+  color: #008000;
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  text-align: center;
+  margin-top: 10px;
+}
+
 .description {
   display: flex;
   flex-direction: column;

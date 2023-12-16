@@ -13,6 +13,7 @@ import Profile from "./pages/profile/Profile";
 import Verify from "./pages/verify/Verify";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 import ResetPassword from "./pages/reset-password/ResetPassword";
+import Cart from "./pages/cart/Cart";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path='profile' element={<ProfileLayout />}>
               <Route index element={<Profile />} />
             </Route>
+            <Route path={"cart"} element={<Cart />} />
           </Route>
         </Route>
 

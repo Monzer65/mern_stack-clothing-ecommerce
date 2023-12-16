@@ -5,6 +5,7 @@ import LoadingGrid from "../componentss/spinners/LoadingGrid";
 import Brands from "../componentss/brands/Brands";
 import SearchInput from "../componentss/search/SearchInput";
 import { useNavigate } from "react-router-dom";
+import styles from "./home.module.css";
 
 const LazyCategories = lazy(() =>
   import("../componentss/categories/SecondLevelCategories")
@@ -47,7 +48,9 @@ export default function Home() {
         bannerText=''
       />
 
-      <SearchInput setSearchParams={setSearchParams} />
+      <div className={styles.searchContainer}>
+        <SearchInput setSearchParams={setSearchParams} />
+      </div>
 
       <Suspense fallback={<LoadingGrid />}>
         <LazyCategories />
