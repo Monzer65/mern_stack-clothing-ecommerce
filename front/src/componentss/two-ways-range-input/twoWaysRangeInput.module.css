@@ -1,7 +1,7 @@
 :root {
   --slider-width: 300px;
-  --slider-height: 25px;
-  --slider-thumb-size: 25px;
+  --slider-height: 30px;
+  --slider-thumb-size: 20px;
   --slider-thumb-color: #808080;
   --slider-track-color: #d3d3d3;
   --slider-active-color: #04aa6d;
@@ -39,4 +39,14 @@
 .activeThumb {
   background: var(--slider-active-color);
   border: 1px solid var(--slider-active-color);
+}
+
+.rangeText {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.rangeText .rangeValue {
+  font-weight: bold;
 }

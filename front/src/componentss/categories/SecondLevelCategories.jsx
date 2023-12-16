@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFetchCategoriesQuery } from "../../reducers/categoriesApiSlice";
 import styles from "./secondLevelCategories.module.css";
+import { Link } from "react-router-dom";
 
 export default function SecondLevelCategories() {
   // const [categoriesData, setCategoriesData] = useState([]);
@@ -32,7 +33,11 @@ export default function SecondLevelCategories() {
       <h2>Discover by category</h2>
       <div className={styles.categories}>
         {secondLevelCategories?.map((category) => (
-          <div key={category._id} className={styles.categoryCard}>
+          <Link
+            to={`/products?category=${category.slug}`}
+            key={category._id}
+            className={styles.categoryCard}
+          >
             {category.image && (
               <img
                 src={category.image}
@@ -43,7 +48,7 @@ export default function SecondLevelCategories() {
             <div className={styles.categoryDetails}>
               <p>{category.name}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

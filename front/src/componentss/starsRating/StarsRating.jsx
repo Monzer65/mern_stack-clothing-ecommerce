@@ -64,7 +64,15 @@ export default function StarsRating({ rating }) {
     return stars;
   };
 
-  return <div style={{ display: "flex" }}>{renderStars(rating)}</div>;
+  return (
+    <div
+      style={{
+        display: "flex",
+      }}
+    >
+      {renderStars(rating)}
+    </div>
+  );
 }
 
 StarsRating.propTypes = {

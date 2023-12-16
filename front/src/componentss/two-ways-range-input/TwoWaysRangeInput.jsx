@@ -61,20 +61,25 @@ const TwoWayRangeInput = ({ minPrice, maxPrice, handleFilterChange }) => {
           // )}
         />
       </div>
-      <div>
-        min price: {formatValue(value[0])} - max price: {formatValue(value[1])}
+      <div className={styles.rangeText}>
+        <span>
+          min:
+          <span className={styles.rangeValue}> {formatValue(value[0])}</span>
+        </span>
+        -
+        <span>
+          max:
+          <span className={styles.rangeValue}> {formatValue(value[1])}</span>
+        </span>
       </div>
     </div>
   );
 };
 
 TwoWayRangeInput.propTypes = {
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  minPrice: PropTypes.number.isRequired,
-  maxPrice: PropTypes.number.isRequired,
-  step: PropTypes.number.isRequired,
-  handleFilterChange: PropTypes.func.isRequired,
+  minPrice: PropTypes.number,
+  maxPrice: PropTypes.number,
+  handleFilterChange: PropTypes.func,
 };
 
 export default TwoWayRangeInput;

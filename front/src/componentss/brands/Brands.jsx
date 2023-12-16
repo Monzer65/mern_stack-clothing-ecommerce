@@ -20,7 +20,11 @@ const Brands = () => {
       <div className={styles.carousel}>
         <div className={styles.brandCards}>
           {brands.map((brand, index) => (
-            <Link key={index} to={`/products`} className={styles.link}>
+            <Link
+              key={index}
+              to={`/products?brand=${brand.name}`}
+              className={styles.link}
+            >
               <img src={brand.image} alt={brand.name} />
               <h3>{brand.name}</h3>
             </Link>

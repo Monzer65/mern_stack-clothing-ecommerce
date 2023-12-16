@@ -2,129 +2,184 @@ import propTypes from "prop-types";
 import styles from "./filterSort.module.css"; // Import your styles if needed
 import CustomCategoryTree from "../categories/CategoryTree";
 import TwoWayRangeInput from "../two-ways-range-input/TwoWaysRangeInput";
+import { useFetchBrandsQuery } from "../../reducers/productsApiSlice";
+import { TbCategory } from "react-icons/tb";
+import { useEffect, useState } from "react";
+import { AiOutlineClear, AiOutlinePlus } from "react-icons/ai";
+
+const useWindowWidth = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return width;
+};
 
 function FilterSort({
   category,
   minPrice,
   maxPrice,
-  ratings,
   brand,
-  newArrival,
   discount,
   sortBy,
   sortOrder,
   handleFilterChange,
+  setSearchParams,
 }) {
+  const { data } = useFetchBrandsQuery();
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const width = useWindowWidth();
+  const [showFilters, setShowFilters] = useState({
+    category: false,
+    price: false,
+    brand: false,
+  });
+
+  const toggleFilter = (filter) => {
+    setShowFilters((prevShowFilters) => ({
+      ...prevShowFilters,
+      [filter]: !prevShowFilters[filter],
+    }));
+  };
+
+  let isMobile = width < 768;
+
+  const handleToggle = () => {
+    setIsFilterOpen(!isFilterOpen);
+  };
+
+  useEffect(() => {
+    if (isMobile) {
+      setIsFilterOpen(false);
+    } else {
+      setIsFilterOpen(true);
+    }
+
+    console.log(isMobile, width);
+  }, [isMobile, width]);
+
   return (
     <div className={styles.filterSortContainer}>
       <div className={styles.filterContainer}>
-        <CustomCategoryTree
-          category={category}
-          handleFilterChange={handleFilterChange}
-        />
-        <div className={styles.filter}>
-          <TwoWayRangeInput
-            minPrice={minPrice}
-            maxPrice={maxPrice}
-            handleFilterChange={handleFilterChange}
-          />
-          {/* <label htmlFor='minPrice'>Min Price:</label>
-          <input
-            type='range'
-            id='minPrice'
-            name='minPrice'
-            value={minPrice || ""}
-            onChange={(e) => handleFilterChange(e)}
-            onInput={(e) => {
-              updateRangeValue(e, "minRangeValue");
-              updateMaxPriceRange();
-            }}
-          />
-
-          <span id='minRangeValue'>0</span>
-
-          <label htmlFor='maxPrice'>Max Price:</label>
-          <input
-            type='range'
-            id='maxPrice'
-            name='maxPrice'
-            value={maxPrice || ""}
-            onChange={(e) => handleFilterChange(e)}
-            onInput={(e) => updateRangeValue(e, "maxRangeValue")}
-            min={minPrice}
-          /> 
-          <span id='maxRangeValue'>0</span>
-          */}
-        </div>
-        <div className={styles.filter}>
-          <label htmlFor='ratings'>Ratings:</label>
-          <input
-            type='number'
-            id='ratings'
-            name='ratings'
-            value={ratings || ""}
-            onChange={(e) => handleFilterChange(e)}
-          />
-        </div>
-        <div className={styles.filter}>
-          <label htmlFor='brand'>Brand:</label>
-          <input
-            type='text'
-            id='brand'
-            name='brand'
-            value={brand || ""}
-            onChange={(e) => handleFilterChange(e)}
-          />
-        </div>
-        <div className={styles.filter}>
-          <label htmlFor='newArrival'>New Arrival:</label>
-          <input
-            type='checkbox'
-            id='newArrival'
-            name='newArrival'
-            checked={newArrival}
-            onChange={(e) => handleFilterChange(e)}
-          />
-        </div>
-        <div className={styles.filter}>
-          <label htmlFor='discount'>Discount:</label>
-          <input
-            type='checkbox'
-            id='discount'
-            name='discount'
-            checked={discount}
-            onChange={(e) => handleFilterChange(e)}
-          />
-        </div>
+        <button
+          className={styles.clearButton}
+          onClick={() => setSearchParams({})}
+          aria-label='clear filters'
+        >
+          <AiOutlineClear /> Clear Filters
+        </button>
+        {isMobile && (
+          <div className={styles.filterIcon} onClick={handleToggle}>
+            <TbCategory />
+          </div>
+        )}
+        {isFilterOpen && (
+          <div className={styles.filters}>
+            <div className={styles.filter}>
+              <div
+                className={styles.filterHeader}
+                onClick={() => toggleFilter("category")}
+              >
+                Category <AiOutlinePlus />
+              </div>
+              {showFilters.category && (
+                <CustomCategoryTree
+                  category={category}
+                  handleFilterChange={handleFilterChange}
+                />
+              )}
+            </div>
+            <div className={styles.filter}>
+              <div
+                className={styles.filterHeader}
+                onClick={() => toggleFilter("price")}
+              >
+                Price
+                <AiOutlinePlus />
+              </div>
+              {showFilters.price && (
+                <TwoWayRangeInput
+                  minPrice={minPrice}
+                  maxPrice={maxPrice}
+                  handleFilterChange={handleFilterChange}
+                />
+              )}
+            </div>
+            <div className={`${styles.filter} ${styles.brand}`}>
+              <div
+                className={styles.filterHeader}
+                onClick={() => toggleFilter("brand")}
+              >
+                Brand
+                <AiOutlinePlus />
+              </div>
+              {showFilters.brand && (
+                <div>
+                  <label htmlFor='brand' aria-label='brand'></label>
+                  <select
+                    id='brand'
+                    name='brand'
+                    value={brand || ""}
+                    onChange={(e) => handleFilterChange(e)}
+                  >
+                    <option value=''>All</option>
+                    {data?.map((brand) => (
+                      <option key={brand.name} value={brand.name}>
+                        {brand.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* sort */}
       <div className={styles.sortContainer}>
-        <label htmlFor='sort'>Sort By:</label>
-        <select
-          id='sort'
-          name='sortBy'
-          value={sortBy || ""}
-          onChange={(e) => handleFilterChange(e)}
-        >
-          <option value=''>None</option>
-          <option value='price'>Price</option>
-          <option value='averageRating'>Ratings</option>
-          {discount && (
-            <option value='discount.discountPercentage'>discount</option>
-          )}
-        </select>
-
-        <label htmlFor='order'>Order:</label>
-        <select
-          id='order'
-          name='sortOrder'
-          value={sortOrder || "asc"}
-          onChange={(e) => handleFilterChange(e)}
-        >
-          <option value='asc'>Ascending</option>
-          <option value='desc'>Descending</option>
-        </select>
+        <div className={styles.sortGroup}>
+          <label htmlFor='sort' aria-label='sort by'>
+            Sort By:
+          </label>
+          <select
+            id='sort'
+            name='sortBy'
+            value={sortBy || ""}
+            onChange={(e) => handleFilterChange(e)}
+          >
+            <option value=''>None</option>
+            <option value='price'>Price</option>
+            <option value='averageRating'>Ratings</option>
+            {discount && (
+              <option value='discount.discountPercentage'>discount</option>
+            )}
+          </select>
+        </div>
+        <div className={styles.sortGroup}>
+          <label htmlFor='order' aria-label='sorting order'>
+            Order:
+          </label>
+          <select
+            id='order'
+            name='sortOrder'
+            value={sortOrder || "asc"}
+            onChange={(e) => handleFilterChange(e)}
+          >
+            <option value='asc'>Ascending</option>
+            <option value='desc'>Descending</option>
+          </select>{" "}
+        </div>
       </div>
     </div>
   );
@@ -134,13 +189,13 @@ FilterSort.propTypes = {
   category: propTypes.string,
   minPrice: propTypes.number,
   maxPrice: propTypes.number,
-  ratings: propTypes.number,
   brand: propTypes.string,
   newArrival: propTypes.bool,
   discount: propTypes.bool,
   sortBy: propTypes.string,
   sortOrder: propTypes.string,
   handleFilterChange: propTypes.func,
+  setSearchParams: propTypes.func,
 };
 
 export default FilterSort;

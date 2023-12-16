@@ -1,76 +1,58 @@
+/* Use simple selectors and avoid unnecessary specificity */
 .searchForm {
-  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  gap: 10px;
-  /* max-width: 350px; */
-  margin: 1rem 2rem;
+  max-width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .searchForm {
+    margin-left: 250px;
+  }
 }
 
 .searchInput,
 .searchButton {
   position: relative;
   transition: all 0.5s ease;
+  height: 40px;
+  padding-inline: 8px;
+  z-index: 99999;
 }
 
 .searchInput {
-  width: 100%;
-  padding: 8px;
+  flex: 10;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 4px 0 0 4px;
   box-sizing: border-box;
-}
-
-.searchInput:focus + .searchButton,
-.searchButton:focus {
-  animation: fadeInButton 0.5s forwards;
-}
-
-@keyframes fadeInButton {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.searchInput:focus {
-  animation: expandInput 0.5s forwards;
-  z-index: 999;
-}
-
-@keyframes expandInput {
-  0% {
-    width: 100%;
-    height: 40px;
-    padding: 8px;
-  }
-  100% {
-    width: calc(100% - 16px);
-    max-width: calc(100% - 16px);
-    height: 80px;
-    padding: 12px;
-  }
+  outline: none;
 }
 
 .searchButton {
-  padding: 8px 12px;
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
   border: none;
-  border-radius: 4px;
+  border-radius: 0 4px 4px 0;
   cursor: pointer;
   background-color: #007bff;
   color: #fff;
-  z-index: 999;
 }
 
 .searchButton:hover {
-  background-color: #f0f0f0;
-  color: #333;
+  background-color: #0069d9;
+  color: #ffffff;
+}
+
+.searchButton:active {
+  scale: 0.9;
+}
+
+.searchForm:focus-within .searchInput,
+.searchForm:focus-within .searchButton {
+  transition: all 0.5s ease;
+  height: 80px;
 }
 
 .searchOverlay {
@@ -81,7 +63,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 998;
+  z-index: 9999;
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
   display: none;

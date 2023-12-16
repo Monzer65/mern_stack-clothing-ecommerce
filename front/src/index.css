@@ -57,16 +57,19 @@ footer {
 }
 
 .track {
-  height: 25px;
-  background-color: #ccc;
-  border-radius: 999px;
+  height: 20px;
+  background-color: white;
+  border-radius: 20px;
 }
 
-.track.track-0,
-.track.track-2 {
-  background-color: #ee8a8a;
+.track.track-0 {
+  background-color: hsl(10, 80%, 60%);
 }
 
 .track.track-1 {
-  background-color: #6de66d;
+  /* background-color: hsl(230, 50%, 30%); */
+}
+
+.track.track-2 {
+  background-color: hsl(160, 50%, 45%);
 }

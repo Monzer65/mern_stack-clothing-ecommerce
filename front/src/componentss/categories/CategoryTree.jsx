@@ -43,6 +43,12 @@ export default function CustomCategoryTree({ category, handleFilterChange }) {
     );
   };
 
+  const clearCategoryParams = () => {
+    handleFilterChange({
+      target: { name: "category", value: "" }, // Clear category value
+    });
+  };
+
   const renderCategories = (categories, level = 0) =>
     categories.map((cat) => {
       const hasChildren = cat.children && cat.children.length > 0;
@@ -111,13 +117,26 @@ export default function CustomCategoryTree({ category, handleFilterChange }) {
 
   return (
     <div className={styles.deopdownWrapper}>
-      <label htmlFor='category' className={styles.deopdownTitle}>
-        Category
-      </label>
+      <label
+        htmlFor='category'
+        aria-label='Category'
+        className={styles.deopdownTitle}
+      ></label>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
         <ul className={styles.dropdownList}>
+          <li className={styles.dropdownItem}>
+            <div className={styles.dropdownItemContainer}>
+              <span
+                onClick={clearCategoryParams}
+                className={styles.dropdownItemText}
+                style={{ paddingLeft: "0" }}
+              >
+                Select All
+              </span>
+            </div>
+          </li>
           <li className={styles.dropdownItem}>
             {renderCategories(hierarchicalCategories)}
           </li>

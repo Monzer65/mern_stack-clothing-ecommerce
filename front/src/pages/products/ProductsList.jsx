@@ -6,15 +6,9 @@ import { useSearchParams } from "react-router-dom";
 import SearchInput from "../../componentss/search/SearchInput";
 import Pagination from "../../componentss/pagination/Pagination";
 import FilterSort from "../../componentss/filter-sort/FilterSort";
-import StarsRating from "../../componentss/starsRating/StarsRating";
 import LoadingSpinner from "../../componentss/spinners/LoadingGrid";
 
 export default function ProductsList() {
-  // const [minPriceRange, setMinPriceRange] = useState(0);
-  // const [maxPriceRange, setMaxPriceRange] = useState(1000);
-  // const [categories, setCategories] = useState("");
-  // const [brands, setBrands] = useState("");
-
   const [searchParams, setSearchParams] = useSearchParams();
   let filterParams = useMemo(() => {
     const params = new URLSearchParams();
@@ -81,7 +75,7 @@ export default function ProductsList() {
   };
 
   const page = parseInt(filterParams.get("page")) || 1;
-  const limit = parseInt(filterParams.get("limit")) || 2;
+  const limit = parseInt(filterParams.get("limit")) || 10;
   const sortBy = filterParams.get("sortBy");
   const sortOrder = filterParams.get("sortOrder");
   const search = filterParams.get("search");
@@ -124,11 +118,6 @@ export default function ProductsList() {
     setSearchParams(filterParams, { replace: true });
   };
 
-  const clearFilters = () => {
-    const filterParams = new URLSearchParams();
-    setSearchParams(filterParams, { replace: true });
-  };
-
   if (isError) {
     console.error(error);
     return (
@@ -137,55 +126,57 @@ export default function ProductsList() {
   }
 
   return (
-    <div className={styles.productsListContainer}>
-      <SearchInput setSearchParams={setSearchParams} />
-      <button onClick={clearFilters}>Clear Filters</button>
-      <FilterSort
-        handleFilterChange={handleFilterChange}
-        category={category}
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        ratings={ratings}
-        brand={brand}
-        newArrival={newArrival}
-        discount={discount}
-        sortBy={sortBy}
-        sortOrder={sortOrder}
-      />
-      {/* result data*/}
-      <h1>Products</h1>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <div className={styles.productsList}>
-          {productsData?.totalProducts === 0 && (
-            <p>No products found for the selected filters.</p>
-          )}
-          {productsData?.products?.map((product) => (
-            <Link
-              to={`/products/${product._id}`}
-              key={product._id}
-              className={styles.productItem}
-            >
-              <img src={product.images[0]} alt={product.name} />
-              <h3>{product.name}</h3>
-              <p>{product.shortDescription}</p>
-              <span>${product.price}</span>
-              <StarsRating rating={product.averageRating} />
-              <p className={styles.discount}>
-                {" "}
-                {product.discount.discountPercentage}%
-              </p>
-            </Link>
-          ))}
-        </div>
-      )}
+    <div className={styles.productsListwrapper}>
+      <div className={styles.searchWrapper}>
+        <SearchInput setSearchParams={setSearchParams} />
+      </div>
 
-      <Pagination
-        currentPage={page}
-        totalPages={data?.totalPages}
-        handlePageChange={handlePageChange}
-      />
+      <div className={styles.ProductsAndFiltersContainer}>
+        <FilterSort
+          handleFilterChange={handleFilterChange}
+          setSearchParams={setSearchParams}
+          category={category}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          ratings={ratings}
+          brand={brand}
+          newArrival={newArrival}
+          discount={discount}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
+        />
+        {/* result data*/}
+        <div className={styles.ProductsListContainer}>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <div className={styles.productsList}>
+              {productsData?.totalProducts === 0 && (
+                <p className={styles.noProducts}>
+                  No products found for the selected filters.
+                </p>
+              )}
+              {productsData?.products?.map((product) => (
+                <Link
+                  to={`/products/${product._id}`}
+                  key={product._id}
+                  className={styles.productItem}
+                >
+                  <img src={product.images[0]} alt={product.name} />
+                  <h3>{product.name}</h3>
+                  <span className={styles.price}>${product.price}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          <Pagination
+            currentPage={page}
+            totalPages={data?.totalPages}
+            handlePageChange={handlePageChange}
+          />
+        </div>
+      </div>
     </div>
   );
 }
