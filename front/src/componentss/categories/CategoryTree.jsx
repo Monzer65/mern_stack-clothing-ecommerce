@@ -2,7 +2,7 @@ import styles from "./categoryTree.module.css";
 import { useState, useEffect } from "react";
 import { useFetchCategoriesQuery } from "../../reducers/categoriesApiSlice";
 import PropTypes from "prop-types";
-import LoadingSpinner from "../spinners/LoadingGrid";
+import LoadingSpinner from "../spinners/LoadingSpinner";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 
 export default function CustomCategoryTree({ category, handleFilterChange }) {

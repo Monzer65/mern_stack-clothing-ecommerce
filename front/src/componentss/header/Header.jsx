@@ -19,13 +19,20 @@ export default function Header() {
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
+  const [cartQuantity, setCartQuantity] = useState(0);
   const username = useSelector((state) => state.auth.username);
+  const cartState = useSelector((state) => state.cart.cart);
+
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
 
   useEffect(() => {
     setName(username);
   }, [username, navigate]);
+
+  useEffect(() => {
+    setCartQuantity(cartState?.products?.length);
+  }, [cartState]);
 
   const handleItemClick = () => {
     setIsOpen(false);
@@ -77,6 +84,7 @@ export default function Header() {
     <Link to='/cart'>
       <button className={styles.cart}>
         <IoBasketOutline /> Cart
+        <span className={styles.cartQuantity}>{cartQuantity}</span>
       </button>
     </Link>
   );
@@ -94,6 +102,8 @@ export default function Header() {
               <input
                 type='checkbox'
                 id='dropdown-toggle'
+                min={0}
+                max={10}
                 className={styles.dropdownToggle}
                 checked={isOpen}
                 onChange={() => setIsOpen(!isOpen)}

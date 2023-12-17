@@ -1,8 +1,8 @@
-import "./loadingSpinner.css";
+import styles from "./loadingSpinner.module.css";
 export default function LoadingSpinner() {
   return (
-    <div className='spinner-container'>
-      <div className='spinner'></div>
+    <div className={styles.spinnerContainer}>
+      <div className={styles.spinner}></div>
     </div>
   );
 }

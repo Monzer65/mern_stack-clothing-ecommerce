@@ -57,6 +57,7 @@ const Profile = () => {
 
     if (pwd !== confirmPwd) {
       setErrMsg("Passwords do not match");
+      setUpdateLoading(false);
       return;
     }
 
@@ -85,6 +86,8 @@ const Profile = () => {
       console.log(err?.data?.message || err.error);
       errRef.current.focus();
       errRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    } finally {
+      setUpdateLoading(false);
     }
   };
 
@@ -107,6 +110,8 @@ const Profile = () => {
       console.log(err?.data?.message || err.error);
       errRef.current.focus();
       errRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    } finally {
+      setUpdateLoading(false);
     }
   };
 

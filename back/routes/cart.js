@@ -25,7 +25,10 @@ router.post("/", jwtAuth, async (req, res, next) => {
     const { userId } = req;
 
     if (!productId || !quantity || isNaN(quantity)) {
-      return res.status(400).json({ error: "Invalid productId or quantity" });
+      res.status(400);
+      throw new Error(
+        "productId and quantity are required and must be numbers"
+      );
     }
 
     let cart = await Cart.findOne({ userId });
@@ -61,14 +64,31 @@ router.put("/:productId", jwtAuth, async (req, res, next) => {
     const { quantity } = req.body;
     const { userId } = req;
 
-    if (!quantity || isNaN(quantity)) {
-      return res.status(400).json({ error: "Invalid quantity" });
-    }
-
     let cart = await Cart.findOne({ userId });
 
     if (!cart) {
-      return res.status(404).json({ error: "Cart not found" });
+      res.status(404);
+      throw new Error("Cart not found");
+    }
+
+    if (!productId) {
+      res.status(400);
+      throw new Error("productId is required");
+    }
+
+    if (quantity < 1) {
+      const updatedCart = await Cart.findOneAndUpdate(
+        { userId },
+        { $pull: { products: { productId } } },
+        { new: true }
+      );
+
+      return res.status(200).json(updatedCart);
+    }
+
+    if (isNaN(quantity)) {
+      res.status(400);
+      throw new Error("quantity must be a number");
     }
 
     const existingProduct = cart.products.find(
@@ -76,7 +96,8 @@ router.put("/:productId", jwtAuth, async (req, res, next) => {
     );
 
     if (!existingProduct) {
-      return res.status(404).json({ error: "Product not found in cart" });
+      res.status(404);
+      throw new Error("Product not found in cart");
     }
 
     existingProduct.quantity = parseInt(quantity, 10);
@@ -98,7 +119,8 @@ router.delete("/:productId", jwtAuth, async (req, res, next) => {
     let cart = await Cart.findOne({ userId });
 
     if (!cart) {
-      return res.status(404).json({ error: "Cart not found" });
+      res.status(404);
+      throw new Error("Cart not found");
     }
 
     const updatedProducts = cart.products.filter(
@@ -117,20 +139,21 @@ router.delete("/:productId", jwtAuth, async (req, res, next) => {
 
 // Clear Cart:
 router.delete("/", jwtAuth, async (req, res, next) => {
-  const { userId } = req;
-
   try {
-    const cart = await Cart.findOne({ userId });
+    const { userId } = req;
+
+    let cart = await Cart.findOne({ userId });
 
     if (!cart) {
-      const error = new Error("Cart not found");
-      error.status = 404;
-      throw error;
+      res.status(404);
+      throw new Error("Cart not found");
     }
 
     cart.products = [];
 
     await cart.save();
+
+    res.status(200).json({ message: "Cart cleared successfully" });
   } catch (error) {
     next(error);
   }

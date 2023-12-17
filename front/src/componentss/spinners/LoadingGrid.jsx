@@ -1,8 +1,8 @@
-import "./loadingGrid.css";
-export default function LoadingSpinner() {
+import styles from "./loadingGrid.module.css";
+export default function LoadingGrid() {
   return (
-    <div className='lds-grid-container'>
-      <div className='lds-grid'>
+    <div className={styles.ldsGridContainer}>
+      <div className={styles.ldsGrid}>
         <div></div>
         <div></div>
         <div></div>
