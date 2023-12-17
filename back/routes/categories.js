@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const Category = require("../models/Category");
 const { categoryValidation } = require("../middlewares/validation");
 const jwtAuth = require("../middlewares/jwtAuth");
@@ -15,10 +14,10 @@ router.get("/", async (req, res, next) => {
 
     const calculateCategoryLevel = async (categoryId, level) => {
       if (!categoryId) {
-        return level; // Base case: Return the level when there's no parent category
+        return level;
       }
-      const parentCategory = await Category.findById(categoryId); // Find the parent category by ID
-      return calculateCategoryLevel(parentCategory.parentCategory, level + 1); // Recursively calculate the level
+      const parentCategory = await Category.findById(categoryId);
+      return calculateCategoryLevel(parentCategory.parentCategory, level + 1);
     };
 
     // Add level to each category
@@ -29,7 +28,7 @@ router.get("/", async (req, res, next) => {
       })
     );
 
-    res.json(categoriesWithLevel); // Send categories with their levels as JSON response
+    res.json(categoriesWithLevel);
   } catch (err) {
     console.error(err);
     next(err);

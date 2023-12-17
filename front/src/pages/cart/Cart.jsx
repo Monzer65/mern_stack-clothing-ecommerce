@@ -81,6 +81,7 @@ const Cart = () => {
       const response = await removeItem(productId).unwrap();
       setUpdatedQuantity((prevQuantity) => {
         const { [productId]: _, ...rest } = prevQuantity;
+        console.log("_:", _);
         return rest;
       });
       refetch();

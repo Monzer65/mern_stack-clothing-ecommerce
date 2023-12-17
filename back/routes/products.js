@@ -6,31 +6,6 @@ const Category = require("../models/Category");
 const mongoose = require("mongoose");
 const { ObjectId } = require("mongoose").Types;
 
-// Recursive function to get all descendant category IDs including the parent category
-async function getAllCategoryIds(categorySlug) {
-  try {
-    const category = await Category.findOne({ slug: categorySlug }).exec();
-
-    if (!category) {
-      throw new Error("Category not found");
-    }
-
-    const descendantCategories = await Category.find({
-      parentCategory: category._id,
-    }).exec();
-
-    const allDescendantIds = [
-      category._id,
-      ...(descendantCategories.map((c) => c._id) || ""),
-    ];
-
-    return allDescendantIds;
-  } catch (err) {
-    console.error("Error retrieving category IDs:", err.message);
-    return [];
-  }
-}
-
 router.get("/", async (req, res, next) => {
   try {
     const {
@@ -125,7 +100,34 @@ router.get("/", async (req, res, next) => {
     }
 
     if (category) {
-      const categoryIds = await getAllCategoryIds(category);
+      let categoryPipeline = [];
+
+      categoryPipeline.push(
+        {
+          $match: { slug: category },
+        },
+        {
+          $graphLookup: {
+            from: "categories",
+            startWith: "$_id", // Start with the category's _id
+            connectFromField: "_id", // The field to connect from (current document)
+            connectToField: "parentCategory", // The field to connect to (target document)
+            as: "allCategories", // Store all matched categories in this field
+          },
+        }
+      );
+
+      const foundCategories = await Category.aggregate(categoryPipeline);
+
+      const firstCategory = foundCategories[0];
+
+      const categoryIds =
+        firstCategory && firstCategory.allCategories
+          ? firstCategory.allCategories.map((category) => category._id)
+          : [];
+
+      categoryIds.push(firstCategory._id);
+
       pipeline.push({
         $match: { category: { $in: categoryIds } },
       });
