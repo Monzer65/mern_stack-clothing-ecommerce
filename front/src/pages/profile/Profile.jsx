@@ -10,7 +10,7 @@ import LoadingSpinner from "../../componentss/spinners/LoadingSpinner";
 import { GrUpdate } from "react-icons/gr";
 import { FaRegTrashAlt } from "react-icons/fa";
 import ConfirmationModal from "../../componentss/modal/ConfirmationModal";
-import styles from "./Profile.module.css";
+import styles from "./profile.module.css";
 
 const Profile = () => {
   const [username, setUsername] = useState("");
