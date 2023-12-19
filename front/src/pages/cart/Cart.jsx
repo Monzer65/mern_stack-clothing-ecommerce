@@ -59,11 +59,8 @@ const Cart = () => {
         quantity: parseInt(quantity),
       }).unwrap();
       refetch();
-      if (Object.keys(updatedQuantity).length === 0) {
-        dispatch(setCart({ ...cartData, products: [] }));
-      } else {
-        dispatch(setCart(res));
-      }
+
+      dispatch(setCart({ ...res }));
 
       console.log("Updated quantity:", quantity);
       setUpdateLoading(false);
@@ -85,11 +82,8 @@ const Cart = () => {
         return rest;
       });
       refetch();
-      if (Object.keys(updatedQuantity).length === 0) {
-        dispatch(setCart({ ...cartData, products: [] }));
-      } else {
-        dispatch(setCart(response));
-      }
+
+      dispatch(setCart({ ...response }));
 
       console.log("Removed item:", response);
       setRemoveLoading(false);
@@ -172,7 +166,7 @@ const Cart = () => {
                         <span className={styles.quantityLabel}>
                           sub-total:{" "}
                         </span>
-                        ${item.productId.price * item?.quantity}
+                        ${(item.productId.price * item?.quantity).toFixed(2)}
                       </p>
                     </div>
                   </Link>
@@ -197,7 +191,9 @@ const Cart = () => {
                       onClick={() =>
                         handleUpdateQuantity(
                           item.productId._id,
-                          parseInt(updatedQuantity[item.productId._id] || "0")
+                          parseInt(
+                            updatedQuantity[item.productId._id] || item.quantity
+                          )
                         )
                       }
                       className={styles.updateButton}
@@ -230,23 +226,23 @@ const Cart = () => {
             </div>
           </div>
 
+          <div className={styles.cartActions}>
+            <button
+              onClick={handleClearCart}
+              className={styles.clearButton}
+              disabled={clearLoading || updateLoading || removeLoading}
+            >
+              {clearLoading ? (
+                <TbLoader calssName={styles.spin} />
+              ) : (
+                <>
+                  <GrClearOption /> Clear Cart
+                </>
+              )}
+            </button>
+          </div>
+          <p className={styles.total}>Total: ${totalAmount}</p>
           <Link to='/checkout'>
-            <div className={styles.cartActions}>
-              <button
-                onClick={handleClearCart}
-                className={styles.clearButton}
-                disabled={clearLoading || updateLoading || removeLoading}
-              >
-                {clearLoading ? (
-                  <TbLoader calssName={styles.spin} />
-                ) : (
-                  <>
-                    <GrClearOption /> Clear Cart
-                  </>
-                )}
-              </button>
-            </div>
-            <p className={styles.total}>Total: ${totalAmount}</p>
             <button disabled={true} className={styles.checkoutButton}>
               {updateLoading || removeLoading || clearLoading ? (
                 <>

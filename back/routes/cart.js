@@ -67,28 +67,17 @@ router.put("/:productId", jwtAuth, async (req, res, next) => {
     let cart = await Cart.findOne({ userId });
 
     if (!cart) {
-      res.status(404);
-      throw new Error("Cart not found");
+      return res.status(404).json({ error: "Cart not found" });
     }
 
     if (!productId) {
-      res.status(400);
-      throw new Error("productId is required");
+      return res.status(400).json({ error: "productId is required" });
     }
 
-    if (quantity < 1) {
-      const updatedCart = await Cart.findOneAndUpdate(
-        { userId },
-        { $pull: { products: { productId } } },
-        { new: true }
-      );
-
-      return res.status(200).json(updatedCart);
-    }
-
-    if (isNaN(quantity)) {
-      res.status(400);
-      throw new Error("quantity must be a number");
+    if (isNaN(quantity) || quantity < 0 || !Number.isInteger(quantity)) {
+      return res
+        .status(400)
+        .json({ error: "Quantity must be a non-negative integer" });
     }
 
     const existingProduct = cart.products.find(
@@ -96,11 +85,16 @@ router.put("/:productId", jwtAuth, async (req, res, next) => {
     );
 
     if (!existingProduct) {
-      res.status(404);
-      throw new Error("Product not found in cart");
+      return res.status(404).json({ error: "Product not found in cart" });
     }
 
-    existingProduct.quantity = parseInt(quantity, 10);
+    if (quantity === 0) {
+      cart.products = cart.products.filter(
+        (product) => product.productId.toString() !== productId
+      );
+    }
+
+    existingProduct.quantity = quantity || existingProduct.quantity;
 
     await cart.save();
 
