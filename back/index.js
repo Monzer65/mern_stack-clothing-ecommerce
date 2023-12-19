@@ -23,6 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
 app.use("/categories", require("./routes/categories"));
 app.use("/products", require("./routes/products"));
 app.use("/reviews", require("./routes/reviews"));
