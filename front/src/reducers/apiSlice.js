@@ -3,7 +3,7 @@ import { setCredentials, logout } from "../reducers/authSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://mern-shop-api-tau.vercel.app",
-  credentials: "include",
+  credentials: "same-origin",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
 
