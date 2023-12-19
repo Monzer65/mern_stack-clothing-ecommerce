@@ -22,14 +22,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors(corsOptions));
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authortization');
-    res.setHeader('Acces-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
 
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
+
 app.use("/categories", require("./routes/categories"));
 app.use("/products", require("./routes/products"));
 app.use("/reviews", require("./routes/reviews"));
