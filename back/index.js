@@ -23,10 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://mern-shop-api-tau.vercel.app"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "https://mern-shop-api-tau.vercel.app",
     credentials: true,
-    optionsSuccessStatus: 200,
   })
 );
 
