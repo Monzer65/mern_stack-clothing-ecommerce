@@ -8,58 +8,8 @@
   ],
   "routes": [
     {
-      "source": "/products",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://mern-shop-seven-pi.vercel.app/products"
-        }
-      ]
-    }, 
-        {
-      "source": "/categories",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://mern-shop-seven-pi.vercel.app/categories"
-        }
-      ]
-    },
-    {
-      "source": "/reviews",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://mern-shop-seven-pi.vercel.app/reviews"
-        }
-      ]
-    },
-    {
-      "source": "/cart",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://mern-shop-seven-pi.vercel.app/cart"
-        }
-      ]
-    },
-     {
-      "source": "/auth",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://mern-shop-seven-pi.vercel.app/auth"
-        }
-      ]
-    },
-     {
-      "source": "/profile",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://mern-shop-seven-pi.vercel.app/profile"
-        }
-      ]
-    },
+      "src": "/(.*)",
+      "dest": "./index.js",
+    }
   ]
 }
