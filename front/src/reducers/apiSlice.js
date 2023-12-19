@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logout } from "../reducers/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3000",
+  baseUrl: "https://mern-shop-api-tau.vercel.app",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
