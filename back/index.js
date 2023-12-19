@@ -1,16 +1,13 @@
 const express = require("express");
-
 const { errorHandler, notFound } = require("./middlewares/errorHandler");
+const cookieParser = require("cookie-parser");
+require("dotenv").config();
+const mongoose = require("mongoose");
+const uri = require("./config/dbUri");
+const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
 
 const app = express();
-
-const cookieParser = require("cookie-parser");
-
-require("dotenv").config();
-
-const mongoose = require("mongoose");
-
-const uri = require("./config/dbUri");
 
 mongoose
   .connect(uri)
@@ -22,31 +19,18 @@ mongoose
   });
 
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
-
 app.use(cookieParser());
-
-const cors = require("cors");
-
-const corsOptions = require("./config/corsOptions");
-
 app.use(cors(corsOptions));
 
 app.use("/categories", require("./routes/categories"));
-
 app.use("/products", require("./routes/products"));
-
 app.use("/reviews", require("./routes/reviews"));
-
 app.use("/cart", require("./routes/cart"));
-
 app.use("/auth", require("./routes/auth"));
-
 app.use("/profile", require("./routes/profile"));
 
 app.use(notFound);
-
 app.use(errorHandler);
 
 const port = process.env.PORT || 3000;

@@ -7,10 +7,11 @@ import ProductCarousel from "../../componentss/product-carousel/ProductCarousel"
 import { BiCartAdd } from "react-icons/bi";
 import ProductInformation from "../../componentss/product-detail-components/ProductInformation";
 import ProductVariations from "../../componentss/product-detail-components/ProductVariations";
-import ProductReviews from "../../componentss/product-detail-components/ProductReviews";
+// import ProductReviews from "../../componentss/product-detail-components/ProductReviews";
 import { useSelector, useDispatch } from "react-redux";
 import { usePostToCartMutation } from "../../reducers/cartApiSlice";
 import { setCart } from "../../reducers/cartSlice";
+import ReviewForm from "../../componentss/review/Review";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -49,7 +50,7 @@ const ProductDetail = () => {
     refetch();
   }, [refetch]);
 
-  const { reviews } = productData;
+  // const { reviews } = productData;
 
   return (
     <div className={styles.productDetailContainer}>
@@ -88,9 +89,11 @@ const ProductDetail = () => {
                 {productData.longDescription}
               </p>
 
-              <ProductReviews reviews={reviews} />
+              {/* <ProductReviews reviews={reviews} /> */}
             </>
           )}
+
+          <ReviewForm id={productId} />
         </>
       )}
     </div>

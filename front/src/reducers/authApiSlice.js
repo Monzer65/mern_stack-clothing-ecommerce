@@ -1,5 +1,6 @@
 import { apiSlice } from "./apiSlice";
 import { logout, setCredentials } from "./authSlice";
+import { setCart } from "./cartSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -37,6 +38,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           await queryFulfilled;
           dispatch(logout());
           dispatch(apiSlice.util.resetApiState());
+          dispatch(setCart(null));
         } catch (err) {
           console.log(err);
         }

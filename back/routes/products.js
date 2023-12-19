@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const jwtAuth = require("../middlewares/jwtAuth");
 const Product = require("../models/Product");
 const Category = require("../models/Category");
 const mongoose = require("mongoose");
 const { ObjectId } = require("mongoose").Types;
+// const jwtAuth = require("../middlewares/jwtAuth");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -23,7 +23,7 @@ router.get("/", async (req, res, next) => {
       ratings,
     } = req.query;
 
-    const numericLimit = parseInt(limit, 10); // Convert limit to a number
+    const numericLimit = parseInt(limit, 10);
     if (isNaN(numericLimit)) {
       return res.status(400).send("Limit must be a number");
     }
@@ -109,10 +109,10 @@ router.get("/", async (req, res, next) => {
         {
           $graphLookup: {
             from: "categories",
-            startWith: "$_id", // Start with the category's _id
+            startWith: "$_id",
             connectFromField: "_id", // The field to connect from (current document)
             connectToField: "parentCategory", // The field to connect to (target document)
-            as: "allCategories", // Store all matched categories in this field
+            as: "allCategories",
           },
         }
       );
@@ -206,16 +206,16 @@ router.get("/brands", async (req, res, next) => {
     const brands = await Product.aggregate([
       {
         $group: {
-          _id: "$brand.name", // Group by the brand name
-          featured: { $first: "$brand.featured" }, // Get the 'featured' field from the first document in each group
-          image: { $first: "$brand.image" }, // Get the 'image' field from the first document in each group
+          _id: "$brand.name",
+          featured: { $first: "$brand.featured" },
+          image: { $first: "$brand.image" },
         },
       },
       {
         $project: {
           _id: 0, // Exclude the _id field
-          name: "$_id", // Set the name of the brand
-          featured: 1, // Include the 'featured' field
+          name: "$_id",
+          featured: 1,
           image: 1, // Include the 'image' field
         },
       },
@@ -285,76 +285,72 @@ router.get("/:id", async (req, res, next) => {
 
     res.status(200).json(product);
   } catch (error) {
-    if (error.name === "CastError") {
-      res.status(400).json({ message: "Invalid product ID" });
-    } else {
-      next(error);
-    }
-  }
-});
-
-router.post("/", jwtAuth, async (req, res, next) => {
-  if (req.role[0] !== "admin") {
-    return res
-      .status(403)
-      .json({ message: "Forbidden. Admin access required." });
-  }
-  try {
-    const newProduct = await Product.create(req.body);
-    res.status(201).json(newProduct);
-  } catch (error) {
     next(error);
   }
 });
 
-router.put("/:id", jwtAuth, async (req, res, next) => {
-  if (req.role[0] !== "admin") {
-    return res
-      .status(403)
-      .json({ message: "Forbidden. Admin access required." });
-  }
-  try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updatedProduct) {
-      const error = new Error("Product not found");
-      error.status = 404;
-      throw error;
-    }
-    res.status(200).json(updatedProduct);
-  } catch (error) {
-    if (error.kind === "ObjectId") {
-      res.status(400).json({ message: "Invalid product ID" });
-    } else {
-      next(error);
-    }
-  }
-});
+// router.post("/", jwtAuth, async (req, res, next) => {
+//   if (req.role[0] !== "admin") {
+//     return res
+//       .status(403)
+//       .json({ message: "Forbidden. Admin access required." });
+//   }
+//   try {
+//     const newProduct = await Product.create(req.body);
+//     res.status(201).json(newProduct);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
-router.delete("/:id", jwtAuth, async (req, res, next) => {
-  if (req.role[0] !== "admin") {
-    return res
-      .status(403)
-      .json({ message: "Forbidden. Admin access required." });
-  }
-  try {
-    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-    if (!deletedProduct) {
-      const error = new Error("Product not found");
-      error.status = 404;
-      throw error;
-    }
-    res.status(200).json(deletedProduct);
-  } catch (error) {
-    if (error.kind === "ObjectId") {
-      res.status(400).json({ message: "Invalid product ID" });
-    } else {
-      next(error);
-    }
-  }
-});
+// router.put("/:id", jwtAuth, async (req, res, next) => {
+//   if (req.role[0] !== "admin") {
+//     return res
+//       .status(403)
+//       .json({ message: "Forbidden. Admin access required." });
+//   }
+//   try {
+//     const updatedProduct = await Product.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true }
+//     );
+//     if (!updatedProduct) {
+//       const error = new Error("Product not found");
+//       error.status = 404;
+//       throw error;
+//     }
+//     res.status(200).json(updatedProduct);
+//   } catch (error) {
+//     if (error.kind === "ObjectId") {
+//       res.status(400).json({ message: "Invalid product ID" });
+//     } else {
+//       next(error);
+//     }
+//   }
+// });
+
+// router.delete("/:id", jwtAuth, async (req, res, next) => {
+//   if (req.role[0] !== "admin") {
+//     return res
+//       .status(403)
+//       .json({ message: "Forbidden. Admin access required." });
+//   }
+//   try {
+//     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+//     if (!deletedProduct) {
+//       const error = new Error("Product not found");
+//       error.status = 404;
+//       throw error;
+//     }
+//     res.status(200).json(deletedProduct);
+//   } catch (error) {
+//     if (error.kind === "ObjectId") {
+//       res.status(400).json({ message: "Invalid product ID" });
+//     } else {
+//       next(error);
+//     }
+//   }
+// });
 
 module.exports = router;

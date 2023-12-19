@@ -6,6 +6,7 @@ const baseQuery = fetchBaseQuery({
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
+
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
@@ -45,6 +46,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["User"],
+  tagTypes: ["User", "Product", "Category", "Review", "Cart"],
   endpoints: (builder) => ({}),
 });

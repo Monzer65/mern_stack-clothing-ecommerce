@@ -1,6 +1,5 @@
 import { apiSlice } from "./apiSlice";
 
-// Define your profile API slice
 export const categoryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     fetchCategories: builder.query({

@@ -1,103 +1,152 @@
 const express = require("express");
 const router = express.Router();
-
 const Review = require("../models/Review");
 const User = require("../models/User");
+const mongoose = require("mongoose");
 const jwtAuth = require("../middlewares/jwtAuth");
 
 router.get("/:id", async (req, res, next) => {
-  const { id } = req.params;
-  const review = await Review.findById(id).populate("author product");
-  if (!review) {
-    return res.status(404).json({ message: "Review not found" });
+  try {
+    const reviews = await Review.find({ product: req.params.id }).populate(
+      "author product"
+    );
+
+    if (!reviews) {
+      res.status(404);
+      throw new Error("Reviews not found");
+    }
+
+    res.status(200).json(reviews);
+  } catch (error) {
+    next(error);
   }
-  res.status(200).json(review);
 });
 
 router.post("/:id", jwtAuth, async (req, res, next) => {
   try {
-    if (!req.userId) {
-      return res.status(404).json({ message: "login to write a review" });
+    const product = req.params.id;
+    const author = req.userId;
+    const { rating, comment } = req.body;
+
+    if (!author) {
+      res.status(404);
+      throw new Error("Author not found");
     }
 
-    const review = new Review(req.body);
+    if (!product) {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+
+    if (!rating || !comment) {
+      res.status(400);
+      throw new Error("Rating and comment are required");
+    }
 
     const existingReview = await Review.findOne({
-      author: req.userId,
-      product: req.params.id,
+      product,
+      author,
     });
 
     if (existingReview) {
-      return res.status(400).json({
-        message: "You already have a review for this product",
-      });
+      res.status(400);
+      throw new Error("You already have a review for this product");
     }
 
-    if (!review.comment || !review.rating) {
-      const error = new Error("Comment and rating are required");
-      error.status = 400;
-      throw error;
-    }
+    const review = new Review({
+      author,
+      product,
+      comment,
+      rating: Number(rating),
+    });
 
-    review.author = req.userId;
-    review.product = req.params.id;
-    const newReview = await review.save();
+    const result = await review.save();
+
     res
       .status(201)
-      .json({ rating: newReview.rating, comment: newReview.comment });
+      .json({ message: "Review created successfully", review: result });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", jwtAuth, async (req, res, next) => {
+  try {
+    const author = req.userId;
+    let id = req.params.id;
+    const { rating, comment } = req.body;
+
+    console.log("review id", id);
+    console.log("rating", rating);
+    console.log("comment", comment);
+
+    if (!id) {
+      re.status(400);
+      throw new Error("Review id is required");
+    }
+
+    if (!rating || !comment) {
+      res.status(400);
+      throw new Error("Rating and comment are required");
+    }
+
+    const review = await Review.findByIdAndUpdate({
+      _id: id,
+    });
+
+    if (!review) {
+      re.status(400);
+      throw new Error("Review not found");
+    }
+
+    if (review.author.toString() !== author) {
+      res.status(400);
+      throw new Error("you do not have permission");
+    }
+
+    review.comment = comment || review.comment;
+    review.rating = rating || review.rating;
+
+    const result = await review.save();
+
+    res
+      .status(200)
+      .json({ message: "Review updated successfully", review: result });
   } catch (error) {
     next(error);
   }
 });
 
 router.delete("/:id", jwtAuth, async (req, res, next) => {
-  if (req.role[0] !== "admin") {
-    return res
-      .status(403)
-      .json({ message: "Forbidden. Admin access required." });
-  }
-
   try {
-    const deletedReview = await Review.findByIdAndDelete(req.params.id);
+    const id = req.params.id;
+    const { userId } = req;
+
+    console.log(id);
+    console.log(userId);
+
+    const deletedReview = await Review.findById(id);
+
     if (!deletedReview) {
-      return res.status(404).json({ message: "Review not found" });
+      res.status(404);
+      throw new Error("Review not found");
     }
+
+    if (deletedReview.author._id.toString() !== userId) {
+      console.log(
+        "deletedReview.author._id:",
+        deletedReview.author._id.toString()
+      );
+      res.status(403);
+      throw new Error("No permission");
+    }
+
+    await deletedReview.deleteOne({ id });
 
     res.status(200).json({ message: "Review deleted successfully" });
   } catch (error) {
-    if (error.kind === "ObjectId") {
-      res.status(400).json({ message: "Invalid review ID" });
-    } else {
-      next(error);
-    }
+    next(error);
   }
 });
 
-router.put("/:id", jwtAuth, async (req, res, next) => {
-  if (req.role[0] !== "admin") {
-    return res
-      .status(403)
-      .json({ message: "Forbidden. Admin access required." });
-  }
-
-  try {
-    const updatedReview = await Review.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-
-    if (!updatedReview) {
-      return res.status(404).json({ message: "Review not found" });
-    }
-
-    res.status(200).json(updatedReview);
-  } catch (error) {
-    if (error.kind === "ObjectId") {
-      res.status(400).json({ message: "Invalid review ID" });
-    } else {
-      next(error);
-    }
-  }
-});
 module.exports = router;

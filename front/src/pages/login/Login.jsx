@@ -25,7 +25,6 @@ export default function Login() {
   const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
   const token = useSelector((state) => state.auth.token);
-  // const username = useSelector((state) => state.auth.username)
 
   useEffect(() => {
     userRef.current.focus();
@@ -46,6 +45,7 @@ export default function Login() {
     try {
       const userData = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...userData }));
+
       console.log({ ...userData });
       setEmail("");
       setPassword("");

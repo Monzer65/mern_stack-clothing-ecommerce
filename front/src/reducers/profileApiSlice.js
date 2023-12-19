@@ -1,6 +1,5 @@
 import { apiSlice } from "./apiSlice";
 
-// Define your profile API slice
 export const profileApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     fetchUserProfile: builder.query({
