@@ -28,12 +28,12 @@ app.use(express.static("dist"));
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
-app.use("/api/categories", require("./routes/categories"));
-app.use("/api/products", require("./routes/products"));
-app.use("/api/reviews", require("./routes/reviews"));
-app.use("/api/cart", require("./routes/cart"));
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/profile", require("./routes/profile"));
+app.use("/categories", require("./routes/categories"));
+app.use("/products", require("./routes/products"));
+app.use("/reviews", require("./routes/reviews"));
+app.use("/cart", require("./routes/cart"));
+app.use("/auth", require("./routes/auth"));
+app.use("/profile", require("./routes/profile"));
 
 app.use(notFound);
 app.use(errorHandler);
