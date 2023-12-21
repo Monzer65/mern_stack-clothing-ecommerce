@@ -28,6 +28,7 @@ app.use(express.static("dist"));
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
+
 app.use("/api/categories", require("./routes/categories"));
 app.use("/api/products", require("./routes/products"));
 app.use("/api/reviews", require("./routes/reviews"));
@@ -43,3 +44,11 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+// echo "# mern-same-server" >> README.md
+// git init
+// git add README.md
+// git commit -m "first commit"
+// git branch -M main
+// git remote add origin https://github.com/Monzer65/mern-same-server.git
+// git push -u origin main

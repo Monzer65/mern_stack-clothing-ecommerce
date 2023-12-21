@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters"],
     },
-    verificationCode: { type: String, minlength: 6, maxlength: 6 },
+    verificationCode: { type: String },
     verificationCodeExpiration: Date,
     isVerified: {
       type: Boolean,
